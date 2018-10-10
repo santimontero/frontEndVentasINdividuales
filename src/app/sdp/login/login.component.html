@@ -1,0 +1,47 @@
+<p-growl [(value)]="msgs" [life]="5000"></p-growl>
+
+<div id="overlay" class="overlay" *ngIf="loader"> </div>
+<div id="loader" class="app-loading" *ngIf="loader">
+    <div class="logo"></div>
+    <svg class="spinner" viewBox="25 25 50 50">
+        <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10" />
+    </svg>
+</div>
+
+
+
+<div id="crossfade">
+    <img src="../../../assets/img/fondo.jpg" alt="Image 1">
+
+</div>
+<div class="cont">
+    <div class="demo">
+      <div class="login">
+        <a class="ui-g-12" href="https://www.isacode.com/">
+            <img class="imgLogo" src="../../../assets/img/sdp.png">
+        </a>
+        <div class="login__form">
+                <form class="s-login-pg-form" name="form" (ngSubmit)="login()" #f="ngForm" autocomplete="off">
+          <div class="login__row">
+            <span class="login__icon name svg-icon" viewBox="0 0 20 20">
+              
+            </span>
+            <input class="login__input name" id="username" type="text" name="username" [(ngModel)]="model.username" required pInputText placeholder="Usuario"/>
+          </div>
+          <div class="login__row">
+            <span class="login__icon pass svg-icon" viewBox="0 0 20 20">
+         
+            </span>
+            <input class="login__input pass"d="password" autocomplete="new-password" type="password" name="password" [(ngModel)]="model.password" required pInputText placeholder="Contraseña"/>
+          </div>
+          <button class="login2" type="submit">Entrar</button>
+ 
+          <p class="login__signup">Olvidaste la contraseña? &nbsp;<a (click)="openRecover()" > Recuperar</a></p>
+          </form>
+        
+ 
+        </div>
+      </div>
+     
+    </div>
+  </div>
