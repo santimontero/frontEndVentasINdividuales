@@ -37,16 +37,14 @@ export class ApiRequestService {
      * This is a Global place to add all the request headers for every REST calls
      */
     appendAuthHeader(): Headers {
-        let headers = new Headers({ 
-        'Accept': 'application/json',
-        'Access-Control-Allow-Credentials':true,
-        'Access-Control-Allow-Origin':true });
-        headers.append('Content-Type', 'application/x-www-form-urlencoded;charset=UTF-8');
+        
+
+        let headers = new Headers({ 'Content-Type': 'application/json' });
         let token = this.userInfoService.getStoredToken();
         if (token !== null && token !== undefined) {
             headers.append("Authorization", token);
         } else {
-             headers.append('Authorization', 'Basic ' + btoa("eagleeye:thisissecret"));
+            headers.append('Authorization', 'Basic ' + btoa("eagleeye:thisissecret"));
         }
         return headers;
     }
@@ -114,13 +112,7 @@ export class ApiRequestService {
     get(url: string, tituloPagina: string, urlParams?: URLSearchParams): Observable<any> {
         let me = this;
         let requestOptions = this.getRequestOptions(RequestMethod.Get, url, urlParams);
-//         let options = new RequestOptions({
-//             headers: this.appendAuthHeader(),
-
-//         });
-       
-    console.log(requestOptions)
-        
+  
         
         return this.http.request(new Request(requestOptions))
             .map(resp => resp.json())
@@ -140,7 +132,9 @@ export class ApiRequestService {
 
     post(url: string, body: Object, tituloPagina: string, params?: URLSearchParams): Observable<any> {
         let me = this;
+     
         let requestOptions = this.getRequestOptions(RequestMethod.Post, url, params, body);
+        console.log(requestOptions)
         return this.http.request(new Request(requestOptions))
             .map(resp => resp.json())
             .catch(function (error: any) {

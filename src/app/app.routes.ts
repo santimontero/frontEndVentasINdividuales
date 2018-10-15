@@ -4,6 +4,7 @@ import { AppComponent } from './app.component';
 import { AuthGuard } from './services/auth_guard.service';
 import { LoginComponent } from './sdp/login/login.component';
 import { DashboardComponent } from './sdp/dashboard/dashboard.component';
+import { EmpresasComponent } from './sdp/empresas/empresas.component';
 
 export const routes: Routes = [
     {
@@ -17,6 +18,7 @@ export const routes: Routes = [
 
             { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
             { path: 'dashboard', component: DashboardComponent },
+            { path: 'empresas', component: EmpresasComponent },
 
            
 

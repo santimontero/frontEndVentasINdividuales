@@ -17,14 +17,19 @@ import { DashboardComponent } from './sdp/dashboard/dashboard.component';
 import { HttpClientModule, HttpRequest, HttpEvent, HttpClient } from '@angular/common/http';
 import { HttpModule } from '@angular/http';
 import { GrowlModule } from 'primeng/primeng';
-import { FormsModule } from '@angular/forms';
-
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { EmpresasComponent } from './sdp/empresas/empresas.component';
+import {ToolbarModule} from 'primeng/toolbar';
+import {ButtonModule} from 'primeng/button';
+import {TableModule} from 'primeng/table';
+import {DialogModule} from 'primeng/dialog';
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     AppLoginComponent,
     DashboardComponent,
+    EmpresasComponent,
   ],
   imports: [
     BrowserModule,
@@ -33,7 +38,12 @@ import { FormsModule } from '@angular/forms';
     GrowlModule,
     HttpModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    ToolbarModule,
+    ButtonModule,
+    TableModule,
+    ReactiveFormsModule,
+    DialogModule
   ],
   providers: [
     LoginService,
