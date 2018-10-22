@@ -1,0 +1,45 @@
+<!--Inicio Menu -->
+
+<p-toolbar class="toolbar">
+  <div class="ui-toolbar-group-left">
+    <button pButton type="button" icon="fa fa-floppy-o" class="green-btn" [disabled]="this.guardarboton" (click)="guardar()"
+      label="Guardar"></button>
+
+  </div>
+  <div class="ui-toolbar-group-right">
+    <label #titulo class="titulo">Permisos</label>
+  </div>
+</p-toolbar>
+
+
+<div class="ui-fluid">
+  <div class="ui-g">
+
+    <!--Fin Menu -->
+    <div class="ui-g-12 div-form">
+      <div class="card">
+        <div class="ui-g form-group">
+
+          <div class="ui-g-12 ui-md-6 form-group relative">
+
+            <div class="ui-g-12 ui-md-12 ">
+              <label class="etiquetaOtrosComponentes ">Perfil*</label>
+            </div>
+            <div class="ui-g-12 ui-md-12 ">
+              <p-dropdown [options]="perfiles" (onChange)="seleccionarPerfil($event)" [(ngModel)]="autocompletadorPerfil" placeholder="Seleccionar"
+                [autoWidth]="true" [style]="{'width': '100%'}" filter="true"></p-dropdown>
+            </div>
+          </div>
+
+          <div class="ui-g-12">
+            <p-tree [value]="arbol" selectionMode="checkbox" [(selection)]="arbolSeleccion" [style]="{'margin-top':'50px'}">
+             
+            </p-tree>
+          </div>
+
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
