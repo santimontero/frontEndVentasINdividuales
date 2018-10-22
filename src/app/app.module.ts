@@ -16,14 +16,20 @@ import { AppLoginComponent } from './app.login.component';
 import { DashboardComponent } from './sdp/dashboard/dashboard.component';
 import { HttpClientModule, HttpRequest, HttpEvent, HttpClient } from '@angular/common/http';
 import { HttpModule } from '@angular/http';
-import { GrowlModule } from 'primeng/primeng';
+import { GrowlModule, DropdownModule, TreeModule } from 'primeng/primeng';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { EmpresasComponent } from './sdp/empresas/empresas.component';
 import {ToolbarModule} from 'primeng/toolbar';
 import {ButtonModule} from 'primeng/button';
 import {TableModule} from 'primeng/table';
 import {DialogModule} from 'primeng/dialog';
+<<<<<<< HEAD
 import { UsuariosComponent } from './sdp/usuarios/usuarios.component';
+=======
+import { PerfilesComponent } from './sdp/perfiles/perfiles.component';
+import { OpcionesComponent } from './sdp/opciones/opciones.component';
+import { PermisosComponent } from './sdp/permisos/permisos.component';
+>>>>>>> d37a61a53139695f01c73aed4eeb48abe3a57652
 @NgModule({
   declarations: [
     AppComponent,
@@ -31,7 +37,13 @@ import { UsuariosComponent } from './sdp/usuarios/usuarios.component';
     AppLoginComponent,
     DashboardComponent,
     EmpresasComponent,
+<<<<<<< HEAD
     UsuariosComponent,
+=======
+    PerfilesComponent,
+    OpcionesComponent,
+    PermisosComponent,
+>>>>>>> d37a61a53139695f01c73aed4eeb48abe3a57652
   ],
   imports: [
     BrowserModule,
@@ -45,7 +57,9 @@ import { UsuariosComponent } from './sdp/usuarios/usuarios.component';
     ButtonModule,
     TableModule,
     ReactiveFormsModule,
-    DialogModule
+    DialogModule,
+    DropdownModule,
+    TreeModule,
   ],
   providers: [
     LoginService,
