@@ -23,7 +23,7 @@ export class AppComponent implements OnInit {
 }
 
 ngOnInit() {
-  this.api.get('/api/Permisos/listarUrl/' +3, 'menu').subscribe(
+  this.api.get('/api/Permisos/listarUrl/' +this.api.getInfoUsuario().perfil, 'menu').subscribe(
     codigosMenu => {
       this.items = [];
       for (let i = 0; i < codigosMenu.length; i++) {

@@ -95,15 +95,16 @@ export class LoginComponent implements OnInit {
                                             "message": respuestaSesion.operationMessage,
                                             "landingPage": respuestaSesion.esCambio ? "cambioClave" : this.landingPage,
                                             "user": {
-                                                "userId": respuestaSesion.id,
-                                                "email": respuestaSesion.email,
-                                                "displayName": respuestaSesion.nombre + " " + respuestaSesion.apellido,
+                                                "userId": respuestaSesion.usu_codigo_usuario,
+                                                "email": respuestaSesion.usu_mail,
+                                                "displayName": respuestaSesion.usu_nombre_usuario,
                                                 "token": 'bearer ' + this.userInfoService.getStoredToken(),
                                                 "esCambio": respuestaSesion.esCambio,
-                                                "empresaId": respuestaSesion.idEmpresa,
-                                                "agenciaId": 'null', // es para detectar primer inicio de sesion
+                                                "empresaId": respuestaSesion.emp_id_empresa,
+                                                "agenciaId": respuestaSesion.usu_agencia, // es para detectar primer inicio de sesion
                                                 "agenciaName": respuestaSesion.AgenciaId,
                                                 "path": respuestaSesion.path,
+                                                "perfil": respuestaSesion.per_codigo_perfil,
                                             }
                                         };
                                         console.log(loginInfoReturn)
