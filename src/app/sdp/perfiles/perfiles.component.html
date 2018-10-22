@@ -1,0 +1,54 @@
+
+<p-toolbar>
+  
+
+
+
+</p-toolbar>
+
+<p-table [columns]="cols" [value]="perfiles" selectionMode="single" [(selection)]="selectedPerfiles" (onRowSelect)="onRowSelect($event)" [paginator]="true" [rows]="15">
+  <ng-template pTemplate="caption">
+    Lista de perfiles
+  </ng-template>
+  <ng-template pTemplate="header" let-columns>
+      <tr>
+          <th *ngFor="let col of columns" [pSortableColumn]="col.field">
+              {{col.header}}
+              <p-sortIcon [field]="col.field"></p-sortIcon>
+          </th>
+      </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-rowData let-columns="columns">
+      <tr [pSelectableRow]="rowData">
+          <td *ngFor="let col of columns">
+              {{rowData[col.field]}}
+          </td>
+      </tr>
+  </ng-template>
+  <ng-template pTemplate="summary" let-rowData>
+      <div style="text-align:left">
+          <button type="button" pButton icon="fa fa-plus" (click)="showDialogToAdd()" label="Add"></button>
+      </div>
+  </ng-template>    
+</p-table>
+
+<p-dialog header="Opcion Detalle" [(visible)]="displayDialog" [responsive]="true" showEffect="fade" [modal]="true" [width]="300">
+  <form [formGroup]="formulario" >
+      <div class="ui-g form-group">
+ 
+      <div class="ui-g-12">
+        <span class="ui-float-label">
+          <input id="float-input" type="text" size="30" pInputText [(ngModel)]="formulario.get('per_descripcion').value"  formControlName="per_descripcion"> 
+          <label for="float-input">Perfil Descripcion</label>
+      </span>
+      </div>
+     
+  </div>
+  </form>
+  <p-footer>
+      <div class="ui-dialog-buttonpane ui-helper-clearfix">
+          <button type="button" pButton icon="fa fa-close" (click)="delete()" label="Delete"></button>
+          <button type="button" pButton icon="fa fa-check" (click)="save()" label="Save"></button>
+      </div>
+  </p-footer>
+</p-dialog>

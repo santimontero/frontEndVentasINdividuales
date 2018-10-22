@@ -5,6 +5,9 @@ import { AuthGuard } from './services/auth_guard.service';
 import { LoginComponent } from './sdp/login/login.component';
 import { DashboardComponent } from './sdp/dashboard/dashboard.component';
 import { EmpresasComponent } from './sdp/empresas/empresas.component';
+import { PerfilesComponent } from './sdp/perfiles/perfiles.component';
+import { OpcionesComponent } from './sdp/opciones/opciones.component';
+import { PermisosComponent } from './sdp/permisos/permisos.component';
 
 export const routes: Routes = [
     {
@@ -19,8 +22,9 @@ export const routes: Routes = [
             { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
             { path: 'dashboard', component: DashboardComponent },
             { path: 'empresas', component: EmpresasComponent },
-
-           
+            { path: 'perfiles', component: PerfilesComponent },
+            { path: 'opciones', component: OpcionesComponent },
+            { path: 'permisos', component: PermisosComponent },
 
 
 
