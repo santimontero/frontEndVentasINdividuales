@@ -2,8 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { AppRoutes } from './app.routes';
 import { AppComponent } from './app.component';
-import { AccordionModule } from 'primeng/accordion';     //accordion and accordion tab
-import { MenuItem } from 'primeng/api';                 //api
+import { AccordionModule } from 'primeng/accordion';     //accordion and accordion tab         
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LoginComponent } from './sdp/login/login.component';
 import { AppConfig } from './app-config';
@@ -16,7 +15,8 @@ import { AppLoginComponent } from './app.login.component';
 import { DashboardComponent } from './sdp/dashboard/dashboard.component';
 import { HttpClientModule, HttpRequest, HttpEvent, HttpClient } from '@angular/common/http';
 import { HttpModule } from '@angular/http';
-import { GrowlModule, DropdownModule, TreeModule } from 'primeng/primeng';
+import {MenuItem} from 'primeng/api';
+import { GrowlModule, DropdownModule, TreeModule, InputTextModule, MenubarModule } from 'primeng/primeng';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { EmpresasComponent } from './sdp/empresas/empresas.component';
 import {ToolbarModule} from 'primeng/toolbar';
@@ -40,6 +40,8 @@ import { PermisosComponent } from './sdp/permisos/permisos.component';
     PermisosComponent,
   ],
   imports: [
+    MenubarModule,
+    InputTextModule,
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutes,

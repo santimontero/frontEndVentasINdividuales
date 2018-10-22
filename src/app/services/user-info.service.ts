@@ -10,6 +10,7 @@ export interface UserInStorage {
     agenciaId: string;
     agenciaName: string;
     path: string;
+    perfil:number;
 }
 
 export interface LoginInfoInStorage {

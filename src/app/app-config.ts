@@ -25,7 +25,7 @@ export class AppConfig {
             this.apiProtocol = "http";
         }
         if (this.apiHostName === undefined) {
-            this.apiHostName = "localhost:55629";
+            this.apiHostName = "localhost:55629/";
         }
         if (this.apiPort === undefined) {
             this.apiPort = window.location.port;
