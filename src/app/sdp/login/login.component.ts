@@ -21,6 +21,7 @@ import { AppConfig } from '../../app-config';
 
 import { MessageService } from 'primeng/components/common/messageservice';
 
+
 @Component({
   selector: 'login',
   templateUrl: './login.component.html',
@@ -105,6 +106,8 @@ export class LoginComponent implements OnInit {
                                                 "path": respuestaSesion.path,
                                             }
                                         };
+                                        console.log(loginInfoReturn)
+                                        console.log(respuestaSesion)
                                         // Almacenamos la informacion del usuario dentro de la variable de sesion
                                         this.userInfoService.storeUserInfo(JSON.stringify(loginInfoReturn.user));
 
