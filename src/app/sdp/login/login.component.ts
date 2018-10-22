@@ -85,8 +85,8 @@ export class LoginComponent implements OnInit {
                     } else {
                         if (resp.access_token !== undefined) {
                             let params: URLSearchParams = new URLSearchParams();
-                            params.set('codUser', 'DOHERNAN');
-                            this.apiRequest.get('/api/usuario/buscar', 'Login', params).subscribe(
+                            params.set('codUser', this.model.username);
+                            this.apiRequest.get('/api/usuarios/buscar', 'Login', params).subscribe(
                                 respuestaSesion => {
                                     if (respuestaSesion !== undefined && respuestaSesion !== null) {
                                         loginInfoReturn = {

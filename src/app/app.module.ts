@@ -23,6 +23,7 @@ import {ToolbarModule} from 'primeng/toolbar';
 import {ButtonModule} from 'primeng/button';
 import {TableModule} from 'primeng/table';
 import {DialogModule} from 'primeng/dialog';
+import { UsuariosComponent } from './sdp/usuarios/usuarios.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -30,6 +31,7 @@ import {DialogModule} from 'primeng/dialog';
     AppLoginComponent,
     DashboardComponent,
     EmpresasComponent,
+    UsuariosComponent,
   ],
   imports: [
     BrowserModule,
