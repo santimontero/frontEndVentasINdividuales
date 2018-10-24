@@ -22,10 +22,10 @@ export class AppConfig {
 
     constructor() {
         if (this.apiProtocol === undefined) {
-            this.apiProtocol = "http";
+            this.apiProtocol = "https";
         }
         if (this.apiHostName === undefined) {
-            this.apiHostName = "localhost:55629/";
+            this.apiHostName =  "srv-appinterno.segurosdelpichincha.com/BackendVentasIndividuales/";
         }
         if (this.apiPort === undefined) {
             this.apiPort = window.location.port;
