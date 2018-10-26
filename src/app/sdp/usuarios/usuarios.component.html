@@ -29,14 +29,7 @@
 
   <p-dialog header="Usuario Detalle" [(visible)]="displayDialog" [responsive]="true" showEffect="fade" [modal]="true" [width]="300">
       <form [formGroup]="formulario" >
-          <div class="ui-g form-group">
-     
-          <div class="ui-g-12">
-            <span class="ui-float-label">
-              <input id="float-input" type="text" size="30" pInputText [(ngModel)]="formulario.get('usu_codigo_usuario').value"  formControlName="usu_codigo_usuario"> 
-              <label for="float-input">Código</label>
-          </span>
-          </div>
+        <div class="ui-g form-group">
           <div class="ui-g-12">
               <span class="ui-float-label">
                   <input id="float-input" type="text" size="30" pInputText [(ngModel)]="formulario.get('usu_nombre_usuario').value"  formControlName="usu_nombre_usuario"> 
@@ -84,10 +77,8 @@
                 <input id="float-input" type="number" size="30" pInputText [(ngModel)]="formulario.get('usu_val_presupuesto').value"  formControlName="usu_val_presupuesto"> 
                 <label for="float-input">Valor presupuesto</label>
             </span>            
-          </div>
-
-                  
-      </div>
+          </div>               
+        </div>
       </form>
       <p-footer>
           <div class="ui-dialog-buttonpane ui-helper-clearfix">

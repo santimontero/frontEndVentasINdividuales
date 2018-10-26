@@ -1,5 +1,5 @@
 export class Usuario {
-    usu_codigo_usuario?: string;
+    usu_codigo_usuario?: number;
     frc_codigo_frecp?: string;
     per_codigo_perfil?: number;
     emp_id_empresa?: number;

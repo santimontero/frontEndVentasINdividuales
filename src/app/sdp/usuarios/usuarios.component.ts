@@ -37,7 +37,7 @@ export class UsuariosComponent implements OnInit {
 
   nuevofurmulario() {
       return this.formulario = this.formBuilder.group({
-        usu_codigo_usuario: ['',[Validators.required]],
+        usu_codigo_usuario: ['',],
         usu_nombre_usuario: ['',[Validators.required]],
         per_codigo_perfil: ['',[Validators.required]],
         emp_id_empresa: ['',[Validators.required]],
@@ -86,7 +86,6 @@ export class UsuariosComponent implements OnInit {
         });
 
     this.cols = [
-      { field: 'usu_codigo_usuario', header: 'Código' },
       { field: 'usu_nombre_usuario', header: 'Usuario' },
       { field: 'usu_nombre_asesor', header: 'Nombre Completo'},
       { field: 'usu_mail', header: 'Correo electrónico' },
@@ -154,7 +153,7 @@ export class UsuariosComponent implements OnInit {
     this.newUsuario = false;
    
     this.formulario = this.formBuilder.group({
-      usu_codigo_usuario: [this.selectedUsuarios.usu_codigo_usuario, Validators.required],
+      usu_codigo_usuario: [this.selectedUsuarios.usu_codigo_usuario,],
       usu_nombre_usuario: [this.selectedUsuarios.usu_nombre_usuario, Validators.required],
       usu_nombre_asesor: [this.selectedUsuarios.usu_nombre_asesor,],
       per_codigo_perfil: [this.selectedUsuarios.per_codigo_perfil, Validators.required],
