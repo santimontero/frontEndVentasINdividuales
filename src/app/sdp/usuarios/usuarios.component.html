@@ -1,9 +1,10 @@
 <p-toolbar>
 </p-toolbar>
 
-<p-table [columns]="cols" [value]="usuarios" selectionMode="single" [(selection)]="selectedUsuarios" (onRowSelect)="onRowSelect($event)" [paginator]="true" [rows]="15">
+<p-table [columns]="cols" [value]="usuarios" selectionMode="single" [(selection)]="selectedUsuarios" (onRowSelect)="onRowSelect($event)"
+    [paginator]="true" [rows]="15">
     <ng-template pTemplate="caption">
-      Lista de Usuarios
+        Lista de Usuarios
     </ng-template>
     <ng-template pTemplate="header" let-columns>
         <tr>
@@ -24,66 +25,74 @@
         <div style="text-align:left">
             <button type="button" pButton icon="fa fa-plus" (click)="showDialogToAdd()" label="Add"></button>
         </div>
-    </ng-template>    
-  </p-table>
+    </ng-template>
+</p-table>
 
-  <p-dialog header="Usuario Detalle" [(visible)]="displayDialog" [responsive]="true" showEffect="fade" [modal]="true" [width]="300">
-      <form [formGroup]="formulario" >
+<p-dialog header="Usuario Detalle" [(visible)]="displayDialog" [responsive]="true" showEffect="fade" [modal]="true"
+    [width]="300">
+    <form [formGroup]="formulario">
         <div class="ui-g form-group">
-          <div class="ui-g-12">
-              <span class="ui-float-label">
-                  <input id="float-input" type="text" size="30" pInputText [(ngModel)]="formulario.get('usu_nombre_usuario').value"  formControlName="usu_nombre_usuario"> 
-                  <label for="float-input">Usuario</label>
-              </span>          
-          </div>
-          <div class="ui-g-12">
-           <span class="ui-float-label">
-                <input id="float-input" type="text" size="30" pInputText [(ngModel)]="formulario.get('usu_nombre_asesor').value"  formControlName="usu_nombre_asesor"> 
-                <label for="float-input">Nombre Completo</label>
-            </span>          
-          </div>
-          <div class="ui-g-12">
             <div class="ui-g-12">
-                <label class="etiquetaOtrosComponentes ">Perfil</label>
+                <span class="ui-float-label">
+                    <input id="float-input" type="text" size="30" pInputText [(ngModel)]="formulario.get('usu_nombre_usuario').value"
+                        disabled formControlName="usu_nombre_usuario">
+                    <label for="float-input">Usuario</label>
+                </span>
             </div>
             <div class="ui-g-12">
-               <p-dropdown [options]="perfiles" (onChange)="seleccionarPerfil($event)" [(ngModel)]="formulario.get('per_codigo_perfil').value" placeholder="Seleccionar"
-                 [autoWidth]="true" [style]="{'width': '100%'}" filter="true" formControlName="per_codigo_perfil"></p-dropdown>
-            </div>
-          </div>
-          <div class="ui-g-12">  
-            <div class="ui-g-12">
-                <label class="etiquetaOtrosComponentes ">Empresa</label>
+                <span class="ui-float-label">
+                    <input id="float-input" type="text" size="30" pInputText [(ngModel)]="formulario.get('usu_nombre_asesor').value"
+                        formControlName="usu_nombre_asesor">
+                    <label for="float-input">Nombre Completo</label>
+                </span>
             </div>
             <div class="ui-g-12">
-              <p-dropdown [options]="empresas" (onChange)="seleccionarEmpresa($event)" [(ngModel)]="formulario.get('emp_id_empresa').value" placeholder="Seleccionar"
-                [autoWidth]="true" [style]="{'width': '100%'}" filter="true" formControlName="emp_id_empresa"></p-dropdown>
+                <div class="ui-g-12">
+                    <label class="etiquetaOtrosComponentes ">Perfil</label>
+                </div>
+                <div class="ui-g-12">
+                    <p-dropdown [options]="perfiles" (onChange)="seleccionarPerfil($event)" [(ngModel)]="formulario.get('per_codigo_perfil').value"
+                        placeholder="Seleccionar" [autoWidth]="true" [style]="{'width': '100%'}" filter="true"
+                        formControlName="per_codigo_perfil"></p-dropdown>
+                </div>
             </div>
-          </div>
-          <div class="ui-g-12">
-              <span class="ui-float-label">
-                  <input id="float-input" type="text" size="30" pInputText [(ngModel)]="formulario.get('usu_mail').value"  formControlName="usu_mail"> 
-                  <label for="float-input">Email</label>
-              </span>          
-          </div>
-          <div class="ui-g-12">
-              <span class="ui-float-label">
-                  <input id="float-input" type="text" size="30" pInputText [(ngModel)]="formulario.get('usu_agencia').value"  formControlName="usu_agencia"> 
-                  <label for="float-input">Agencia</label>
-              </span>            
-          </div>
-          <div class="ui-g-12">
-            <span class="ui-float-label">
-                <input id="float-input" type="number" size="30" pInputText [(ngModel)]="formulario.get('usu_val_presupuesto').value"  formControlName="usu_val_presupuesto"> 
-                <label for="float-input">Valor presupuesto</label>
-            </span>            
-          </div>               
+            <div class="ui-g-12">
+                <div class="ui-g-12">
+                    <label class="etiquetaOtrosComponentes ">Empresa</label>
+                </div>
+                <div class="ui-g-12">
+                    <p-dropdown [options]="empresas" (onChange)="seleccionarEmpresa($event)" [(ngModel)]="formulario.get('emp_id_empresa').value"
+                        placeholder="Seleccionar" [autoWidth]="true" [style]="{'width': '100%'}" filter="true"
+                        formControlName="emp_id_empresa"></p-dropdown>
+                </div>
+            </div>
+            <div class="ui-g-12">
+                <span class="ui-float-label">
+                    <input id="float-input" type="text" size="30" pInputText [(ngModel)]="formulario.get('usu_mail').value"
+                        formControlName="usu_mail">
+                    <label for="float-input">Email</label>
+                </span>
+            </div>
+            <div class="ui-g-12">
+                <span class="ui-float-label">
+                    <input id="float-input" type="text" size="30" pInputText [(ngModel)]="formulario.get('usu_agencia').value"
+                        formControlName="usu_agencia">
+                    <label for="float-input">Agencia</label>
+                </span>
+            </div>
+            <div class="ui-g-12">
+                <span class="ui-float-label">
+                    <input id="float-input" type="number" size="30" pInputText [(ngModel)]="formulario.get('usu_val_presupuesto').value"
+                        formControlName="usu_val_presupuesto">
+                    <label for="float-input">Valor presupuesto</label>
+                </span>
+            </div>
         </div>
-      </form>
-      <p-footer>
-          <div class="ui-dialog-buttonpane ui-helper-clearfix">
-              <button type="button" pButton icon="fa fa-close" (click)="delete()" label="Delete"></button>
-              <button type="button" pButton icon="fa fa-check" (click)="save()" label="Save"></button>
-          </div>
-      </p-footer>
-    </p-dialog>
+    </form>
+    <p-footer>
+        <div class="ui-dialog-buttonpane ui-helper-clearfix">
+            <button type="button" pButton icon="fa fa-close" (click)="delete()" label="Delete"></button>
+            <button type="button" pButton icon="fa fa-check" (click)="save()" label="Save"></button>
+        </div>
+    </p-footer>
+</p-dialog>

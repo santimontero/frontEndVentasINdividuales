@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { ApiRequestService } from 'src/app/services/api-request.service';
 import { AppComponent } from 'src/app/app.component';
-import { URLSearchParams} from '@angular/http';
+import { URLSearchParams } from '@angular/http';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms'
 import { Usuario } from 'src/app/domain/usuario';
 import { SelectItem } from 'primeng/components/common/selectitem';
@@ -28,7 +28,7 @@ export class UsuariosComponent implements OnInit {
 
   perfiles: SelectItem[];
   empresas: SelectItem[];
-  
+
   constructor(private api: ApiRequestService,
     private formBuilder: FormBuilder,
     public appComponent: AppComponent) {
@@ -36,21 +36,21 @@ export class UsuariosComponent implements OnInit {
   }
 
   nuevofurmulario() {
-      return this.formulario = this.formBuilder.group({
-        usu_codigo_usuario: ['',],
-        usu_nombre_usuario: ['',[Validators.required]],
-        per_codigo_perfil: ['',[Validators.required]],
-        emp_id_empresa: ['',[Validators.required]],
-        usu_mail: ['',[Validators.required]],
-        usu_agencia: ['',[Validators.required]],
-        usu_val_presupuesto: ['',],
-        usu_nombre_asesor: ['',],
-        //usu_contrasenia: ['',[Validators.required]],
-        //usu_contrasenia_confirm: ['',[Validators.required]],
-        usu_estado: ['A',],
-        usu_usuario_crea: ['',],
-      });  
-  }   
+    return this.formulario = this.formBuilder.group({
+      usu_codigo_usuario: ['',],
+      usu_nombre_usuario: ['', [Validators.required]],
+      per_codigo_perfil: ['', [Validators.required]],
+      emp_id_empresa: ['', [Validators.required]],
+      usu_mail: ['', [Validators.required]],
+      usu_agencia: ['', [Validators.required]],
+      usu_val_presupuesto: ['',],
+      usu_nombre_asesor: ['',],
+      //usu_contrasenia: ['',[Validators.required]],
+      //usu_contrasenia_confirm: ['',[Validators.required]],
+      usu_estado: ['A',],
+      usu_usuario_crea: ['',],
+    });
+  }
 
   ngOnInit() {
     this.nuevofurmulario();
@@ -59,11 +59,11 @@ export class UsuariosComponent implements OnInit {
         this.usuarios = res;
         this.usuarios.forEach(element => {
           console.log(element)
-        })       
+        })
       }
     );
 
-    this.api.get('/api/Perfiles/listar' , 'Usuarios').subscribe(
+    this.api.get('/api/Perfiles/listar', 'Usuarios').subscribe(
       res => {
         this.perfiles = [];
         if (res != null) {
@@ -74,35 +74,35 @@ export class UsuariosComponent implements OnInit {
         }
       });
 
-      this.api.get('/api/empresas/listar' , 'Usuarios').subscribe(
-        res => {
-          this.empresas = [];
-          if (res != null) {
-            this.empresas.push({ label: 'Elegir Empresa', value: null })
-            for (let i = 0; i < res.length; i++) {
-              this.empresas.push({ label: res[i].emp_razon_social, value: res[i].emp_id_empresa });
-            }
+    this.api.get('/api/empresas/listar', 'Usuarios').subscribe(
+      res => {
+        this.empresas = [];
+        if (res != null) {
+          this.empresas.push({ label: 'Elegir Empresa', value: null })
+          for (let i = 0; i < res.length; i++) {
+            this.empresas.push({ label: res[i].emp_razon_social, value: res[i].emp_id_empresa });
           }
-        });
+        }
+      });
 
     this.cols = [
       { field: 'usu_nombre_usuario', header: 'Usuario' },
-      { field: 'usu_nombre_asesor', header: 'Nombre Completo'},
+      { field: 'usu_nombre_asesor', header: 'Nombre Completo' },
       { field: 'usu_mail', header: 'Correo electrónico' },
       //{ field: 'emp_id_empresa', header: 'Empresa' },
       //{ field: 'usu_usuario_crea', header: 'Usuario crea/modifica'}
-  ];
+    ];
   }
 
-  seleccionarPerfil(evento ) {
+  seleccionarPerfil(evento) {
 
     let idPerfil = evento.value;
 
-    this.formulario.patchValue({per_codigo_perfil: idPerfil});
+    this.formulario.patchValue({ per_codigo_perfil: idPerfil });
   }
 
-  seleccionarEmpresa(evento ) {
-    this.formulario.patchValue({emp_id_empresa: evento.value});
+  seleccionarEmpresa(evento) {
+    this.formulario.patchValue({ emp_id_empresa: evento.value });
   }
 
   showDialogToAdd() {
@@ -110,7 +110,7 @@ export class UsuariosComponent implements OnInit {
     this.usuario.usu_estado = 'A'
     this.displayDialog = true;
   }
-  datosEnvio(){
+  datosEnvio() {
     const envio = {
       usu_codigo_usuario: this.formulario.get('usu_codigo_usuario').value,
       usu_nombre_usuario: this.formulario.get('usu_nombre_usuario').value,
@@ -122,36 +122,36 @@ export class UsuariosComponent implements OnInit {
       usu_val_presupuesto: this.formulario.get('usu_val_presupuesto').value,
       usu_estado: this.formulario.get('usu_estado').value,
       //usu_usuario_crea: this.formulario.get('usu_usuario_crea').value,
-  };
-  console.log(envio)
-  return envio;
+    };
+    console.log(envio)
+    return envio;
   }
 
   save() {
     this.api.post('/api/usuarios/guardar/', this.datosEnvio(), 'Usuarios').subscribe(Data => {
       this.ngOnInit()
-    }    
-    ,error => {
-      console.log(error)
-    });
+    }
+      , error => {
+        console.log(error)
+      });
     this.displayDialog = false;
   }
 
   delete() {
     let params: URLSearchParams = new URLSearchParams();
-                              params.set('id', this.selectedUsuarios.usu_codigo_usuario.toString());
-      this.api.get('/api/usuarios/elimina', 'Usuarios',params).subscribe(
-        res => {          
-          this.ngOnInit();                   
-        }
-      );
-      this.usuario = null;
-      this.displayDialog = false;
+    params.set('id', this.selectedUsuarios.usu_codigo_usuario.toString());
+    this.api.get('/api/usuarios/elimina', 'Usuarios', params).subscribe(
+      res => {
+        this.ngOnInit();
+      }
+    );
+    this.usuario = null;
+    this.displayDialog = false;
   }
 
   onRowSelect(event) {
     this.newUsuario = false;
-   
+
     this.formulario = this.formBuilder.group({
       usu_codigo_usuario: [this.selectedUsuarios.usu_codigo_usuario,],
       usu_nombre_usuario: [this.selectedUsuarios.usu_nombre_usuario, Validators.required],
@@ -173,7 +173,7 @@ export class UsuariosComponent implements OnInit {
   cloneEmpresa(c: Usuario): Usuario {
     let car = {};
     for (let prop in c) {
-        car[prop] = c[prop];
+      car[prop] = c[prop];
     }
     return car;
   }

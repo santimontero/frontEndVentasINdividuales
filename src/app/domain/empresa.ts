@@ -7,4 +7,5 @@ export class Empresa {
     emp_estado?: string;
     emp_fecha?: Date;
     emp_usuario?: string;
+    emp_cod_desc?: string;
 }
