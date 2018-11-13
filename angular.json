@@ -19,16 +19,26 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "src/tsconfig.app.json",
             "assets": [
-              "src/favicon.ico",
-              "src/assets"
+              "src/assets",
+              "src/upload.php",
+              "src/favicon.ico"
             ],
             "styles": [
-              "src/styles.css",
+              "node_modules/primeng/resources/primeng.min.css",
+              "node_modules/fullcalendar/dist/fullcalendar.min.css",
+              "node_modules/quill/dist/quill.snow.css",
+              "node_modules/font-awesome/css/font-awesome.min.css",
               "node_modules/primeicons/primeicons.css",
-              "node_modules/primeng/resources/themes/nova-light/theme.css",
-              "node_modules/primeng/resources/primeng.min.css"
+              "src/assets/demo/css/codehighlight.css",
+              "src/styles.css"
             ],
-            "scripts": []
+            "scripts": [
+              "node_modules/moment/moment.js",
+              "node_modules/chart.js/dist/Chart.js",
+              "node_modules/fullcalendar/dist/fullcalendar.js",
+              "node_modules/prismjs/prism.js",
+              "node_modules/quill/dist/quill.js"
+            ]
           },
           "configurations": {
             "production": {
@@ -75,14 +85,20 @@
             "tsConfig": "src/tsconfig.spec.json",
             "karmaConfig": "src/karma.conf.js",
             "styles": [
-              "src/styles.css" ,
-              "node_modules/primeicons/primeicons.css",
-              "node_modules/primeng/resources/themes/nova-light/theme.css",
-              "node_modules/primeng/resources/primeng.min.css"
-            ],
-            "scripts": [],
+              "node_modules/primeng/resources/primeng.min.css",
+              "node_modules/fullcalendar/dist/fullcalendar.min.css",
+              "node_modules/quill/dist/quill.snow.css",
+              "node_modules/font-awesome/css/font-awesome.min.css",
+              "src/styles.css"
+                    ],
+            "scripts": [ "node_modules/moment/moment.js",
+              "node_modules/chart.js/dist/Chart.js",
+              "node_modules/fullcalendar/dist/fullcalendar.js",
+              "node_modules/quill/dist/quill.js"
+        ],
             "assets": [
               "src/favicon.ico",
+              "src/upload.php",
               "src/assets"
             ]
           }
