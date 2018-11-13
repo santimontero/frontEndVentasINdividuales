@@ -32,51 +32,40 @@
     </ng-template>
 </p-table>
 
-<p-dialog header="Empresa Detalle" [(visible)]="displayDialog" [responsive]="true" showEffect="fade" [modal]="true"
-    [width]="300">
-    <form [formGroup]="formulario">
-        <div class="ui-g form-group">
-            <div class="ui-g-12">
-                <span class="ui-float-label">
-                    <input id="float-input" type="text" size="30" pInputText [(ngModel)]="formulario.get('emp_ruc').value"
-                        formControlName="emp_ruc">
-                    <label for="float-input">Empresa Ruc</label>
-                </span>
-            </div>
-            <div class="ui-g-12">
-                <span class="ui-float-label">
-                    <input id="float-input" type="text" size="30" pInputText [(ngModel)]="formulario.get('emp_razon_social').value"
-                        formControlName="emp_razon_social">
-                    <label for="float-input">Razón Social</label>
-                </span>
-            </div>
-            <div class="ui-g-12">
-                <span class="ui-float-label">
-                    <input id="float-input" type="text" size="30" pInputText [(ngModel)]="formulario.get('emp_tipo').value"
-                        formControlName="emp_tipo">
-                    <label for="float-input">Tipo (B)roker o (S)ponsor</label>
-                </span>
-            </div>
-            <div class="ui-g-12">
-                <span class="ui-float-label">
-                    <input id="float-input" type="text" size="30" pInputText [(ngModel)]="formulario.get('emp_email').value"
-                        formControlName="emp_email">
-                    <label for="float-input">Correo electrónico</label>
-                </span>
-            </div>
-            <div class="ui-g-12">
-                <span class="ui-float-label">
-                    <input id="float-input" type="text" size="30" pInputText [(ngModel)]="formulario.get('emp_cod_desc').value"
-                        formControlName="emp_cod_desc">
-                    <label for="float-input">Código descriptivo(3 letras)</label>
-                </span>
-            </div>
-        </div>
-    </form>
-    <p-footer>
-        <div class="ui-dialog-buttonpane ui-helper-clearfix">
-            <button type="button" pButton icon="fa fa-close" (click)="delete()" label="Delete"></button>
-            <button type="button" pButton icon="fa fa-check" (click)="save()" label="Save"></button>
-        </div>
-    </p-footer>
+<p-dialog header="Empresa Detalle" [(visible)]="displayDialog" [responsive]="true" showEffect="fade" [modal]="true" [width]="300">
+  <form [formGroup]="formulario" >
+      <div class="ui-g form-group">
+ 
+      <div class="ui-g-12">
+        <span class="ui-float-label">
+          <input id="float-input" type="text" size="30" pInputText [(ngModel)]="formulario.get('emp_ruc').value"  formControlName="emp_ruc"> 
+          <label for="float-input">Empresa Ruc</label>
+      </span>
+      </div>
+      <div class="ui-g-12">
+          <span class="ui-float-label">
+              <input id="float-input" type="text" size="30" pInputText [(ngModel)]="formulario.get('emp_razon_social').value"  formControlName="emp_razon_social"> 
+              <label for="float-input">Razon Social</label>
+          </span>          
+      </div>
+      <div class="ui-g-12">
+          <span class="ui-float-label">
+              <input id="float-input" type="text" size="30" pInputText [(ngModel)]="formulario.get('emp_tipo').value"  formControlName="emp_tipo"> 
+              <label for="float-input">emp_tipo</label>
+          </span>          
+      </div>
+      <div class="ui-g-12">
+          <span class="ui-float-label">
+              <input id="float-input" type="text" size="30" pInputText [(ngModel)]="formulario.get('emp_email').value"  formControlName="emp_email"> 
+              <label for="float-input">Email</label>
+          </span>            
+      </div>
+  </div>
+  </form>
+  <p-footer>
+      <div class="ui-dialog-buttonpane ui-helper-clearfix">
+          <button type="button" pButton icon="fa fa-close" (click)="delete()" label="Delete"  class="ui-button-danger ui-button-rounded"></button>
+          <button type="button" pButton icon="fa fa-check" (click)="save()" label="Save" class="ui-button-success ui-button-rounded"></button>
+      </div>
+  </p-footer>
 </p-dialog>

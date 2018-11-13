@@ -1,8 +1,26 @@
 
-<p-menubar [model]="items">
-    <div>
+
         
-        <button pButton label="Logout" icon="fa fa-sign-out" style="margin-left:.25em" (click)="logout()"></button>
+
+<div class="layout-wrapper" [ngClass]="{'layout-menu-horizontal': menuMode === 'horizontal',
+                                        'layout-menu-overlay': menuMode === 'overlay',
+                                        'layout-menu-static': menuMode === 'static',
+                                        'layout-menu-slim': menuMode === 'slim',
+                                        'layout-menu-light': lightMenu === true,
+                                        'layout-menu-overlay-active': overlayMenuActive,
+                                        'layout-menu-mobile-active': staticMenuMobileActive,
+                                        'layout-menu-static-inactive': staticMenuDesktopInactive}" (click)="onLayoutClick()">
+    <app-topbar></app-topbar>
+
+    <app-rightpanel></app-rightpanel>
+
+    <app-menu [reset]="resetMenu"></app-menu>
+
+    <div class="layout-main">
+        <div class="layout-content">
+            <router-outlet></router-outlet>
+        </div>
+
+       <!-- <app-footer></app-footer>-->
     </div>
-</p-menubar>
-<router-outlet></router-outlet>
+</div>
