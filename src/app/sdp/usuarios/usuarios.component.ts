@@ -38,7 +38,7 @@ export class UsuariosComponent implements OnInit {
   nuevofurmulario() {
     return this.formulario = this.formBuilder.group({
       usu_codigo_usuario: ['',],
-      usu_nombre_usuario: ['', [Validators.required]],
+      usu_nombre_usuario: new FormControl({ value: '', disabled: true},),
       per_codigo_perfil: ['', [Validators.required]],
       emp_id_empresa: ['', [Validators.required]],
       usu_mail: ['', [Validators.required]],
@@ -154,7 +154,7 @@ export class UsuariosComponent implements OnInit {
 
     this.formulario = this.formBuilder.group({
       usu_codigo_usuario: [this.selectedUsuarios.usu_codigo_usuario,],
-      usu_nombre_usuario: [this.selectedUsuarios.usu_nombre_usuario, Validators.required],
+      usu_nombre_usuario: new FormControl({ value: this.selectedUsuarios.usu_nombre_usuario, disabled: true},),
       usu_nombre_asesor: [this.selectedUsuarios.usu_nombre_asesor,],
       per_codigo_perfil: [this.selectedUsuarios.per_codigo_perfil, Validators.required],
       emp_id_empresa: [this.selectedUsuarios.per_codigo_perfil, Validators.required],
