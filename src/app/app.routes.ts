@@ -9,6 +9,7 @@ import { UsuariosComponent } from './sdp/usuarios/usuarios.component';
 import { PerfilesComponent } from './sdp/perfiles/perfiles.component';
 import { OpcionesComponent } from './sdp/opciones/opciones.component';
 import { PermisosComponent } from './sdp/permisos/permisos.component';
+import { RecuperarCuentaComponent } from './sdp/recuperar-cuenta/recuperar-cuenta.component';
 
 export const routes: Routes = [
     {
@@ -37,7 +38,7 @@ export const routes: Routes = [
      { path: 'login', component: LoginComponent },
     // { path: 'logout', component: LogoutComponent },
     // { path: 'cambioClave', component: CambioClaveComponent },
-    // { path: 'recuperarCuenta', component: RecuperarCuentaComponent },
+     { path: 'recuperarCuenta', component: RecuperarCuentaComponent },
 
 ];
 

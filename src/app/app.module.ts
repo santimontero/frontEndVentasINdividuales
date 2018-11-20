@@ -105,6 +105,7 @@ import { EmpresasComponent } from './sdp/empresas/empresas.component';
 import { UsuariosComponent } from './sdp/usuarios/usuarios.component';
 import { PerfilesComponent } from './sdp/perfiles/perfiles.component';
 import { OpcionesComponent } from './sdp/opciones/opciones.component';
+import { RecuperarCuentaComponent } from './sdp/recuperar-cuenta/recuperar-cuenta.component';
 
 @NgModule({
   declarations: [
@@ -123,6 +124,7 @@ import { OpcionesComponent } from './sdp/opciones/opciones.component';
     AppBreadcrumbComponent,
     AppTopBarComponent,
     AppFooterComponent,
+    RecuperarCuentaComponent,
   ],
   imports: [
     MenubarModule,

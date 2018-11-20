@@ -106,6 +106,7 @@ export class UsuariosComponent implements OnInit {
   }
 
   showDialogToAdd() {
+    this.nuevofurmulario();
     this.newUsuario = true;
     this.usuario.usu_estado = 'A'
     this.displayDialog = true;
