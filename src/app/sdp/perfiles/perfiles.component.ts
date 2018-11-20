@@ -67,7 +67,7 @@ export class PerfilesComponent implements OnInit {
 
   showDialogToAdd() {
     this.newPerfil = true;
-
+    this.nuevofurmulario();
     this.formulario.patchValue({
       per_estado: 'A'
     })
