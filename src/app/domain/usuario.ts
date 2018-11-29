@@ -13,4 +13,6 @@ export class Usuario {
     usu_estado?: string;
     usu_fecha_crea?: Date;
     usu_usuario_crea?: string;
+    usu_tipo_ident?: string;
+    usu_identificacion?: string;
 }

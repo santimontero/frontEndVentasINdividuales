@@ -10,7 +10,9 @@ export interface UserInStorage {
     agenciaId: string;
     agenciaName: string;
     path: string;
-    perfil:number;
+    perfil: number;
+    tipoIdent: string;
+    identificacion: string;
 }
 
 export interface LoginInfoInStorage {
@@ -20,7 +22,7 @@ export interface LoginInfoInStorage {
     user?: UserInStorage;
 }
 
-export interface TokenStorage{
+export interface TokenStorage {
     token: string;
 }
 
@@ -67,9 +69,6 @@ export class UserInfoService {
         }
     }
 
-
-
-    
     isLoggedIn(): boolean {
         return this.storage.getItem(this.currentUserKey) === null ? false : true;
     }
@@ -93,14 +92,14 @@ export class UserInfoService {
         return "no-user";
     }
 
-    insertIdAgencia(ageid:any,agename:any) {
+    insertIdAgencia(ageid: any, agename: any) {
         let userObj: UserInStorage = this.getUserInfo();
         if (userObj !== null) {
             userObj.agenciaId = ageid;
             userObj.agenciaName = agename;
             this.storeUserInfo(JSON.stringify(userObj));
         }
-       
+
     }
     getIdAgencia(): string {
         let userObj: UserInStorage = this.getUserInfo();
@@ -116,7 +115,7 @@ export class UserInfoService {
         }
         return "no-user";
     }
-  
+
     getPathImagen(): string {
         let userObj: UserInStorage = this.getUserInfo();
         if (userObj !== null) {
@@ -125,8 +124,8 @@ export class UserInfoService {
         return "no-user";
     }
 
-     //Get User's Display name from session storage
-     getIdUsuario(): string {
+    //Get User's Display name from session storage
+    getIdUsuario(): string {
         let userObj: UserInStorage = this.getUserInfo();
         if (userObj !== null) {
             return userObj.userId
@@ -135,14 +134,14 @@ export class UserInfoService {
     }
 
     getStoredToken(): string | null {
-       // let userObj: UserInStorage = this.getUserInfo();
-       // if (userObj !== null) {
-       //     return userObj.token;
-       // }
+        // let userObj: UserInStorage = this.getUserInfo();
+        // if (userObj !== null) {
+        //     return userObj.token;
+        // }
 
-        let tokenObj : TokenStorage = JSON.parse(this.storage.getItem(this.currentToken));
+        let tokenObj: TokenStorage = JSON.parse(this.storage.getItem(this.currentToken));
 
-        if(tokenObj !== null){
+        if (tokenObj !== null) {
             return tokenObj.token;
         }
     }
