@@ -69,6 +69,7 @@ export class OpcionesComponent implements OnInit {
 
   showDialogToAdd() {
     this.newOpcion = true;
+    this.nuevofurmulario();
     this.formulario.patchValue({
       opc_estado: 'A'
     })

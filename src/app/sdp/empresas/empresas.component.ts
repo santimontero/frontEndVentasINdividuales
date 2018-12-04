@@ -73,6 +73,7 @@ export class EmpresasComponent implements OnInit {
 
   showDialogToAdd() {
     this.newEmpresa = true;
+    this.nuevofurmulario();
     this.empresa.emp_estado = 'A'
     this.empresa.emp_usuario = 'Santiago'
     this.empresa.emp_id_empresa = 0

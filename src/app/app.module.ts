@@ -112,6 +112,7 @@ import { BeneficiariosDependientesComponent } from './sdp/beneficiarios-dependie
 import { EmisionComponent } from './sdp/emision/emision.component';
 import { FinancieroComponent } from './sdp/financiero/financiero.component';
 import { ClienteComponent } from './sdp/cliente/cliente.component';
+import { RecuperarCuentaComponent } from './sdp/recuperar-cuenta/recuperar-cuenta.component';
 
 @NgModule({
   declarations: [
@@ -137,6 +138,7 @@ import { ClienteComponent } from './sdp/cliente/cliente.component';
     EmisionComponent,
     FinancieroComponent,
     ClienteComponent,
+    RecuperarCuentaComponent,
   ],
   imports: [
     MenubarModule,

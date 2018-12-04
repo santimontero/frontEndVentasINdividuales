@@ -105,6 +105,8 @@ export class LoginComponent implements OnInit {
                                                 "agenciaName": respuestaSesion.AgenciaId,
                                                 "path": respuestaSesion.path,
                                                 "perfil": respuestaSesion.per_codigo_perfil,
+                                                "tipoIdent": respuestaSesion.usu_tipo_ident,
+                                                "identificacion": respuestaSesion.usu_identificacion
                                             }
                                         };
                                         console.log(loginInfoReturn)

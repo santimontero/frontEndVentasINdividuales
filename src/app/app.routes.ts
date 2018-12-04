@@ -15,6 +15,7 @@ import { ClienteDomicilioComponent } from './sdp/cliente-domicilio/cliente-domic
 import { BeneficiariosDependientesComponent } from './sdp/beneficiarios-dependientes/beneficiarios-dependientes.component';
 import { EmisionComponent } from './sdp/emision/emision.component';
 import { FinancieroComponent } from './sdp/financiero/financiero.component';
+import { RecuperarCuentaComponent } from './sdp/recuperar-cuenta/recuperar-cuenta.component';
 
 export const routes: Routes = [
     {
@@ -47,7 +48,7 @@ export const routes: Routes = [
      { path: 'login', component: LoginComponent },
     // { path: 'logout', component: LogoutComponent },
     // { path: 'cambioClave', component: CambioClaveComponent },
-    // { path: 'recuperarCuenta', component: RecuperarCuentaComponent },
+     { path: 'recuperarCuenta', component: RecuperarCuentaComponent },
 
 ];
 
