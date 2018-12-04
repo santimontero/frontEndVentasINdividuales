@@ -25,7 +25,7 @@ export class AppConfig {
             this.apiProtocol = "https";
         }
         if (this.apiHostName === undefined) {
-            this.apiHostName =  "srv-appinterno.segurosdelpichincha.com/BackendVentasIndividuales/";
+            this.apiHostName =  "serviceout.segurosdelpichincha.com/BackendVentasIndividuales/";
         }
         if (this.apiPort === undefined) {
             this.apiPort = window.location.port;

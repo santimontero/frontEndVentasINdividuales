@@ -1,0 +1,92 @@
+<h2 class="titulo">Cliente</h2>
+<div class="ui-g ui-fluid form-group">
+    <form [formGroup]="formulario" (ngSubmit)="siguiente()" >
+  <div class="ui-g-12 ui-md-6">
+
+    <p-panel header="Datos Personales">
+
+      <div class="ui-g">
+        <div class="ui-g-12 ui-md-6">
+            <span class="ui-float-label">
+                <label class="label-list">Tipo identificación</label>
+                <p-dropdown  id="tipo_identificacion" formControlName="tipo_identificacion" [options]="tipoId" [autoWidth]="false" ></p-dropdown>
+              </span>
+        </div>
+        <div class="ui-g-12 ui-md-6">
+            <span class="ui-float-label">
+                <input id="identificacion"  formControlName="identificacion"   type="text"  pInputText>
+                <label >Identificación</label>
+              </span>
+        </div>
+        <div class="ui-g-12 ui-md-6" >
+            <span class="ui-float-label">
+                <input id="primer_nombre" formControlName="primer_nombre"   type="text"  pInputText>
+                <label for="float-input">Primer Nombre</label>
+              </span>
+        </div>
+        <div class="ui-g-12 ui-md-6">
+            <span class="ui-float-label">
+                <input id="segundo_nombre"  formControlName="segundo_nombre"  type="text"  pInputText>
+                <label for="float-input">Segundo Nombre</label>
+              </span>
+        </div>
+        <div class="ui-g-12 ui-md-6">
+            <span class="ui-float-label">
+                <input  id="primer_apellido"   formControlName="primer_apellido"   type="text"  pInputText>
+                <label for="float-input">Primer Apellido</label>
+              </span>
+        </div>
+        <div class="ui-g-12 ui-md-6">
+            <span class="ui-float-label">
+                <input id="segundo_apellido"  formControlName="segundo_apellido" type="text"  pInputText>
+                <label for="float-input">Segundo Apellido</label>
+              </span>
+        </div>
+      </div>
+    </p-panel>
+  </div>
+    <div class="ui-g-12 ui-md-6">
+    <p-panel header="Datos del Asegurado">
+
+        <div class="ui-g">
+          <div class="ui-g-12 ui-md-6">
+              <span class="ui-float-label">
+                  <label class="label-list">Genero</label>
+                  <p-dropdown  id="genero"  formControlName="genero" [options]="generos" [autoWidth]="false" ></p-dropdown>
+                </span>
+          </div>
+          <div class="ui-g-12 ui-md-6">
+              <span class="ui-float-label">
+                  <label class="label-list">Estado Civil</label>
+                  <p-dropdown id="estado_civil" formControlName="estado_civil"  [options]="estadoCivil" [autoWidth]="false" ></p-dropdown>
+                </span>
+          </div>
+          <div class="ui-g-12 ui-md-6">
+              <span class="ui-float-label">
+                  <label class="label-list">Fecha de Nacimiento</label>
+                  <p-calendar id="fecha_nacimiento"   formControlName="fecha_nacimiento" [locale]="es" dateFormat="dd/mm/yy" 
+                  (onSelect)="CalculateAge()"  [monthNavigator]="true" [yearNavigator]="true" yearRange="1940:2020"></p-calendar>
+                </span>
+          </div>
+          <div class="ui-g-12 ui-md-6">
+              <span class="ui-float-label">
+                  <input id="edad"  formControlName="edad" type="text" size="30" pInputText readonly=true>
+                  <label for="float-input">Edad</label>
+                </span>
+          </div>
+
+        </div>
+      </p-panel>
+  </div>
+
+
+  <div class=" ui-g-12">
+    <div class=" ui-g-6">
+      <p-button icon="pi pi-arrow-left" label="Atras" (click)=" anterior()"></p-button>
+    </div>
+    <div class=" ui-g-6" style="text-align:right">
+      <p-button icon="pi pi-arrow-right" iconPos="right" label="Siguiente" (click)="siguiente()"></p-button>
+    </div>
+  </div>
+    </form>
+</div>

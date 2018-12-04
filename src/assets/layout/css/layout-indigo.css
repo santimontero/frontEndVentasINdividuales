@@ -2073,5 +2073,30 @@ body .layout-wrapper .layout-main {
 
 
   .ui-float-label{
-    margin-top: 15px
+    margin-top: 25px
+  }
+  .label-list{
+    position: absolute !important;
+    top: -10px !important;
+  }
+  .ui-float-label>label{
+    color: #2062af!important;
+    font-weight: 500 !important;
+  }
+  .ui-steps-item{
+    width: 12.5% !important;
+}
+
+.valor-total{    color: #2062af;
+  font-size: 3.5em;
+  text-align: center;
+  font-weight: bolder;
+
+  border: 4px solid;
+  border-radius: 25px;}
+
+  .titulo{
+    text-align: center;
+    font-weight: bold !important;
+    color: #2062af;
   }

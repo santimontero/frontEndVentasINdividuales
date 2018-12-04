@@ -5,7 +5,7 @@ import { ApiRequestService } from 'src/app/services/api-request.service';
 import { Http } from '@angular/http';
 import { AppComponent } from 'src/app/app.component';
 import { ConfirmationService } from 'primeng/primeng';
-import { Perfil } from 'src/app/domain/Perfil';
+import { Perfil } from 'src/app/domain/perfil';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms'
 import { URLSearchParams } from '@angular/http';
 @Component({

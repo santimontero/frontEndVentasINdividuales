@@ -8,7 +8,7 @@ import { Subject } from 'rxjs';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
   title = 'frontEndVentasIndividuales';
@@ -40,7 +40,7 @@ export class AppComponent implements OnInit {
     rightPanelActive: boolean;
 
     rightPanelClick: boolean;
-
+    loader: boolean = false;
     onLayoutClick() {
         if (!this.topbarItemClick) {
             this.activeTopbarItem = null;

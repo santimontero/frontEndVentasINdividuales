@@ -9,6 +9,12 @@ import { UsuariosComponent } from './sdp/usuarios/usuarios.component';
 import { PerfilesComponent } from './sdp/perfiles/perfiles.component';
 import { OpcionesComponent } from './sdp/opciones/opciones.component';
 import { PermisosComponent } from './sdp/permisos/permisos.component';
+import { VentaPrincipalComponent } from './sdp/venta-principal/venta-principal.component';
+import { CotizacionComponent } from './sdp/cotizacion/cotizacion.component';
+import { ClienteDomicilioComponent } from './sdp/cliente-domicilio/cliente-domicilio.component';
+import { BeneficiariosDependientesComponent } from './sdp/beneficiarios-dependientes/beneficiarios-dependientes.component';
+import { EmisionComponent } from './sdp/emision/emision.component';
+import { FinancieroComponent } from './sdp/financiero/financiero.component';
 
 export const routes: Routes = [
     {
@@ -30,8 +36,12 @@ export const routes: Routes = [
             { path: 'opciones', component: OpcionesComponent },
             { path: 'permisos', component: PermisosComponent },
 
-
-
+            { path: 'venta', component: VentaPrincipalComponent },
+            { path: 'financiero', component: FinancieroComponent },
+            { path: 'cotizacion', component: CotizacionComponent },
+            { path: 'cli-dom', component: ClienteDomicilioComponent },
+            { path: 'beneDepe', component: BeneficiariosDependientesComponent },
+            { path: 'cotizacion', component: EmisionComponent }
         ]
     },
      { path: 'login', component: LoginComponent },

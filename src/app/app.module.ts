@@ -105,6 +105,13 @@ import { EmpresasComponent } from './sdp/empresas/empresas.component';
 import { UsuariosComponent } from './sdp/usuarios/usuarios.component';
 import { PerfilesComponent } from './sdp/perfiles/perfiles.component';
 import { OpcionesComponent } from './sdp/opciones/opciones.component';
+import { VentaPrincipalComponent } from './sdp/venta-principal/venta-principal.component';
+import { CotizacionComponent } from './sdp/cotizacion/cotizacion.component';
+import { ClienteDomicilioComponent } from './sdp/cliente-domicilio/cliente-domicilio.component';
+import { BeneficiariosDependientesComponent } from './sdp/beneficiarios-dependientes/beneficiarios-dependientes.component';
+import { EmisionComponent } from './sdp/emision/emision.component';
+import { FinancieroComponent } from './sdp/financiero/financiero.component';
+import { ClienteComponent } from './sdp/cliente/cliente.component';
 
 @NgModule({
   declarations: [
@@ -123,6 +130,13 @@ import { OpcionesComponent } from './sdp/opciones/opciones.component';
     AppBreadcrumbComponent,
     AppTopBarComponent,
     AppFooterComponent,
+    VentaPrincipalComponent,
+    CotizacionComponent,
+    ClienteDomicilioComponent,
+    BeneficiariosDependientesComponent,
+    EmisionComponent,
+    FinancieroComponent,
+    ClienteComponent,
   ],
   imports: [
     MenubarModule,

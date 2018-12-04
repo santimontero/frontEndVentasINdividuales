@@ -1,0 +1,37 @@
+<div class="ui-g ui-fluid">
+  <div class=" ui-g-12">
+    <div class="card card-w-title">
+      <p-steps [model]="items" [(activeIndex)]="activeIndex" [readonly]="true"></p-steps>
+    </div>
+    <div class="card card-w-title">
+      <div  *ngIf="activeIndex == 0">
+          <app-cotizacion [activeIndex]="activeIndex" (enviarPadre)="cerrarCotizacion($event)"></app-cotizacion>
+
+      </div>
+      <div *ngIf="activeIndex == 1">
+          <app-cliente [activeIndex]="activeIndex" (enviarPadre)="cerrarCliente($event)"></app-cliente>
+    
+      </div>
+      <div  *ngIf="activeIndex == 2">
+          <app-cliente-domicilio [activeIndex]="activeIndex" (enviarPadre)="cerrarCliente($event)"></app-cliente-domicilio >
+    
+      </div>
+      <div  *ngIf="activeIndex == 3">
+
+      </div>
+      <div  *ngIf="activeIndex == 4">
+
+      </div>
+
+      <div  *ngIf="activeIndex == 5">
+
+      </div>
+
+    </div>
+
+
+
+
+    
+  </div>
+</div>

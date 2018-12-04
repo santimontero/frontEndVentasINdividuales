@@ -11,7 +11,14 @@
                                         'layout-menu-mobile-active': staticMenuMobileActive,
                                         'layout-menu-static-inactive': staticMenuDesktopInactive}" (click)="onLayoutClick()">
     <app-topbar></app-topbar>
-
+    <div id="overlay" class="overlay" *ngIf="loader"> </div>
+    <div id="loader" class="app-loading" *ngIf="loader">
+        <div class="logo"></div>
+        <svg class="spinner" viewBox="25 25 50 50">
+            <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10" />
+        </svg>
+    </div>
+    
     <app-rightpanel></app-rightpanel>
 
     <app-menu [reset]="resetMenu"></app-menu>

@@ -1,0 +1,236 @@
+<h2 class="titulo">Direcciones</h2>
+<div class="ui-g ui-fluid form-group">
+    <form [formGroup]="formulario" (ngSubmit)="siguiente()" >
+
+        <div class="ui-g-12">
+
+            <p-panel header="Datos Adicionales">
+        
+              <div class="ui-g">
+                <div class="ui-g-12 ui-md-4">
+                    <span class="ui-float-label">
+                        <label class="label-list">País de origen</label>
+                        <p-dropdown  id="pais_origen" formControlName="pais_origen" [options]="pais_ori" [autoWidth]="false" ></p-dropdown>
+                      </span>
+                </div>
+                <div class="ui-g-12 ui-md-4">
+                    <span class="ui-float-label">
+                        <label class="label-list">Nacionalidad</label>
+                        <p-dropdown  id="nacionalidad" formControlName="nacionalidad" [options]="nacional" [autoWidth]="false" ></p-dropdown>                   
+                      </span>
+                </div>
+                <div class="ui-g-12 ui-md-4">
+                    <span class="ui-float-label">
+                        <input id="telef_familiar"  formControlName="telef_familiar"  type="text"  pInputText>
+                        <label >Telefono Familiar</label>
+                      </span>
+                </div>
+                <div class="ui-g-12 ui-md-4" >
+                    <span class="ui-float-label">
+                        <input id="nomb_familiar" formControlName="nomb_familiar"   type="text"  pInputText>
+                        <label >Nombre Familiar</label>
+                      </span>
+                </div>
+         
+                <div class="ui-g-12 ui-md-4">
+                    <span class="ui-float-label">
+                        <input  id="email"   formControlName="email"   type="text"  pInputText>
+                        <label >Email Cliente</label>
+                      </span>
+                </div>
+                <div class="ui-g-12 ui-md-4">
+                    <span class="ui-float-label">
+                        <label class="label-list">Envio de correspondencia</label>
+                        <p-dropdown  id="envio_cor" formControlName="envio_cor" [options]="envio_core" [autoWidth]="false" ></p-dropdown>
+                      </span>
+                </div>
+              </div>
+            </p-panel>
+          </div>
+
+  <div class="ui-g-12 ui-md-6">
+
+    <p-panel header="Dirección Domicilio">
+
+      <div class="ui-g">
+        <div class="ui-g-12 ui-md-6">
+            <span class="ui-float-label">
+                <label class="label-list">Provincia</label>
+                <p-dropdown  id="provincia_dom" formControlName="provincia_dom" [options]="provincia" [autoWidth]="false" ></p-dropdown>
+              </span>
+        </div>
+        <div class="ui-g-12 ui-md-6">
+            <span class="ui-float-label">
+                <label class="label-list">Ciudad</label>
+                <p-dropdown  id="ciudad_dom" formControlName="ciudad_dom" [options]="ciudad" [autoWidth]="false" ></p-dropdown>
+              </span>
+        </div>
+        <div class="ui-g-12 ui-md-6" >
+            <span class="ui-float-label">
+                <input id="calle_prin_dom" formControlName="calle_prin_dom"   type="text"  pInputText>
+                <label for="float-input">Calle Principal</label>
+              </span>
+        </div>
+        <div class="ui-g-12 ui-md-6">
+            <span class="ui-float-label">
+                <input id="num_dom"  formControlName="num_dom"  type="text"  pInputText>
+                <label for="float-input">Numeración</label>
+              </span>
+        </div>
+        <div class="ui-g-12 ui-md-6">
+            <span class="ui-float-label">
+                <input  id="trasv_dom"   formControlName="trasv_dom"   type="text"  pInputText>
+                <label for="float-input">Calle trasversal</label>
+              </span>
+        </div>
+        <div class="ui-g-12 ui-md-6">
+            <span class="ui-float-label">
+                <input id="barrio_dom"  formControlName="barrio_dom" type="text"  pInputText>
+                <label for="float-input">Barrio </label>
+              </span>
+        </div>
+        <div class="ui-g-12">
+            <span class="ui-float-label">
+                <input id="refe_dom"  formControlName="refe_dom" type="text"  pInputText>
+                <label for="float-input">Referencia </label>
+              </span>
+        </div>
+  
+        <div class="ui-g-12 ui-md-6">
+            <span class="ui-float-label">
+                <input id="tel_dom"  formControlName="tel_dom" type="text"  pInputText>
+                <label for="float-input">Telefono Casa </label>
+              </span>
+        </div>
+        <div class="ui-g-12 ui-md-6">
+            <span class="ui-float-label">
+                <input id="cel_dom"  formControlName="cel_dom" type="text"  pInputText>
+                <label for="float-input">Celular </label>
+              </span>
+        </div>
+        <div class="ui-g-12 ui-md-6">
+        <span class="ui-float-label">
+            <label class="label-list">Hora Contacto desde </label>
+            <p-calendar id="hora_desde_dom"   formControlName="hora_desde_dom"  [timeOnly]="true"></p-calendar>
+          </span>
+        </div>
+        <div class="ui-g-12 ui-md-6">
+            <span class="ui-float-label">
+                <label class="label-list">Hora Contacto hasta </label>
+                <p-calendar id="hora_hasta_dom"   formControlName="hora_hasta_dom"  [timeOnly]="true"></p-calendar>
+              </span>
+            </div>
+      </div>
+    </p-panel>
+  </div>
+
+  <div class="ui-g-12 ui-md-6">
+
+      <p-panel header="Dirección Trabajo">
+  
+          <div class="ui-g">
+            <div class="ui-g-12 ui-md-6">
+                <span class="ui-float-label">
+                    <label class="label-list">Provincia</label>
+                    <p-dropdown  id="provincia_trab" formControlName="provincia_trab" [options]="provincia" [autoWidth]="false" ></p-dropdown>
+                  </span>
+            </div>
+            <div class="ui-g-12 ui-md-6">
+                <span class="ui-float-label">
+                    <label class="label-list">Ciudad</label>
+                    <p-dropdown  id="ciudad_trab" formControlName="ciudad_trab" [options]="ciudad" [autoWidth]="false" ></p-dropdown>
+                  </span>
+            </div>
+            <div class="ui-g-12 ui-md-6" >
+                <span class="ui-float-label">
+                    <input id="calle_prin_trab" formControlName="calle_prin_trab"   type="text"  pInputText>
+                    <label for="float-input">Calle Principal</label>
+                  </span>
+            </div>
+            <div class="ui-g-12 ui-md-6">
+                <span class="ui-float-label">
+                    <input id="num_trab"  formControlName="num_trab"  type="text"  pInputText>
+                    <label for="float-input">Numeración</label>
+                  </span>
+            </div>
+            <div class="ui-g-12 ui-md-6">
+                <span class="ui-float-label">
+                    <input  id="trasv_trab"   formControlName="trasv_trab"   type="text"  pInputText>
+                    <label for="float-input">Calle trasversal</label>
+                  </span>
+            </div>
+            <div class="ui-g-12 ui-md-6">
+                <span class="ui-float-label">
+                    <input id="barrio_trab"  formControlName="barrio_trab" type="text"  pInputText>
+                    <label for="float-input">Barrio </label>
+                  </span>
+            </div>
+            <div class="ui-g-12 ">
+                <span class="ui-float-label">
+                    <input id="refe_trab"  formControlName="refe_trab" type="text"  pInputText>
+                    <label for="float-input">Referencia </label>
+                  </span>
+            </div>
+            <div class="ui-g-12 ui-md-6">
+                <span class="ui-float-label">
+                    <input id="local_trab"  formControlName="local_trab" type="text"  pInputText>
+                    <label for="float-input">Local </label>
+                  </span>
+            </div>
+            <div class="ui-g-12 ui-md-6">
+                <span class="ui-float-label">
+                    <input id="piso_trab"  formControlName="piso_trab" type="text"  pInputText>
+                    <label for="float-input">Piso </label>
+                  </span>
+            </div>
+            <div class="ui-g-12 ui-md-6">
+                <span class="ui-float-label">
+                    <input id="tel_trab"  formControlName="tel_trab" type="text"  pInputText>
+                    <label for="float-input">Teléfono Casa </label>
+                  </span>
+            </div>
+            <div class="ui-g-12 ui-md-6">
+                <span class="ui-float-label">
+                    <input id="ext_trab"  formControlName="ext_trab" type="text"  pInputText>
+                    <label for="float-input">Extension </label>
+                  </span>
+            </div>
+            <div class="ui-g-12 ui-md-6">
+                <span class="ui-float-label">
+                    <input id="fax"  formControlName="fax" type="text"  pInputText>
+                    <label for="float-input">Fax </label>
+                  </span>
+            </div>
+            <div class="ui-g-12 ui-md-6">
+                <span class="ui-float-label">
+                    <input id="nom_empresa"  formControlName="nom_empresa" type="text"  pInputText>
+                    <label for="float-input">Nombre Empresa </label>
+                  </span>
+            </div>
+            <div class="ui-g-12 ui-md-6">
+            <span class="ui-float-label">
+                <label class="label-list">Hora Contacto desde </label>
+                <p-calendar id="hora_desde_trab"   formControlName="hora_desde_trab"  [timeOnly]="true"></p-calendar>
+              </span>
+            </div>
+            <div class="ui-g-12 ui-md-6">
+                <span class="ui-float-label">
+                    <label class="label-list">Hora Contacto hasta </label>
+                    <p-calendar id="hora_hasta_trab"   formControlName="hora_hasta_trab"  [timeOnly]="true"></p-calendar>
+                  </span>
+                </div>
+          </div>
+        </p-panel>
+  
+    </div>
+
+  <div class=" ui-g-12">
+    <div class=" ui-g-6">
+      <p-button icon="pi pi-arrow-left" label="Atras" (click)=" anterior()"></p-button>
+    </div>
+    <div class=" ui-g-6" style="text-align:right">
+      <p-button icon="pi pi-arrow-right" iconPos="right" label="Siguiente" (click)="siguiente()"></p-button>
+    </div>
+  </div>
+    </form>
+</div>
