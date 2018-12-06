@@ -80,15 +80,11 @@ export class VentaPrincipalComponent implements OnInit {
 
 
 
-  public cerrarCotizacion(event) {
+  public cerrarParcial(event) {
 
     this.activeIndex  = event.index;
 
   }
-  public cerrarCliente(event) {
 
-    this.activeIndex  = event.index;
-
-  }
 
 }

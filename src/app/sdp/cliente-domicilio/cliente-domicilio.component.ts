@@ -55,14 +55,14 @@ this.nuevofurmulario();
   }
   nuevofurmulario() {
     return this.formulario = this.formBuilder.group({
-      pais_origen:  new FormControl('', Validators.required),
-      nacionalidad: new FormControl('', Validators.required),
+      pais_origen:  new FormControl('', ),
+      nacionalidad: new FormControl('',),
       nomb_familiar:  new FormControl('', Validators.required),
       telef_familiar:  new FormControl('',),
       email:  new FormControl('', Validators.required),
-      envio_cor:   new FormControl('', Validators.required),
-      provincia_dom:   new FormControl('', Validators.required),
-      ciudad_dom:   new FormControl('', Validators.required),
+      envio_cor:   new FormControl('',),
+      provincia_dom:   new FormControl('', ),
+      ciudad_dom:   new FormControl('', ),
       calle_prin_dom:  new FormControl('', Validators.required),
       num_dom:  new FormControl('', Validators.required),
       trasv_dom: ['', ],
@@ -73,8 +73,8 @@ this.nuevofurmulario();
       hora_desde_dom: new FormControl('',),
       hora_hasta_dom: new FormControl('',),
 
-      provincia_trab:   new FormControl('', Validators.required),
-      ciudad_trab:   new FormControl('', Validators.required),
+      provincia_trab:   new FormControl('', ),
+      ciudad_trab:   new FormControl('', ),
       calle_prin_trab:  new FormControl('', Validators.required),
       num_trab:   new FormControl('', Validators.required),
       trasv_trab: ['', ],
@@ -82,7 +82,7 @@ this.nuevofurmulario();
       refe_trab:  new FormControl('', ),
       local_trab: new FormControl('',),
       piso_trab: new FormControl('',),
-      tel_trab: new FormControl('',),
+      tel_trab: new FormControl('', Validators.required),
       ext_trab: new FormControl('',),
 
       fax: new FormControl('',),
