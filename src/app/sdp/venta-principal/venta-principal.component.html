@@ -21,7 +21,8 @@
     
       </div>
       <div  *ngIf="activeIndex == 4">
-
+        <app-forma-pago [activeIndex]="activeIndex" (enviarPadre)="cerrarParcial($event)"></app-forma-pago>
+    
       </div>
 
       <div  *ngIf="activeIndex == 5">
