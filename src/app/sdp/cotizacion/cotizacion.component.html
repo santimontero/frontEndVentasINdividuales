@@ -5,7 +5,7 @@
 
     <p-panel header="Productos">
 
-      <p-listbox [options]="productos" [(ngModel)]="selectedCity" optionLabel="name" [listStyle]="{'max-height':'250px'}"
+      <p-listbox [options]="productos" [(ngModel)]="selectedCity" optionLabel="pda_descrip_conf_prod" [listStyle]="{'max-height':'250px'}"
         (onChange)="seleccionarProducto($event)"></p-listbox>
 
     </p-panel>
@@ -16,7 +16,7 @@
 
     <p-panel header="Coberturas">
 
-      <p-listbox [options]="coberturas" optionLabel="name" [listStyle]="{'max-height':'250px'}" readonly="true"></p-listbox>
+      <p-listbox [options]="coberturas" optionLabel="descripcion" [listStyle]="{'max-height':'250px'}" readonly="true"></p-listbox>
 
     </p-panel>
 
@@ -28,16 +28,16 @@
 
       <div class="ui-g">
         <div class="ui-g-12">
-          Suma Asegurada: <label style="color: #2062af;font-size: large;font-weight: 600;float: right;"> $5.500</label>
+          Suma Asegurada: <label style="color: #2062af;font-size: large;font-weight: 600;float: right;"> {{sumaaseg | currency: 'USD':'symbol':'1.2-2'}}</label>
         </div>
         <div class="ui-g-12">
-          <p-dropdown [options]="plazo" [autoWidth]="false" [(ngModel)]="selectedCity"></p-dropdown>
+          <p-dropdown [options]="plazo" [autoWidth]="false" [(ngModel)]="selectedCity" (onChange)="seleccionarPlazo($event)"></p-dropdown>
         </div>
         <div class="ui-g-12 valor-total" >
-            $300
+            {{prima | currency: 'USD': 'symbol': '1.2-2'}}
         </div>
         <div class="ui-g-12" style="text-align:right">
-          Valor Anualizado: $6.000
+          Valor Anualizado: {{anual | currency: 'USD': 'symbol': '1.2-2'}}
         </div>
       </div>
     </p-panel>
