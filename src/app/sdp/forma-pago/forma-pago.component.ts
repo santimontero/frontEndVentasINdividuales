@@ -2,21 +2,20 @@ import { Component, OnInit, Output, Input, EventEmitter } from '@angular/core';
 import { SelectItem } from 'primeng/primeng';
 import { FormControl, FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms'
 import { AppComponent } from 'src/app/app.component';
-
 @Component({
-  selector: 'app-financiero',
-  templateUrl: './financiero.component.html',
-  styleUrls: ['./financiero.component.css']
+  selector: 'app-forma-pago',
+  templateUrl: './forma-pago.component.html',
+  styleUrls: ['./forma-pago.component.css']
 })
-export class FinancieroComponent implements OnInit {
+export class FormaPagoComponent implements OnInit {
 
   @Output() public enviarPadre = new EventEmitter();
   @Input() activeIndex: any;
-  tipo_tit: SelectItem[];
-  tipo_iden: SelectItem[];
-  tipo_parentesco: SelectItem[];
-  patrimonio: SelectItem[];
-  Ingreso: SelectItem[];
+  tipo_form_pago: SelectItem[];
+  bancos: SelectItem[];
+  tipo_tarjeta: SelectItem[];
+  pais_emisor: SelectItem[];
+  mes: SelectItem[];
   es: any;
   formulario: FormGroup;
   constructor( private formBuilder: FormBuilder,
@@ -36,41 +35,41 @@ export class FinancieroComponent implements OnInit {
 
   ngOnInit() {
 this.nuevofurmulario();
-    this.tipo_tit = [];
+    this.tipo_form_pago = [];
 
-    this.tipo_tit.push({ label: 'Si', value: 0 });
-    this.tipo_tit.push({ label: 'No', value: 1 });
-    this.tipo_iden = [];
-    this.tipo_iden.push({ label: 'cedula',value: 0 });
-    this.tipo_iden.push({ label: 'ruc',value: 1 });
+    this.tipo_form_pago.push({ label: 'DEB.AUT.CORRIENTE', value: 0 });
+    this.tipo_form_pago.push({ label: 'DEB.AUT.AHORRO', value: 1 });
+    this.tipo_form_pago.push({ label: 'DEB.AUT.TARJETA', value: 2 });
 
-    this.tipo_parentesco = [];
-    this.tipo_parentesco.push({ label: 'Padre', value:  1,  });
-    this.tipo_parentesco.push({ label: 'Hijo', value:  2, });
+    this.bancos = [];
+    this.bancos.push({ label: 'pichincha',value: 0 });
+    this.bancos.push({ label: 'guayaquil',value: 1 });
+
+    this.tipo_tarjeta = [];
+    this.tipo_tarjeta.push({ label: 'visa', value:  1,  });
+    this.tipo_tarjeta.push({ label: 'american', value:  2, });
    
-    this.patrimonio = [];
-    this.patrimonio.push({ label: '10000-50000', value:  1});
-    this.patrimonio.push({ label: '50000-20000', value:2 });
+    this.pais_emisor = [];
+    this.pais_emisor.push({ label: 'ecuador', value:  1});
+    this.pais_emisor.push({ label: 'peru', value:2 });
   
   
-    this.Ingreso = [];
-    this.Ingreso.push({ label: '1000-5000', value:  1});
-    this.Ingreso.push({ label: '5000-10000', value:2 });
+    this.mes = [];
+    this.mes.push({ label: 'enero', value:  1});
+    this.mes.push({ label: 'febrero', value:2 });
   
   
   }
   nuevofurmulario() {
     return this.formulario = this.formBuilder.group({
-      tit_cuenta:  new FormControl('', ),
-      tip_ident: new FormControl('',),
-      ident_tit:  new FormControl('', ),
-      nom_tit:  new FormControl('',),
-      paren_tit:  new FormControl('',),
-      ran_ingreso:   new FormControl('',),
-      med_ingreso:   new FormControl('', Validators.required ),
-      ran_patrimonio:   new FormControl('', ),
-      med_patrimonio:  new FormControl('', Validators.required),
-     
+      tipo_form_pago:  new FormControl('', ),
+      banco: new FormControl('',),
+      numero:  new FormControl('', Validators.required ),
+      tipo_tarjeta: new FormControl('',),
+      pais_emisor: new FormControl('',),
+      ano_caducidad: new FormControl('',),
+      mes_caducidad: new FormControl('',),
+      cvv: new FormControl('',),
     });
 
 

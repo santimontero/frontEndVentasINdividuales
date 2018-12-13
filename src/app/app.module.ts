@@ -113,6 +113,7 @@ import { EmisionComponent } from './sdp/emision/emision.component';
 import { FinancieroComponent } from './sdp/financiero/financiero.component';
 import { ClienteComponent } from './sdp/cliente/cliente.component';
 import { RecuperarCuentaComponent } from './sdp/recuperar-cuenta/recuperar-cuenta.component';
+import { FormaPagoComponent } from './sdp/forma-pago/forma-pago.component';
 
 @NgModule({
   declarations: [
@@ -139,6 +140,7 @@ import { RecuperarCuentaComponent } from './sdp/recuperar-cuenta/recuperar-cuent
     FinancieroComponent,
     ClienteComponent,
     RecuperarCuentaComponent,
+    FormaPagoComponent,
   ],
   imports: [
     MenubarModule,
