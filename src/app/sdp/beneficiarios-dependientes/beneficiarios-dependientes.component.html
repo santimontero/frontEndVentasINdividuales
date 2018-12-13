@@ -1,3 +1,148 @@
-<p>
-  beneficiarios-dependientes works!
-</p>
+<h2 class="titulo">Beneficiarios y Dependientes</h2>
+<div class="ui-g ui-fluid form-group">
+    <div class="ui-g-12 ui-md-3">
+        <p-panel header="Grupos">
+          <p-listbox [options]="grupos" [(ngModel)]="gruposelect"  [listStyle]="{'max-height':'250px'}"
+            (onChange)="seleccionarGrupo($event)">
+            <ng-template let-car pTemplate="item">
+                <div  [ngClass]="{'bene': car.label.includes('BENEFICIARI'),
+                'conyu':  car.label.includes('CONYU'),
+                'hijos': car.label.includes('HIJO'),
+                'otros': car.label.includes('OTROS')}" >
+                  <span >{{car.label}}</span>
+                </div>
+              </ng-template>
+          </p-listbox>
+        </p-panel>
+      </div>
+      <div class="ui-g-12 ui-md-9">
+  
+      <div class="ui-g-12 ">
+        <p-panel header="Ingreso de Datos de {{gruposelect.name}}">
+            <form [formGroup]="formulario"  style="width:100%">
+
+<div class="ui-g" *ngIf="gruposelect.id">
+            <div class="ui-g-12 ui-md-3">
+                <span class="ui-float-label">
+                    <label class="label-list">Tipo identificación</label>
+                    <p-dropdown placeholder="Seleccione" id="tipo_identificacion" formControlName="tipo_identificacion" [options]="tipoId" [autoWidth]="false" ></p-dropdown>
+                  </span>
+            </div>
+            <div class="ui-g-12 ui-md-3">
+                <span class="ui-float-label">
+                    <input id="identificacion"  formControlName="identificacion"   type="text"  pInputText>
+                    <label >Identificación</label>
+                  </span>
+            </div>
+            <div class="ui-g-12 ui-md-3">
+                <span class="ui-float-label">
+                    <label class="label-list">Fecha de Nacimiento</label>
+                    <p-calendar id="fecha_nacimiento"   formControlName="fecha_nacimiento" [locale]="es" dateFormat="dd/mm/yy" 
+                    (onSelect)="CalculateAge()"  [monthNavigator]="true" [yearNavigator]="true" yearRange="1940:2020"></p-calendar>
+                  </span>
+            </div>
+            <div class="ui-g-12 ui-md-3">
+                <span class="ui-float-label">
+                    <input id="edad"  formControlName="edad" type="text" size="30" pInputText readonly=true>
+                    <label for="float-input">Edad</label>
+                  </span>
+            </div>
+            <div class="ui-g-12 ui-md-3" >
+                <span class="ui-float-label">
+                    <input id="primer_nombre" formControlName="primer_nombre"   type="text"  pInputText>
+                    <label for="float-input">Primer Nombre</label>
+                  </span>
+            </div>
+            <div class="ui-g-12 ui-md-3">
+                <span class="ui-float-label">
+                    <input id="segundo_nombre"  formControlName="segundo_nombre"  type="text"  pInputText>
+                    <label for="float-input">Segundo Nombre</label>
+                  </span>
+            </div>
+            <div class="ui-g-12 ui-md-3">
+                <span class="ui-float-label">
+                    <input  id="primer_apellido"   formControlName="primer_apellido"   type="text"  pInputText>
+                    <label for="float-input">Primer Apellido</label>
+                  </span>
+            </div>
+            <div class="ui-g-12 ui-md-3">
+                <span class="ui-float-label">
+                    <input id="segundo_apellido"  formControlName="segundo_apellido" type="text"  pInputText>
+                    <label for="float-input">Segundo Apellido</label>
+                  </span>
+            </div>
+            <div class="ui-g-12 ui-md-3">
+                <span class="ui-float-label">
+                    <label class="label-list">Genero</label>
+                    <p-dropdown  placeholder="Seleccione"  id="genero"  formControlName="genero" [options]="generos" [autoWidth]="false" ></p-dropdown>
+                  </span>
+            </div>
+            <div class="ui-g-12 ui-md-3">
+                <span class="ui-float-label">
+                    <label class="label-list">Parentesco</label>
+                    <p-dropdown  placeholder="Seleccione"  id="paren" formControlName="paren" [options]="tipo_parentesco" [autoWidth]="false" ></p-dropdown>
+                  </span>
+            </div>
+            <div class="ui-g-12 ui-md-3">
+                <span class="ui-float-label" *ngIf="gruposelect.name.includes('BENEFICIARI')">
+                    <input id="participacion"  formControlName="participacion" type="text"  pInputText>
+                    <label for="float-input">Participación</label>
+                  </span>
+            </div>
+            <div class="ui-g-12 ui-md-3" style="text-align:center ; margin: auto;padding-top: 30px;">
+                <button pButton icon="pi pi-save" iconPos="right" label="Guardar" class="ui-button-success ui-button-rounded" (click)="guardar()"></button>
+       
+            </div>
+          </div>
+        </form>
+        </p-panel>
+      </div>
+        <div class="ui-g-12 ">
+          <p-panel header="Tabla de Beneficiarios y Dependientes">
+              <p-table [columns]="cols" [value]="table">
+                  <ng-template pTemplate="header" let-columns>
+                      <tr>
+                        <th></th>
+                          <th *ngFor="let col of columns">
+                              {{col.header}}
+                          </th>
+                      </tr>
+                  </ng-template>
+                  <ng-template pTemplate="body" let-rowData let-columns="columns">
+                      <tr [ngClass]="{'beneTab': rowData.grupo_name.includes('BENEFICIARI'),
+                      'conyuTab':  rowData.grupo_name.includes('CONYU'),
+                      'hijosTab': rowData.grupo_name.includes('HIJO'),
+                      'otrosTab': rowData.grupo_name.includes('OTROS')}" >
+                          <td>
+                              <button pButton icon="pi pi-clone" [disabled]="gruposelect.id == null" style="margin: 2px;" class="ui-button-success ui-button-rounded"(click)="clone(rowData)"></button>
+                              <button pButton icon="pi pi-pencil" style="margin: 2px;"  class=" ui-button-rounded" (click)="edit(rowData)" ></button>
+                              <button pButton icon="pi pi-trash" style="margin: 2px;"  class="ui-button-danger ui-button-rounded" (click)="delete(rowData)"></button>
+       
+
+                          </td>
+                          <td *ngFor="let col of columns">
+                                  {{rowData[col.field]}}
+                          </td>
+                      </tr>
+                  </ng-template>
+                  <ng-template pTemplate="summary">
+                    Participación Total:  {{part_total}} 
+                  </ng-template>
+              </p-table> 
+      
+
+          </p-panel>
+        </div>
+  
+ 
+
+</div>
+<div class=" ui-g-12">
+    <div class=" ui-g-6">
+      <p-button icon="pi pi-arrow-left" label="Atras" (click)=" anterior()"></p-button>
+    </div>
+    <div class=" ui-g-6" style="text-align:right">
+      <p-button icon="pi pi-arrow-right" iconPos="right" label="Siguiente" (click)="siguiente()"></p-button>
+    </div>
+  </div>
+</div>

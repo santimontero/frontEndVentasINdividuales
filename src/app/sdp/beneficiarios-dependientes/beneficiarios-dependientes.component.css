@@ -1,0 +1,47 @@
+.conyu{
+    border: 4px solid #ffaaaa;
+    border-radius: 10px;
+    padding: 10px;
+    color: #ffaaaa;
+    font-weight: bold;
+}
+
+.conyuTab{
+    background-color: #ffaaaa5e !important;
+    font-weight: bold;
+}
+
+.hijos{
+    border: 4px solid #90e4a5;
+    border-radius: 10px;
+    padding: 10px;
+    color: #90e4a5;
+    font-weight: bold;
+}
+.hijosTab{
+    background-color: #90e4a547 !important;
+    font-weight: bold;
+}
+
+.otros{
+    border: 4px solid #93c3ff;
+    border-radius: 10px;
+    padding: 10px;
+    color: #93c3ff;
+    font-weight: bold;
+}
+.otrosTab{
+    background-color: #93c3ff52!important;
+    font-weight: bold;
+}
+
+.bene{
+    border: 4px solid #989898;
+    border-radius: 10px;
+    padding: 10px;
+    color: #989898;
+    font-weight: bold;
+}
+.beneTab{
+    font-weight: bold;
+}

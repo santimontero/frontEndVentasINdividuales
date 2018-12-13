@@ -43,6 +43,7 @@ export const routes: Routes = [
             { path: 'cli-dom', component: ClienteDomicilioComponent },
             { path: 'beneDepe', component: BeneficiariosDependientesComponent },
             { path: 'cotizacion', component: EmisionComponent }
+            
         ]
     },
      { path: 'login', component: LoginComponent },

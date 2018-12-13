@@ -492,7 +492,7 @@ body {
           color: #2D8EE3; }
     body .ui-listbox .ui-listbox-list .ui-listbox-item {
       margin: 0;
-      padding: 0.429em 0.857em;
+      /* padding: 0.429em 0.857em; */
       border: 0 none;
       color: #333333;
       background-color: transparent;
