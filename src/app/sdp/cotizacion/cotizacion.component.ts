@@ -1,5 +1,7 @@
 import { Component, OnInit, Output, Input, EventEmitter } from '@angular/core';
 import { SelectItem } from 'primeng/primeng';
+import { ApiRequestService } from 'src/app/services/api-request.service';
+import { from } from 'rxjs';
 
 @Component({
   selector: 'app-cotizacion',
@@ -12,56 +14,87 @@ export class CotizacionComponent implements OnInit {
   productos: any[];
   coberturas: any[];
   plazo: SelectItem[];
-  constructor() {
+  sumaaseg: number;
+  prima: number;
+  anual: number;
 
-    this.productos = [
-      {name: 'New York', code: 'NY'},
-      {name: 'Rome', code: 'RM'},
-      {name: 'London', code: 'LDN'},
-      {name: 'Istanbul', code: 'IST'},
-      {name: 'Paris', code: 'PRS'},
-      {name: 'New York2', code: 'NY2'},
-      {name: 'Rome2', code: 'RM2'},
-      {name: 'London2', code: 'LDN2'},
-      {name: 'Istanbul2', code: 'IST2'},
-      {name: 'Paris2', code: 'PRS2'}
-  ];
-
-   }
+  constructor(private api: ApiRequestService) {
+    this.api.get('api/configuraciones/productosxasesor?tipoIdent=' + this.api.getInfoUsuario().tipoIdent + '&ident=' + this.api.getInfoUsuario().identificacion, 'cotizacion').subscribe(
+      productosAsesor => {
+        this.productos = productosAsesor;
+      }
+    )
+  }
 
   ngOnInit() {
     this.plazo = [];
     this.plazo.push({ label: 'Periodo de tiempo', value: null });
-    this.plazo.push({ label: 'Mensual', value: { id: 1, name: 'Mensual', code: 'M' } });
-    this.plazo.push({ label: 'Trimestral', value: { id: 2, name: 'Trimestral', code: 'T' } });
-    this.plazo.push({ label: 'Semestral', value: { id: 3, name: 'Semestral', code: 'S' } });
-    this.plazo.push({ label: 'Anual', value: { id: 3, name: 'Anual', code: 'A' } });
+    this.api.get('api/catalogos/frecuenciapago', 'cotizacion').subscribe(
+      frecPag => {
+        for (let i = 0; i < frecPag.length; i++) {
+          var p = { label: frecPag[i].cat_descripcion, value: { id: (i + 1), name: frecPag[i].cat_descripcion, code: frecPag[i].cat_id_catalogo } };
+          this.plazo.push(p);
+        }
+      }
+    )
+
+    this.sumaaseg = 0;
+    this.prima = 0;
+    this.anual = 0;
   }
 
-  seleccionarProducto(event){
+  seleccionarProducto(event) {
 
     console.log(event.value);
-    this.coberturas = [
-      {name: 'New YorkSS', code: 'NYs'},
-      {name: 'Romes', code: 'RMs'},
-      {name: 'Londons', code: 'LDNs'},
-      {name: 'Istanbuls', code: 'ISTs'},
-      {name: 'Pariss', code: 'PRSs'},
-      {name: 'New York2s', code: 'NY2s'},
-      {name: 'Rome2s', code: 'RM2s'},
-      {name: 'London2s', code: 'LDN2s'},
-      {name: 'Istanbul2s', code: 'IST2s'},
-      {name: 'Paris2s', code: 'PRS2s'}
-  ];
+    this.api.get('api/configuraciones/coberturasxproducto?ramo=' + event.value.pda_ramo + '&codigo=' + event.value.pda_codigo_plan, 'cotizacion').subscribe(
+      coberturasProducto => {
+        this.coberturas = coberturasProducto;
+      }
+    )
+    this.api.get('api/configuraciones/sumaasegurada?ramo=' + event.value.pda_ramo + '&codigo=' + event.value.pda_codigo_plan, 'cotizacion').subscribe(
+      sumaAsegurada => {
+        this.sumaaseg = sumaAsegurada;
+      }
+    )
+    this.api.get('api/configuraciones/primaanual?ramo=' + event.value.pda_ramo + '&codigo=' + event.value.pda_codigo_plan, 'cotizacion').subscribe(
+      primaA => {
+        this.anual = primaA;
+      }
+    )
+    this.prima = 0;
+  }
+
+  seleccionarPlazo(event) {
+    console.log(event);
+    if (this.anual > 0) {
+      switch (event.value.code) {
+        case 'A':
+          this.prima = this.anual
+          break;
+        case 'M':
+          this.prima = this.anual / 12;
+          break;
+        case 'T':
+          this.prima = this.anual / 4;
+          break;
+        case 'S':
+          this.prima = this.anual / 2;
+          break;
+
+        default:
+          this.prima = 0;
+          break;
+      }
+    }
   }
 
   siguiente() {
-    this.enviarPadre.emit({ index: this.activeIndex + 1});
-  
+    this.enviarPadre.emit({ index: this.activeIndex + 1 });
+
   }
 
   anterior() {
-    this.enviarPadre.emit({ index: this.activeIndex - 1});
+    this.enviarPadre.emit({ index: this.activeIndex - 1 });
   }
 
 
