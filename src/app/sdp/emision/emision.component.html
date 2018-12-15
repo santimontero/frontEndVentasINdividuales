@@ -1,3 +1,98 @@
-<p>
-  emision works!
-</p>
+<h2 class="titulo">Emision</h2>
+<div class="ui-g ui-fluid form-group">
+
+  <div class="ui-g-12 ui-md-6">
+    <p-panel header="Cliente">
+
+      Identificación: <label style="color: #2062af;font-weight: 600;">1715521413 </label>
+      <br>
+      Nombre: <label style="color: #2062af;font-weight: 600;">Santiago Alejandro Montero
+        Santacruz </label>
+
+    </p-panel>
+  </div>
+  <div class="ui-g-12 ui-md-6">
+    <p-panel header="Forma de Pago">
+
+      Tipo Pago: <label style="color: #2062af;font-weight: 600;">Tarjeta de credito Visa</label>
+     <br>
+      Numero: <label style="color: #2062af;font-weight: 600;">   23423423423452</label>
+   
+    </p-panel>
+
+  </div>
+
+  <div class="ui-g-12 ui-md-4">
+    <p-panel header="Productos">
+
+      <label style="color: #2062af;font-weight: 600;">Plan Contigo</label>
+
+    </p-panel>
+
+    <p-panel header="Coberturas">
+
+      <p-listbox [options]="coberturas" optionLabel="descripcion" [listStyle]="{'max-height':'250px'}" readonly="true"></p-listbox>
+
+    </p-panel>
+
+  </div>
+
+  <div class="ui-g-12 ui-md-4">
+    <p-panel header="Datos de facturación">
+
+      <div class="ui-g">
+        <div class="ui-g-12">
+          Id: <label style="color: #2062af;"> 1715521413</label>
+        </div>
+        <div class="ui-g-12">
+          nombre: <label style="color: #2062af;"> Santiago Montero</label>
+        </div>
+        <div class="ui-g-12">
+          Direccion: <label style="color: #2062af;"> Santiago Montero Santiago Montero Santiago Montero Santiago MonteroSantiago Montero</label>
+        </div>
+        <div class="ui-g-12">
+          Telefono: <label style="color: #2062af;"> 345345345345345</label>
+        </div>
+        <div class="ui-g-12">
+          Email: <label style="color: #2062af;"> santiago.montero92@gmail.com</label>
+        </div>
+      </div>
+    </p-panel>
+
+
+
+  </div>
+
+  <div class="ui-g-12 ui-md-4">
+
+    <p-panel header="Cálculo de Prima">
+
+      <div class="ui-g">
+        <div class="ui-g-12">
+          Suma Asegurada: <label style="color: #2062af;font-size: large;font-weight: 600;float: right;"> {{sumaaseg |
+            currency: 'USD':'symbol':'1.2-2'}}</label>
+        </div>
+        <div class="ui-g-12">
+          <label style="color: #2062af;font-size: large;font-weight: 600;text-align: center;"> VALOR A PAGAR</label>
+        </div>
+        <div class="ui-g-12 valor-total">
+          {{prima | currency: 'USD': 'symbol': '1.2-2'}}
+        </div>
+        <div class="ui-g-12" style="text-align:right">
+          Valor Anualizado: {{anual | currency: 'USD': 'symbol': '1.2-2'}}
+        </div>
+      </div>
+    </p-panel>
+
+  </div>
+
+  <div class=" ui-g-12">
+    <div class=" ui-g-6">
+      <p-button icon="pi pi-arrow-left" label="Atras" (click)=" anterior()"></p-button>
+    </div>
+    <div class=" ui-g-6" style="text-align:right">
+      <p-button icon="pi pi-check" iconPos="right" label="EMITIR" (click)="siguiente()"></p-button>
+    </div>
+  </div>
+
+</div>

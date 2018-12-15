@@ -44,7 +44,8 @@ export const routes: Routes = [
             { path: 'cli-dom', component: ClienteDomicilioComponent },
             { path: 'beneDepe', component: BeneficiariosDependientesComponent },
             { path: 'cotizacion', component: EmisionComponent },
-            { path: 'facturacion', component: DatosFacturacionComponent }
+            { path: 'facturacion', component: DatosFacturacionComponent },
+            { path: 'emision', component: EmisionComponent }
         ]
     },
      { path: 'login', component: LoginComponent },
