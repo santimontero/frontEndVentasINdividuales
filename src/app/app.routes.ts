@@ -16,6 +16,7 @@ import { BeneficiariosDependientesComponent } from './sdp/beneficiarios-dependie
 import { EmisionComponent } from './sdp/emision/emision.component';
 import { FinancieroComponent } from './sdp/financiero/financiero.component';
 import { RecuperarCuentaComponent } from './sdp/recuperar-cuenta/recuperar-cuenta.component';
+import { DatosFacturacionComponent } from './sdp/datos-facturacion/datos-facturacion.component';
 
 export const routes: Routes = [
     {
@@ -42,8 +43,8 @@ export const routes: Routes = [
             { path: 'cotizacion', component: CotizacionComponent },
             { path: 'cli-dom', component: ClienteDomicilioComponent },
             { path: 'beneDepe', component: BeneficiariosDependientesComponent },
-            { path: 'cotizacion', component: EmisionComponent }
-            
+            { path: 'cotizacion', component: EmisionComponent },
+            { path: 'facturacion', component: DatosFacturacionComponent }
         ]
     },
      { path: 'login', component: LoginComponent },
