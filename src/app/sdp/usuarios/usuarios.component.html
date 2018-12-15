@@ -51,7 +51,7 @@
                     <label class="etiquetaOtrosComponentes ">Perfil</label>
                 </div>
                 <div class="ui-g-12">
-                    <p-dropdown [options]="perfiles" (onChange)="seleccionarPerfil($event)" [(ngModel)]="formulario.get('per_codigo_perfil').value"
+                    <p-dropdown placeholder="Seleccione" [options]="perfiles" (onChange)="seleccionarPerfil($event)" [(ngModel)]="formulario.get('per_codigo_perfil').value"
                         placeholder="Seleccionar" [autoWidth]="true" [style]="{'width': '100%'}" filter="true"
                         formControlName="per_codigo_perfil"></p-dropdown>
                 </div>
@@ -61,7 +61,7 @@
                     <label class="etiquetaOtrosComponentes ">Empresa</label>
                 </div>
                 <div class="ui-g-12">
-                    <p-dropdown [options]="empresas" (onChange)="seleccionarEmpresa($event)" [(ngModel)]="formulario.get('emp_id_empresa').value"
+                    <p-dropdown placeholder="Seleccione" [options]="empresas" (onChange)="seleccionarEmpresa($event)" [(ngModel)]="formulario.get('emp_id_empresa').value"
                         placeholder="Seleccionar" [autoWidth]="true" [style]="{'width': '100%'}" filter="true"
                         formControlName="emp_id_empresa"></p-dropdown>
                 </div>

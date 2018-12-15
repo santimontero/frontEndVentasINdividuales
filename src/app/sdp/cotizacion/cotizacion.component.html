@@ -31,7 +31,7 @@
           Suma Asegurada: <label style="color: #2062af;font-size: large;font-weight: 600;float: right;"> {{sumaaseg | currency: 'USD':'symbol':'1.2-2'}}</label>
         </div>
         <div class="ui-g-12">
-          <p-dropdown [options]="plazo" [autoWidth]="false" [(ngModel)]="selectedCity" (onChange)="seleccionarPlazo($event)"></p-dropdown>
+          <p-dropdown placeholder="Seleccione" [options]="plazo" [autoWidth]="false" [(ngModel)]="selectedCity" (onChange)="seleccionarPlazo($event)"></p-dropdown>
         </div>
         <div class="ui-g-12 valor-total" >
             {{prima | currency: 'USD': 'symbol': '1.2-2'}}
