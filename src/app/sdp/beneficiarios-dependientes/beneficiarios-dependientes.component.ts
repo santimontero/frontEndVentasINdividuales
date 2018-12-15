@@ -2,6 +2,7 @@ import { Component, OnInit, Output, Input, EventEmitter } from '@angular/core';
 import { SelectItem } from 'primeng/primeng';
 import { FormControl, FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms'
 import { AppComponent } from 'src/app/app.component';
+import { totalmem } from 'os';
 @Component({
   selector: 'app-beneficiarios-dependientes',
   templateUrl: './beneficiarios-dependientes.component.html',
@@ -98,7 +99,19 @@ export class BeneficiariosDependientesComponent implements OnInit {
   seleccionarGrupo(event) {
 
     console.log(event.value);
+    if(event.value.name.includes('BENEFICIARI')){
 
+      if(+this.part_total>=100){
+        this.gruposelect = { id: null, name: ""}
+        this.appComponent.message('error','Error', 'la participación no puede superar el 100%, modifique algun beneficiario');
+      }
+  
+    }else{
+      if(+this.part_total<100){
+        this.gruposelect = { id: null, name: ""}
+        this.appComponent.message('warn','Atención', 'la participación tiene que ser 100% antes de seleccionar otro grupo.');
+      }
+    }
   }
 
 
@@ -167,6 +180,10 @@ export class BeneficiariosDependientesComponent implements OnInit {
   guardar() {
 
     if (this.formulario.valid) {
+      if(+this.part_total + this.formulario.get('participacion').value > 100){
+        this.appComponent.message('error','Error', 'la participación no puede superar el 100%');
+      }else{
+
       this.appComponent.loader = true; //activar cargando
 
       const form = {
@@ -195,14 +212,16 @@ export class BeneficiariosDependientesComponent implements OnInit {
       this.calcular_part();
       this.nuevofurmulario();
       this.appComponent.loader = false; //desactivar cargando 
+    }
     } else {
       Object.keys(this.formulario.controls).forEach(field => { // {1}
         const control = this.formulario.get(field);
         control.markAsDirty({ onlySelf: true });            // {2}
         control.markAsTouched({ onlySelf: true });       // {3}
       });
-
+    
     }
+  
   }
   siguiente() {
 
