@@ -915,7 +915,7 @@ body .layout-wrapper .layout-main {
 .card {
   border-radius: 0px;
   background: #ffffff;
-  padding: 16px;
+  /* padding: 16px; */
   box-sizing: border-box;
   margin-bottom: 16px;
   border: 1px solid #dddddd;
@@ -923,7 +923,8 @@ body .layout-wrapper .layout-main {
   -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12); }
   .card.card-w-title {
-    padding-bottom: 16px; }
+    /* padding-bottom: 16px; */
+   }
   .card.no-gutter {
     margin-bottom: 0; }
   .card h1 {

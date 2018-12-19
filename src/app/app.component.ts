@@ -3,12 +3,13 @@ import { UserInfoService } from './services/user-info.service';
 import { ApiRequestService } from './services/api-request.service';
 import { AppMessages } from './app-messages';
 import { Router } from '@angular/router';
-import { MenuItem } from 'primeng/api';
+import { MenuItem, MessageService } from 'primeng/api';
 import { Subject } from 'rxjs';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
+  providers: [MessageService]
 })
 export class AppComponent implements OnInit {
   title = 'frontEndVentasIndividuales';
@@ -159,7 +160,7 @@ export class AppComponent implements OnInit {
     }
   constructor(private router: Router, public renderer: Renderer, public mensaje: AppMessages, 
     private api: ApiRequestService, private userInfoService: UserInfoService,
-    public Compiler: Compiler
+    public Compiler: Compiler,public messageService: MessageService
 ) {
     this.Compiler.clearCache();
     
@@ -172,16 +173,18 @@ ngOnInit() {
       this.items = [];
       for (let i = 0; i < codigosMenu.length; i++) {
         var menu ;
-        console.log(codigosMenu[i])
      var c ={
       label: codigosMenu[i].opc_descripcion, routerLink: codigosMenu[i].opc_url
      }
-     console.log(c)
           this.items.push(c);
         
       };
     }
   )
+}
+
+message(state,title,descripcion) {
+    this.messageService.add({severity:state, summary: title, detail:descripcion});
 }
 
 logout() {
