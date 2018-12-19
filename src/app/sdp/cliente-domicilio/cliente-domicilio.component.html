@@ -56,13 +56,13 @@
         <div class="ui-g-12 ui-md-6">
             <span class="ui-float-label">
                 <label class="label-list">Provincia</label>
-                <p-dropdown  id="provincia_dom" formControlName="provincia_dom" [options]="provincia" [autoWidth]="false" ></p-dropdown>
+                <p-dropdown  id="provincia_dom" formControlName="provincia_dom" [options]="provincia" [autoWidth]="false" (onChange)="seleccionarProvDom($event)"></p-dropdown>
               </span>
         </div>
         <div class="ui-g-12 ui-md-6">
             <span class="ui-float-label">
                 <label class="label-list">Ciudad</label>
-                <p-dropdown  id="ciudad_dom" formControlName="ciudad_dom" [options]="ciudad" [autoWidth]="false" ></p-dropdown>
+                <p-dropdown  id="ciudad_dom" formControlName="ciudad_dom" [options]="ciudad_dom" [autoWidth]="false" ></p-dropdown>
               </span>
         </div>
         <div class="ui-g-12 ui-md-6" >
@@ -132,13 +132,13 @@
             <div class="ui-g-12 ui-md-6">
                 <span class="ui-float-label">
                     <label class="label-list">Provincia</label>
-                    <p-dropdown  id="provincia_trab" formControlName="provincia_trab" [options]="provincia" [autoWidth]="false" ></p-dropdown>
+                    <p-dropdown  id="provincia_trab" formControlName="provincia_trab" [options]="provincia" [autoWidth]="false" (onChange)="seleccionarProvTrab($event)"></p-dropdown>
                   </span>
             </div>
             <div class="ui-g-12 ui-md-6">
                 <span class="ui-float-label">
                     <label class="label-list">Ciudad</label>
-                    <p-dropdown  id="ciudad_trab" formControlName="ciudad_trab" [options]="ciudad" [autoWidth]="false" ></p-dropdown>
+                    <p-dropdown  id="ciudad_trab" formControlName="ciudad_trab" [options]="ciudad_trab" [autoWidth]="false" ></p-dropdown>
                   </span>
             </div>
             <div class="ui-g-12 ui-md-6" >

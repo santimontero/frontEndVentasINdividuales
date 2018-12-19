@@ -77,9 +77,6 @@ export class CotizacionComponent implements OnInit {
         case 'T':
           this.prima = this.anual / 4;
           break;
-        case 'S':
-          this.prima = this.anual / 2;
-          break;
 
         default:
           this.prima = 0;
