@@ -10,7 +10,8 @@
                     <div class="ui-g-12">
                         <span class="ui-float-label">
                             <label class="label-list">Titular de la cuenta ?</label>
-                            <p-dropdown placeholder="Seleccione" id="tit_cuenta" formControlName="tit_cuenta" [options]="tipo_tit" [autoWidth]="false"></p-dropdown>
+                            <p-dropdown placeholder="Seleccione" id="tit_cuenta" formControlName="tit_cuenta" [options]="tipo_tit"
+                                [autoWidth]="false"></p-dropdown>
                         </span>
                     </div>
                 </div>
@@ -18,28 +19,30 @@
                     <div class="ui-g-12 ui-md-6">
                         <span class="ui-float-label">
                             <label class="label-list">Tipo identificación</label>
-                            <p-dropdown placeholder="Seleccione"  id="tip_ident" formControlName="tip_ident" [options]="tipo_iden" [autoWidth]="false" ></p-dropdown>
-                          </span>
+                            <p-dropdown placeholder="Seleccione" id="tip_ident" formControlName="tip_ident" [options]="tipo_iden"
+                                [autoWidth]="false"></p-dropdown>
+                        </span>
                     </div>
                     <div class="ui-g-12 ui-md-6">
                         <span class="ui-float-label">
-                            <input id="ident_tit" formControlName="ident_tit"   type="text"  pInputText>
+                            <input id="ident_tit" formControlName="ident_tit" type="text" pInputText>
                             <label for="float-input">Identificación del titular</label>
-                          </span>
+                        </span>
                     </div>
-                    <div class="ui-g-12 ui-md-6" >
+                    <div class="ui-g-12 ui-md-6">
                         <span class="ui-float-label">
-                            <input id="nom_tit" formControlName="nom_tit"   type="text"  pInputText>
+                            <input id="nom_tit" formControlName="nom_tit" type="text" pInputText>
                             <label for="float-input">Nombre del titular</label>
-                          </span>
+                        </span>
                     </div>
                     <div class="ui-g-12 ui-md-6">
                         <span class="ui-float-label">
                             <label class="label-list">Parentesco</label>
-                            <p-dropdown placeholder="Seleccione"  id="paren_tit" formControlName="paren_tit" [options]="tipo_parentesco" [autoWidth]="false" ></p-dropdown>
-                          </span>
+                            <p-dropdown placeholder="Seleccione" id="paren_tit" formControlName="paren_tit" [options]="tipo_parentesco"
+                                [autoWidth]="false"></p-dropdown>
+                        </span>
                     </div>
-                  </div>
+                </div>
             </p-panel>
         </div>
 
@@ -50,39 +53,59 @@
                     <div class="ui-g-12 ui-md-6">
                         <span class="ui-float-label">
                             <label class="label-list">Rango de ingreso</label>
-                            <p-dropdown placeholder="Seleccione"  id="ran_ingreso" formControlName="ran_ingreso" [options]="Ingreso" [autoWidth]="false" ></p-dropdown>
-                          </span>
+                            <p-dropdown placeholder="Seleccione" id="ran_ingreso" formControlName="ran_ingreso"
+                                [options]="Ingreso" [autoWidth]="false"></p-dropdown>
+                        </span>
                     </div>
                     <div class="ui-g-12 ui-md-6">
                         <span class="ui-float-label">
-                            <input id="med_ingreso"  formControlName="med_ingreso"   type="text"  pInputText>
-                            <label >Ingreso medio</label>
-                          </span>
+                            <input id="med_ingreso" formControlName="med_ingreso" type="text" pInputText>
+                            <label>Ingreso medio</label>
+                        </span>
                     </div>
-                    <div class="ui-g-12 ui-md-6" >
+                    <div class="ui-g-12 ui-md-6">
                         <span class="ui-float-label">
                             <label class="label-list">Rango de patrimonio</label>
-                            <p-dropdown placeholder="Seleccione"  id="ran_patrimonio" formControlName="ran_patrimonio" [options]="patrimonio" [autoWidth]="false" ></p-dropdown>
-                          </span>
+                            <p-dropdown placeholder="Seleccione" id="ran_patrimonio" formControlName="ran_patrimonio"
+                                [options]="patrimonio" [autoWidth]="false"></p-dropdown>
+                        </span>
                     </div>
                     <div class="ui-g-12 ui-md-6">
                         <span class="ui-float-label">
-                            <input id="med_patrimonio"  formControlName="med_patrimonio"  type="text"  pInputText>
+                            <input id="med_patrimonio" formControlName="med_patrimonio" type="text" pInputText>
                             <label for="float-input">Patrimonio medio</label>
-                          </span>
+                        </span>
                     </div>
-  
-                  </div>
-           
+                </div>
             </p-panel>
-          </div>
-          <div class=" ui-g-12">
+        </div>
+        <div class="ui-g-12 ui-md-6">
+            <p-panel header="Ocupación y Actividad económica">
+                <div class="ui-g">
+                    <div class="ui-g-12 ui-md-6">
+                        <span class="ui-float-label">
+                            <label class="label-list">Ocupación</label>
+                            <p-dropdown placeholder="Seleccione" id="ocupa" formControlName="ocupa" [options]="Ocupacion"
+                                [autoWidth]="false"></p-dropdown>
+                        </span>
+                    </div>
+                    <div class="ui-g-12 ui-md-6">
+                        <span class="ui-float-label">
+                            <label class="label-list">Actividad económica</label>
+                            <p-dropdown placeholder="Seleccione" id="act_eco" formControlName="act_eco" [options]="Act_econo"
+                                [autoWidth]="false"></p-dropdown>
+                        </span>
+                    </div>
+                </div>
+            </p-panel>
+        </div>
+        <div class=" ui-g-12">
             <div class=" ui-g-6">
-              <p-button icon="pi pi-arrow-left" label="Atras" (click)=" anterior()"></p-button>
+                <p-button icon="pi pi-arrow-left" label="Atras" (click)=" anterior()"></p-button>
             </div>
             <div class=" ui-g-6" style="text-align:right">
-              <p-button icon="pi pi-arrow-right" iconPos="right" label="Siguiente" (click)="siguiente()"></p-button>
+                <p-button icon="pi pi-arrow-right" iconPos="right" label="Siguiente" (click)="siguiente()"></p-button>
             </div>
-          </div>
+        </div>
     </form>
 </div>
