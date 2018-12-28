@@ -9,69 +9,76 @@
                 <div class="ui-g">
                     <div class="ui-g-6">
                         <span class="ui-float-label">
-                            <label class="label-list">Tpo de forma de pago?</label>
-                            <p-dropdown placeholder="Seleccione" id="tipo_form_pago" formControlName="tipo_form_pago" [options]="tipo_form_pago" [autoWidth]="false"></p-dropdown>
+                            <label class="label-list">Tipo de forma de pago?</label>
+                            <p-dropdown placeholder="Seleccione" id="tipo_form_pago" formControlName="tipo_form_pago"
+                                [options]="tipo_form_pago" [autoWidth]="false"></p-dropdown>
                         </span>
                     </div>
                 </div>
-                <div class="ui-g" >
+                <div class="ui-g">
                     <div class="ui-g-12 ui-md-6">
                         <span class="ui-float-label">
                             <label class="label-list">Banco</label>
-                            <p-dropdown placeholder="Seleccione"  id="banco" formControlName="banco" [options]="bancos" [autoWidth]="false" ></p-dropdown>
-                          </span>
+                            <p-dropdown placeholder="Seleccione" id="banco" formControlName="banco" [options]="bancos"
+                                [autoWidth]="false"></p-dropdown>
+                        </span>
                     </div>
                     <div class="ui-g-12 ui-md-6">
                         <span class="ui-float-label">
-                            <input id="numero" formControlName="numero"   type="text"  pInputText>
-                            <label for="float-input" *ngIf="formulario.get('tipo_form_pago').value != 2">Número de cuenta</label>
-                            <label for="float-input" *ngIf="formulario.get('tipo_form_pago').value == 2">Número de tarjeta</label>
-                          </span>
+                            <input id="numero" formControlName="numero" type="text" pInputText>
+                            <label for="float-input" *ngIf="formulario.get('tipo_form_pago').value.code != 21">Número de
+                                cuenta</label>
+                            <label for="float-input" *ngIf="formulario.get('tipo_form_pago').value.code == 21">Número de
+                                tarjeta</label>
+                        </span>
                     </div>
-                  </div>
-                  <div class="ui-g" *ngIf="formulario.get('tipo_form_pago').value == 2" >
+                </div>
+                <div class="ui-g" *ngIf="formulario.get('tipo_form_pago').value.code == 21">
                     <div class="ui-g-12 ui-md-6">
                         <span class="ui-float-label">
                             <label class="label-list">Tipo de tarjeta</label>
-                            <p-dropdown placeholder="Seleccione"  id="tipo_tarjeta" formControlName="tipo_tarjeta" [options]="tipo_tarjeta" [autoWidth]="false" ></p-dropdown>
-                          </span>
+                            <p-dropdown placeholder="Seleccione" id="tipo_tarjeta" formControlName="tipo_tarjeta"
+                                [options]="tipo_tarjeta" [autoWidth]="false"></p-dropdown>
+                        </span>
                     </div>
                     <div class="ui-g-12 ui-md-6">
-                      <span class="ui-float-label">
-                          <label class="label-list">Páis emisor</label>
-                          <p-dropdown placeholder="Seleccione"  id="pais_emisor" formControlName="pais_emisor" [options]="pais_emisor" [autoWidth]="false" ></p-dropdown>
-                        </span>
-                  </div>
-                    <div class="ui-g-12 ui-md-4">
                         <span class="ui-float-label">
-                            <input id="ano_caducidad" formControlName="ano_caducidad"   type="text"  pInputText>
-                            <label for="float-input" >Año caducidad</label>
-                          </span>
+                            <label class="label-list">Páis emisor</label>
+                            <p-dropdown placeholder="Seleccione" id="pais_emisor" formControlName="pais_emisor"
+                                [options]="pais_emisor" [autoWidth]="false"></p-dropdown>
+                        </span>
                     </div>
                     <div class="ui-g-12 ui-md-4">
-                      <span class="ui-float-label">
-                          <label class="label-list">Mes caducidad</label>
-                          <p-dropdown placeholder="Seleccione"  id="mes_caducidad" formControlName="mes_caducidad" [options]="mes" [autoWidth]="false" ></p-dropdown>
+                        <span class="ui-float-label">
+                            <input id="ano_caducidad" formControlName="ano_caducidad" type="text" pInputText>
+                            <label for="float-input">Año caducidad</label>
                         </span>
-                  </div>
+                    </div>
                     <div class="ui-g-12 ui-md-4">
-                      <span class="ui-float-label">
-                          <input id="cvv" formControlName="cvv"   type="text"  pInputText>
-                          <label for="float-input" >CVV</label>
+                        <span class="ui-float-label">
+                            <label class="label-list">Mes caducidad</label>
+                            <p-dropdown placeholder="Seleccione" id="mes_caducidad" formControlName="mes_caducidad"
+                                [options]="mes" [autoWidth]="false"></p-dropdown>
                         </span>
-                  </div>
-                  </div>
+                    </div>
+                    <div class="ui-g-12 ui-md-4">
+                        <span class="ui-float-label">
+                            <input id="cvv" formControlName="cvv" type="text" pInputText>
+                            <label for="float-input">CVV</label>
+                        </span>
+                    </div>
+                </div>
             </p-panel>
         </div>
 
 
-          <div class=" ui-g-12">
+        <div class=" ui-g-12">
             <div class=" ui-g-6">
-              <p-button icon="pi pi-arrow-left" label="Atras" (click)=" anterior()"></p-button>
+                <p-button icon="pi pi-arrow-left" label="Atras" (click)=" anterior()"></p-button>
             </div>
             <div class=" ui-g-6" style="text-align:right">
-              <p-button icon="pi pi-arrow-right" iconPos="right" label="Siguiente" (click)="siguiente()"></p-button>
+                <p-button icon="pi pi-arrow-right" iconPos="right" label="Siguiente" (click)="siguiente()"></p-button>
             </div>
-          </div>
+        </div>
     </form>
 </div>
