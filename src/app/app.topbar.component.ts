@@ -9,6 +9,6 @@ import { ApiRequestService } from './services/api-request.service';
 export class AppTopBarComponent {
 
     constructor(public app: AppComponent,private api: ApiRequestService) {
-     console.log(this.api.getInfoUsuario()) ;
+    //  console.log(this.api.getInfoUsuario()) ;
     }
 }

@@ -3,6 +3,7 @@ import { SelectItem } from 'primeng/primeng';
 import { FormControl, FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms'
 import { AppComponent } from 'src/app/app.component';
 import { ApiRequestService } from 'src/app/services/api-request.service';
+import { Emision } from 'src/app/domain/emision';
 @Component({
   selector: 'app-cliente-domicilio',
   templateUrl: './cliente-domicilio.component.html',
@@ -12,6 +13,7 @@ export class ClienteDomicilioComponent implements OnInit {
 
   @Output() public enviarPadre = new EventEmitter();
   @Input() activeIndex: any;
+  @Input() emision: Emision;
   pais_ori: SelectItem[];
   nacional: SelectItem[];
   envio_core: SelectItem[];
@@ -145,7 +147,7 @@ export class ClienteDomicilioComponent implements OnInit {
   }
 
   anterior() {
-    this.enviarPadre.emit({ index: this.activeIndex - 1 });
+    this.enviarPadre.emit({ index: this.activeIndex - 1,emision: this.emision });
   }
 
   seleccionarProvDom(event){

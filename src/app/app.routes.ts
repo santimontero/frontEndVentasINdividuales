@@ -49,7 +49,7 @@ export const routes: Routes = [
         ]
     },
      { path: 'login', component: LoginComponent },
-    // { path: 'logout', component: LogoutComponent },
+    //  { path: 'logout', component: LogoutComponent },
     // { path: 'cambioClave', component: CambioClaveComponent },
      { path: 'recuperarCuenta', component: RecuperarCuentaComponent },
 

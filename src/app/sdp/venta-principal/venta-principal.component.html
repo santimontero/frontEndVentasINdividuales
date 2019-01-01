@@ -9,7 +9,7 @@
 
       </div>
       <div *ngIf="activeIndex == 1">
-          <app-cliente [activeIndex]="activeIndex" (enviarPadre)="cerrarParcial($event)"></app-cliente>
+          <app-cliente [activeIndex]="activeIndex"  [emision]="emision" (enviarPadre)="cerrarParcial($event)"></app-cliente>
     
       </div>
       <div  *ngIf="activeIndex == 2">

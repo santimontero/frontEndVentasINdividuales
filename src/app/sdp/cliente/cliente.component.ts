@@ -3,6 +3,8 @@ import { SelectItem } from 'primeng/primeng';
 import { FormControl, FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms'
 import { AppComponent } from 'src/app/app.component';
 import { ApiRequestService } from 'src/app/services/api-request.service';
+import { Emision, Cliente } from 'src/app/domain/emision';
+import { timeout } from 'rxjs/operators';
 @Component({
   selector: 'app-cliente',
   templateUrl: './cliente.component.html',
@@ -12,6 +14,7 @@ export class ClienteComponent implements OnInit {
 
   @Output() public enviarPadre = new EventEmitter();
   @Input() activeIndex: any;
+  @Input() emision: Emision;
   tipoId: SelectItem[];
   generos: SelectItem[];
   estadoCivil: SelectItem[];
@@ -34,21 +37,23 @@ export class ClienteComponent implements OnInit {
 
   ngOnInit() {
     this.nuevofurmulario();
+
     this.tipoId = [];
     this.api.get('api/catalogos/tipoid', 'cliente').subscribe(
       tipoid => {
         for (let i = 0; i < tipoid.length; i++) {
-          var p = { label: tipoid[i].cat_descripcion, value: { id: (i + 1), name: tipoid[i].cat_descripcion, code: tipoid[i].cat_id_catalogo } };
-          this.tipoId.push(p);
+          this.tipoId.push({ label: tipoid[i].cat_descripcion, value: tipoid[i].cat_id_catalogo });
         }
+
       }
+
     )
 
     this.generos = [];
     this.api.get('api/catalogos/genero', 'cliente').subscribe(
       genre => {
         for (let i = 0; i < genre.length; i++) {
-          var p = { label: genre[i].cat_descripcion, value: { id: (i + 1), name: genre[i].cat_descripcion, code: genre[i].cat_id_catalogo } };
+          var p = { label: genre[i].cat_descripcion, value: genre[i].cat_id_catalogo };
           this.generos.push(p);
         }
       }
@@ -58,12 +63,20 @@ export class ClienteComponent implements OnInit {
     this.api.get('api/catalogos/estadocivil', 'cliente').subscribe(
       estciv => {
         for (let i = 0; i < estciv.length; i++) {
-          var p = { label: estciv[i].cat_descripcion, value: { id: (i + 1), name: estciv[i].cat_descripcion, code: estciv[i].cat_id_catalogo } };
+          var p = { label: estciv[i].cat_descripcion, value: estciv[i].cat_id_catalogo };
           this.estadoCivil.push(p);
         }
       }
     )
+
+    setTimeout(() => {
+      if (this.emision.cliente != null) {
+        this.cargarfurmulario();
+      }
+    }, 300);
+
   }
+
   nuevofurmulario() {
     return this.formulario = this.formBuilder.group({
       tipo_identificacion: ['', Validators.required],
@@ -76,6 +89,22 @@ export class ClienteComponent implements OnInit {
       estado_civil: ['', Validators.required],
       fecha_nacimiento: new FormControl('', Validators.required),
       edad: new FormControl(''),
+    });
+
+
+  }
+  cargarfurmulario() {
+    this.formulario = this.formBuilder.group({
+      tipo_identificacion: this.emision.cliente.tipo_identificacion,
+      identificacion: new FormControl(this.emision.cliente.identificacion, Validators.required),
+      primer_nombre: new FormControl(this.emision.cliente.primer_nombre, Validators.required),
+      segundo_nombre: new FormControl(this.emision.cliente.segundo_nombre),
+      primer_apellido: new FormControl(this.emision.cliente.primer_apellido, Validators.required),
+      segundo_apellido: new FormControl(this.emision.cliente.segundo_apellido),
+      genero: [this.emision.cliente.genero, Validators.required],
+      estado_civil: [this.emision.cliente.estado_civil, Validators.required],
+      fecha_nacimiento: new FormControl(this.emision.cliente.fecha_nacimiento, Validators.required),
+      edad: new FormControl(this.emision.cliente.edad),
     });
 
 
@@ -99,7 +128,11 @@ export class ClienteComponent implements OnInit {
 
     if (this.formulario.valid) {
       this.appComponent.loader = true; //activar cargando
-      this.enviarPadre.emit({ index: this.activeIndex + 1 });
+
+      this.emision.cliente = new Cliente();
+      this.emision.cliente = this.formulario.getRawValue(); // {name: '', description: ''}
+
+      this.enviarPadre.emit({ index: this.activeIndex + 1, emision: this.emision });
 
       this.appComponent.loader = false; //desactivar cargando 
     } else {
@@ -113,6 +146,6 @@ export class ClienteComponent implements OnInit {
   }
 
   anterior() {
-    this.enviarPadre.emit({ index: this.activeIndex - 1 });
+    this.enviarPadre.emit({ index: this.activeIndex - 1, emision: this.emision });
   }
 }

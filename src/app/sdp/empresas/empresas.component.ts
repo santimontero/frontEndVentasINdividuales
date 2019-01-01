@@ -55,7 +55,7 @@ export class EmpresasComponent implements OnInit {
       res => {
         this.empresas = res;
         this.empresas.forEach(element => {
-          console.log(element)
+          // console.log(element)
         })
       }
     );
@@ -90,7 +90,7 @@ export class EmpresasComponent implements OnInit {
       emp_usuario: this.formulario.get('emp_usuario').value,
       emp_cod_desc: this.formulario.get('emp_cod_desc').value,
     };
-    console.log(envio)
+    
     return envio;
   }
 

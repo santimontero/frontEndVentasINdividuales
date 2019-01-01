@@ -45,7 +45,6 @@ export class CotizacionComponent implements OnInit {
 
   seleccionarProducto(event) {
 
-    console.log(event.value);
     this.api.get('api/configuraciones/coberturasxproducto?ramo=' + event.value.pda_ramo + '&codigo=' + event.value.pda_codigo_plan, 'cotizacion').subscribe(
       coberturasProducto => {
         this.coberturas = coberturasProducto;
@@ -65,7 +64,7 @@ export class CotizacionComponent implements OnInit {
   }
 
   seleccionarPlazo(event) {
-    console.log(event);
+
     if (this.anual > 0) {
       switch (event.value.code) {
         case 'A':

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/primeng';
+import { Emision } from 'src/app/domain/emision';
 
 @Component({
   selector: 'app-venta-principal',
@@ -10,9 +11,11 @@ export class VentaPrincipalComponent implements OnInit {
   items: MenuItem[];
 
   activeIndex: number = 0;
+  emision: Emision;
   constructor() { }
 
   ngOnInit() {
+    this.emision  = new Emision();
     this.items = [{
       label: 'Cotización',
       command: (event: any) => {
