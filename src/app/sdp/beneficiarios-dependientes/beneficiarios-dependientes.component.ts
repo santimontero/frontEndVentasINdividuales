@@ -3,6 +3,7 @@ import { SelectItem } from 'primeng/primeng';
 import { FormControl, FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms'
 import { AppComponent } from 'src/app/app.component';
 import { totalmem } from 'os';
+import { ApiRequestService } from 'src/app/services/api-request.service';
 @Component({
   selector: 'app-beneficiarios-dependientes',
   templateUrl: './beneficiarios-dependientes.component.html',
@@ -24,7 +25,7 @@ export class BeneficiariosDependientesComponent implements OnInit {
   part_total: number = 0;
   cols: { field: string; header: string; }[];
   constructor(private formBuilder: FormBuilder,
-    public appComponent: AppComponent) {
+    public appComponent: AppComponent, private api: ApiRequestService) {
     this.gruposelect = { id: null, name: "" }
     this.es = {
       firstDayOfWeek: 1,
@@ -58,20 +59,44 @@ export class BeneficiariosDependientesComponent implements OnInit {
     this.table = [];
     this.nuevofurmulario();
     this.tipoId = [];
-    this.tipoId.push({ label: 'Cedula', value: { id: 1, name: 'Cedula' } });
-    this.tipoId.push({ label: 'Pasaporte', value: { id: 2, name: 'Pasaporte' } });
+    this.api.get('api/catalogos/tipoid', 'beneficiarios-dependientes').subscribe(
+      tipoid => {
+        for (let i = 0; i < tipoid.length; i++) {
+          var p = { label: tipoid[i].cat_descripcion, value: { id: (i + 1), name: tipoid[i].cat_descripcion, code: tipoid[i].cat_id_catalogo } };
+          this.tipoId.push(p);
+        }
+      }
+    )
 
     this.generos = [];
-    this.generos.push({ label: 'Masculino', value: { id: 1, name: 'Masculino' } });
-    this.generos.push({ label: 'Femenino', value: { id: 2, name: 'Femenino' } });
+    this.api.get('api/catalogos/genero', 'beneficiarios-dependientes').subscribe(
+      gen => {
+        for (let i = 0; i < gen.length; i++) {
+          var p = { label: gen[i].cat_descripcion, value: { id: (i + 1), name: gen[i].cat_descripcion, code: gen[i].cat_id_catalogo } };
+          this.generos.push(p);
+        }
+      }
+    )
 
     this.estadoCivil = [];
-    this.estadoCivil.push({ label: 'Soltero', value: { id: 1, name: 'Soltero' } });
-    this.estadoCivil.push({ label: 'Casado', value: { id: 2, name: 'Casado' } });
-    this.estadoCivil.push({ label: 'Divorciado', value: { id: 2, name: 'Divorciado' } });
+    this.api.get('api/catalogos/estadocivil', 'beneficiarios-dependientes').subscribe(
+      estciv => {
+        for (let i = 0; i < estciv.length; i++) {
+          var p = { label: estciv[i].cat_descripcion, value: { id: (i + 1), name: estciv[i].cat_descripcion, code: estciv[i].cat_id_catalogo } };
+          this.estadoCivil.push(p);
+        }
+      }
+    )
+
     this.tipo_parentesco = [];
-    this.tipo_parentesco.push({ label: 'Padre', value: { id: 1, name: 'Padre' } });
-    this.tipo_parentesco.push({ label: 'Hijo', value: { id: 2, name: 'Hijo' } });
+    this.api.get('api/catalogos/parentescostitular', 'beneficiarios-dependientes').subscribe(
+      parent => {
+        for (let i = 0; i < parent.length; i++) {
+          var p = { label: parent[i].cat_descripcion, value: { id: (i + 1), name: parent[i].cat_descripcion, code: parent[i].cat_id_catalogo } };
+          this.tipo_parentesco.push(p);
+        }
+      }
+    )
 
   }
   nuevofurmulario() {
