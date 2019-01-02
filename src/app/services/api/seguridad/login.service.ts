@@ -56,7 +56,7 @@ export class LoginService {
 
         this.apiRequest.postLogin('/Token', parametros)
             .subscribe(respuesta => {
-                console.log(respuesta)
+      
                 if (respuesta !== undefined && respuesta !== null && respuesta.access_token !== undefined && respuesta.access_token !== null) {
                     tokenInfoReturn = { "token": respuesta.token_type + " " + respuesta.access_token };
                     this.userInfoService.storeTokenInfo(JSON.stringify(tokenInfoReturn));

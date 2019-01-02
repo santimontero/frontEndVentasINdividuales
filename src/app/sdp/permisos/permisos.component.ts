@@ -86,7 +86,7 @@ export class PermisosComponent implements OnInit {
    
             this.api.get('/api/Permisos/listar/' +idPerfil, this.tituloHTML).subscribe(
               codigosMenu => {
-                console.log(codigosMenu)
+          
                 this.listaMenuPrevia = codigosMenu;
                 this.seleccionarMenuPerfil(nodoSeleccionado);
               }
@@ -101,7 +101,7 @@ export class PermisosComponent implements OnInit {
 
 
   seleccionarMenuPerfil(nodo: TreeNode) {
-console.log(nodo)
+
     if (nodo.data != null  && this.listaMenuPrevia.filter(dato => dato.opc_codigo_opcion == nodo.data).length > 0) {
       this.arbolSeleccion.push(nodo);
     }
@@ -122,7 +122,7 @@ console.log(nodo)
 
     this.arbolSeleccion.forEach(
       nodoSeleccionado => {
-        console.log(nodoSeleccionado)
+     
         if (nodoSeleccionado != null ) {
           this.listaMenu.push(nodoSeleccionado.data)
         }
@@ -130,7 +130,7 @@ console.log(nodo)
     );
 
     const perfilMenuEnviar = { codigosMenu: this.listaMenu, per_codigo_perfil: +this.autocompletadorPerfil };
-console.log(perfilMenuEnviar)
+
    // this.appComponent.loader = true;
     this.api.post('/api/Permisos/guardar', perfilMenuEnviar, this.tituloHTML).subscribe(res => {
       if (res !== undefined && res !== null && res.operationStatus === "SUCCESS") {

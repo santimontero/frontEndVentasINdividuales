@@ -50,7 +50,7 @@ export class PerfilesComponent implements OnInit {
       res => {
         this.perfiles = res;
         this.perfiles.forEach(element => {
-          console.log(element)
+ 
 
         })
 
@@ -79,7 +79,7 @@ export class PerfilesComponent implements OnInit {
       per_descripcion: this.formulario.get('per_descripcion').value,
       per_estado: this.formulario.get('per_estado').value
         };
-    console.log(envio)
+
     return envio;
   }
 
@@ -91,7 +91,7 @@ export class PerfilesComponent implements OnInit {
 
     }
       , error => {
-        console.log(error)
+   
       }
 
     );;
@@ -118,7 +118,7 @@ export class PerfilesComponent implements OnInit {
 
   onRowSelect(event) {
     this.newPerfil = false;
-console.log(this.selectedPerfiles)
+
     this.formulario = this.formBuilder.group({
       per_codigo_perfil: [this.selectedPerfiles.per_codigo_perfil,],
       per_descripcion: [this.selectedPerfiles.per_descripcion, [Validators.required]],

@@ -5,7 +5,7 @@
 
     <p-panel header="Productos">
 
-      <p-listbox [options]="productos" [(ngModel)]="selectedCity" optionLabel="pda_descrip_conf_prod" [listStyle]="{'max-height':'250px'}"
+      <p-listbox [options]="productos" optionLabel="pda_descrip_conf_prod" [listStyle]="{'max-height':'250px'}"
         (onChange)="seleccionarProducto($event)"></p-listbox>
 
     </p-panel>
@@ -31,9 +31,9 @@
           Suma Asegurada: <label style="color: #2062af;font-size: large;font-weight: 600;float: right;"> {{sumaaseg | currency: 'USD':'symbol':'1.2-2'}}</label>
         </div>
         <div class="ui-g-12">
-          <p-dropdown placeholder="Seleccione" [options]="plazo" [autoWidth]="false" [(ngModel)]="selectedCity" (onChange)="seleccionarPlazo($event)"></p-dropdown>
+          <p-dropdown placeholder="Seleccione" [options]="plazo" [autoWidth]="false" [(ngModel)]="fren_pago" (onChange)="seleccionarPlazo($event)"></p-dropdown>
         </div>
-        <div class="ui-g-12 valor-total" >
+        <div   class="ui-g-12 valor-total" >
             {{prima | currency: 'USD': 'symbol': '1.2-2'}}
         </div>
         <div class="ui-g-12" style="text-align:right">
@@ -46,10 +46,10 @@
 
   <div class=" ui-g-12">
     <div class=" ui-g-6">
-      <p-button icon="pi pi-arrow-left" label="Atras" (click)=" anterior()"></p-button>
+      <!-- <p-button  icon="pi pi-arrow-left" label="Atras" (click)=" anterior()"></p-button> -->
     </div>
     <div class=" ui-g-6" style="text-align:right">
-      <p-button icon="pi pi-arrow-right" iconPos="right" label="Siguiente" (click)="siguiente()"></p-button>
+      <p-button  [disabled]="fren_pago==null || prima == 0" icon="pi pi-arrow-right" iconPos="right" label="Siguiente" (click)="siguiente()"></p-button>
     </div>
   </div>
 

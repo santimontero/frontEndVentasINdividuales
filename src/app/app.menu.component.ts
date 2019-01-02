@@ -27,11 +27,11 @@ export class AppMenuComponent implements OnInit, AfterViewInit {
                   this.model = [];
                   for (let i = 0; i < codigosMenu.length; i++) {
                     var menu ;
-                    console.log(codigosMenu[i])
+               
                  var c ={
                   label: codigosMenu[i].opc_descripcion, routerLink: [codigosMenu[i].opc_url]
                  }
-                 console.log(c)
+               
                       this.model.push(c);
                     
                   };

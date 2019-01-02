@@ -123,7 +123,6 @@ export class BeneficiariosDependientesComponent implements OnInit {
 
   seleccionarGrupo(event) {
 
-    console.log(event.value);
     if(event.value.name.includes('BENEFICIARI')){
 
       if(+this.part_total>=100){

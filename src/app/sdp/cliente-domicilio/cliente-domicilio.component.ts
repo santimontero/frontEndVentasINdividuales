@@ -3,6 +3,7 @@ import { SelectItem } from 'primeng/primeng';
 import { FormControl, FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms'
 import { AppComponent } from 'src/app/app.component';
 import { ApiRequestService } from 'src/app/services/api-request.service';
+import { Emision, ClienteDomicilio } from 'src/app/domain/emision';
 @Component({
   selector: 'app-cliente-domicilio',
   templateUrl: './cliente-domicilio.component.html',
@@ -12,6 +13,7 @@ export class ClienteDomicilioComponent implements OnInit {
 
   @Output() public enviarPadre = new EventEmitter();
   @Input() activeIndex: any;
+  @Input() emision: Emision;
   pais_ori: SelectItem[];
   nacional: SelectItem[];
   envio_core: SelectItem[];
@@ -71,17 +73,23 @@ export class ClienteDomicilioComponent implements OnInit {
       }
     )
 
+    setTimeout(() => {
+      if (this.emision.clienteDomicilio != null) {
+        this.cargarfurmulario();
+      }
+    }, 300);
+
   }
   nuevofurmulario() {
     return this.formulario = this.formBuilder.group({
-      pais_origen: new FormControl(''),
-      nacionalidad: new FormControl(''),
+      pais_origen: new FormControl('', Validators.required),
+      nacionalidad: new FormControl('', Validators.required),
       nomb_familiar: new FormControl('', Validators.required),
       telef_familiar: new FormControl(''),
       email: new FormControl('', Validators.required),
-      envio_cor: new FormControl(''),
-      provincia_dom: new FormControl(''),
-      ciudad_dom: new FormControl(''),
+      envio_cor: new FormControl('', Validators.required),
+      provincia_dom: new FormControl('', Validators.required),
+      ciudad_dom: new FormControl('', Validators.required),
       calle_prin_dom: new FormControl('', Validators.required),
       num_dom: new FormControl('', Validators.required),
       trasv_dom: ['',],
@@ -92,8 +100,8 @@ export class ClienteDomicilioComponent implements OnInit {
       hora_desde_dom: new FormControl(''),
       hora_hasta_dom: new FormControl(''),
 
-      provincia_trab: new FormControl(''),
-      ciudad_trab: new FormControl(''),
+      provincia_trab: new FormControl('', Validators.required),
+      ciudad_trab: new FormControl('', Validators.required),
       calle_prin_trab: new FormControl('', Validators.required),
       num_trab: new FormControl('', Validators.required),
       trasv_trab: ['',],
@@ -108,6 +116,46 @@ export class ClienteDomicilioComponent implements OnInit {
       nom_empresa: new FormControl('', Validators.required),
       hora_desde_trab: new FormControl(''),
       hora_hasta_trab: new FormControl(''),
+    });
+
+
+  }
+  cargarfurmulario() {
+    return this.formulario = this.formBuilder.group({
+      pais_origen: new FormControl(this.emision.clienteDomicilio.pais_origen, Validators.required),
+      nacionalidad: new FormControl(this.emision.clienteDomicilio.nacionalidad, Validators.required),
+      nomb_familiar: new FormControl(this.emision.clienteDomicilio.nomb_familiar, Validators.required),
+      telef_familiar: new FormControl(this.emision.clienteDomicilio.telef_familiar),
+      email: new FormControl(this.emision.clienteDomicilio.email, Validators.required),
+      envio_cor: new FormControl(this.emision.clienteDomicilio.envio_cor, Validators.required),
+      provincia_dom: new FormControl(this.emision.clienteDomicilio.provincia_dom, Validators.required),
+      ciudad_dom: new FormControl(this.emision.clienteDomicilio.ciudad_dom, Validators.required),
+      calle_prin_dom: new FormControl(this.emision.clienteDomicilio.calle_prin_dom, Validators.required),
+      num_dom: new FormControl(this.emision.clienteDomicilio.num_dom, Validators.required),
+      trasv_dom: [this.emision.clienteDomicilio.trasv_dom,],
+      refe_dom: [this.emision.clienteDomicilio.refe_dom,],
+      barrio_dom: new FormControl(this.emision.clienteDomicilio.barrio_dom, Validators.required),
+      tel_dom: new FormControl(this.emision.clienteDomicilio.tel_dom, Validators.required),
+      cel_dom: new FormControl(this.emision.clienteDomicilio.cel_dom, Validators.required),
+      hora_desde_dom: new FormControl(this.emision.clienteDomicilio.hora_desde_dom),
+      hora_hasta_dom: new FormControl(this.emision.clienteDomicilio.hora_hasta_dom),
+
+      provincia_trab: new FormControl(this.emision.clienteDomicilio.provincia_trab, Validators.required),
+      ciudad_trab: new FormControl(this.emision.clienteDomicilio.ciudad_trab, Validators.required),
+      calle_prin_trab: new FormControl(this.emision.clienteDomicilio.calle_prin_trab, Validators.required),
+      num_trab: new FormControl(this.emision.clienteDomicilio.num_trab, Validators.required),
+      trasv_trab: [this.emision.clienteDomicilio.trasv_trab,],
+      barrio_trab: new FormControl(this.emision.clienteDomicilio.barrio_trab, Validators.required),
+      refe_trab: new FormControl(this.emision.clienteDomicilio.refe_trab),
+      local_trab: new FormControl(this.emision.clienteDomicilio.local_trab),
+      piso_trab: new FormControl(this.emision.clienteDomicilio.piso_trab),
+      tel_trab: new FormControl(this.emision.clienteDomicilio.tel_trab, Validators.required),
+      ext_trab: new FormControl(this.emision.clienteDomicilio.ext_trab),
+
+      fax: new FormControl(this.emision.clienteDomicilio.fax),
+      nom_empresa: new FormControl(this.emision.clienteDomicilio.nom_empresa, Validators.required),
+      hora_desde_trab: new FormControl(this.emision.clienteDomicilio.hora_desde_trab),
+      hora_hasta_trab: new FormControl(this.emision.clienteDomicilio.hora_hasta_trab),
     });
 
 
@@ -131,7 +179,10 @@ export class ClienteDomicilioComponent implements OnInit {
 
     if (this.formulario.valid) {
       this.appComponent.loader = true; //activar cargando
-      this.enviarPadre.emit({ index: this.activeIndex + 1 });
+      this.emision.clienteDomicilio = new ClienteDomicilio();
+      this.emision.clienteDomicilio = this.formulario.getRawValue(); // {name: '', description: ''}
+
+      this.enviarPadre.emit({ index: this.activeIndex + 1, emision: this.emision  });
 
       this.appComponent.loader = false; //desactivar cargando 
     } else {
@@ -145,7 +196,7 @@ export class ClienteDomicilioComponent implements OnInit {
   }
 
   anterior() {
-    this.enviarPadre.emit({ index: this.activeIndex - 1 });
+    this.enviarPadre.emit({ index: this.activeIndex - 1,emision: this.emision });
   }
 
   seleccionarProvDom(event){

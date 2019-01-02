@@ -5,23 +5,23 @@
     </div>
     <div class="card card-w-title">
       <div  *ngIf="activeIndex == 0">
-          <app-cotizacion [activeIndex]="activeIndex" (enviarPadre)="cerrarParcial($event)"></app-cotizacion>
+          <app-cotizacion [activeIndex]="activeIndex" [emision]="emision"  (enviarPadre)="cerrarParcial($event)"></app-cotizacion>
 
       </div>
       <div *ngIf="activeIndex == 1">
-          <app-cliente [activeIndex]="activeIndex" (enviarPadre)="cerrarParcial($event)"></app-cliente>
+          <app-cliente [activeIndex]="activeIndex"  [emision]="emision" (enviarPadre)="cerrarParcial($event)"></app-cliente>
     
       </div>
       <div  *ngIf="activeIndex == 2">
-          <app-cliente-domicilio [activeIndex]="activeIndex" (enviarPadre)="cerrarParcial($event)"></app-cliente-domicilio >
+          <app-cliente-domicilio [activeIndex]="activeIndex" [emision]="emision" (enviarPadre)="cerrarParcial($event)"></app-cliente-domicilio >
             
       </div>
       <div  *ngIf="activeIndex == 3">
-          <app-financiero [activeIndex]="activeIndex" (enviarPadre)="cerrarParcial($event)"></app-financiero>
+          <app-financiero [activeIndex]="activeIndex" [emision]="emision"  (enviarPadre)="cerrarParcial($event)"></app-financiero>
     
       </div>
       <div  *ngIf="activeIndex == 4">
-        <app-forma-pago [activeIndex]="activeIndex" (enviarPadre)="cerrarParcial($event)"></app-forma-pago>
+        <app-forma-pago [activeIndex]="activeIndex"  (enviarPadre)="cerrarParcial($event)"></app-forma-pago>
     
       </div>
 
@@ -30,11 +30,11 @@
     
       </div>
       <div  *ngIf="activeIndex == 6">
-        <app-datos-facturacion [activeIndex]="activeIndex" (enviarPadre)="cerrarParcial($event)"></app-datos-facturacion>
+        <app-datos-facturacion [activeIndex]="activeIndex"  (enviarPadre)="cerrarParcial($event)"></app-datos-facturacion>
     
       </div>
       <div  *ngIf="activeIndex == 7">
-        <app-emision [activeIndex]="activeIndex" (enviarPadre)="cerrarParcial($event)"></app-emision>
+        <app-emision [activeIndex]="activeIndex"  (enviarPadre)="cerrarParcial($event)"></app-emision>
     
       </div>
 

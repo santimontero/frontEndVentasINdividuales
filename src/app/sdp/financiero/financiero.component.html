@@ -1,6 +1,6 @@
 <h2 class="titulo">Datos Financieros</h2>
 <div class="ui-g ui-fluid form-group">
-    <form [formGroup]="formulario" (ngSubmit)="siguiente()" style=" width: 100%;">
+    <form [formGroup]="formulario"  style=" width: 100%;">
 
         <div class="ui-g-12 ui-md-6">
 
@@ -54,12 +54,12 @@
                         <span class="ui-float-label">
                             <label class="label-list">Rango de ingreso</label>
                             <p-dropdown placeholder="Seleccione" id="ran_ingreso" formControlName="ran_ingreso"
-                                [options]="Ingreso" [autoWidth]="false"></p-dropdown>
+                                [options]="Ingreso" [autoWidth]="false" (onChange)="seleccionarIngreso($event)" ></p-dropdown>
                         </span>
                     </div>
                     <div class="ui-g-12 ui-md-6">
                         <span class="ui-float-label">
-                            <input id="med_ingreso" formControlName="med_ingreso" type="text" pInputText>
+                            <input id="med_ingreso" formControlName="med_ingreso" type="text" pKeyFilter="pnum"   currencyMask [options]="{  thousands: '.', decimal: ',' , precision: '2'}"  pInputText [readonly] = "ingBus !== -1">
                             <label>Ingreso medio</label>
                         </span>
                     </div>
@@ -67,38 +67,37 @@
                         <span class="ui-float-label">
                             <label class="label-list">Rango de patrimonio</label>
                             <p-dropdown placeholder="Seleccione" id="ran_patrimonio" formControlName="ran_patrimonio"
-                                [options]="patrimonio" [autoWidth]="false"></p-dropdown>
+                                [options]="patrimonio" [autoWidth]="false" (onChange)="seleccionarPatrimonio($event)" ></p-dropdown>
                         </span>
                     </div>
                     <div class="ui-g-12 ui-md-6">
                         <span class="ui-float-label">
-                            <input id="med_patrimonio" formControlName="med_patrimonio" type="text" pInputText>
+                            <input id="med_patrimonio" formControlName="med_patrimonio" type="text"  pKeyFilter="pnum"   currencyMask [options]="{  thousands: '.', decimal: ',' , precision: '2'}"  pInputText [readonly] = "ingPat !== -1">
                             <label for="float-input">Patrimonio medio</label>
                         </span>
                     </div>
                 </div>
             </p-panel>
-        </div>
-        <div class="ui-g-12 ui-md-6">
             <p-panel header="Ocupación y Actividad económica">
                 <div class="ui-g">
                     <div class="ui-g-12 ui-md-6">
                         <span class="ui-float-label">
                             <label class="label-list">Ocupación</label>
-                            <p-dropdown placeholder="Seleccione" id="ocupa" formControlName="ocupa" [options]="Ocupacion"
+                            <p-dropdown placeholder="Seleccione"  formControlName="ocupa" [options]="Ocupacion" filter="true"
                                 [autoWidth]="false"></p-dropdown>
                         </span>
                     </div>
                     <div class="ui-g-12 ui-md-6">
                         <span class="ui-float-label">
                             <label class="label-list">Actividad económica</label>
-                            <p-dropdown placeholder="Seleccione" id="act_eco" formControlName="act_eco" [options]="Act_econo"
+                            <p-dropdown placeholder="Seleccione" formControlName="act_eco" [options]="Act_econo" filter="true"
                                 [autoWidth]="false"></p-dropdown>
                         </span>
                     </div>
                 </div>
             </p-panel>
         </div>
+  
         <div class=" ui-g-12">
             <div class=" ui-g-6">
                 <p-button icon="pi pi-arrow-left" label="Atras" (click)=" anterior()"></p-button>

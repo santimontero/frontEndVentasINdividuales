@@ -51,7 +51,7 @@ export class OpcionesComponent implements OnInit {
       res => {
         this.opciones = res;
         this.opciones.forEach(element => {
-          console.log(element)
+         
 
         })
 
@@ -82,7 +82,7 @@ export class OpcionesComponent implements OnInit {
       opc_descripcion: this.formulario.get('opc_descripcion').value,
       opc_estado: this.formulario.get('opc_estado').value
         };
-    console.log(envio)
+   
     return envio;
   }
 
@@ -94,7 +94,7 @@ export class OpcionesComponent implements OnInit {
 
     }
       , error => {
-        console.log(error)
+     
       }
 
     );;

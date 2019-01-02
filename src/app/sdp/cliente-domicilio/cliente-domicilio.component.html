@@ -1,6 +1,6 @@
 <h2 class="titulo">Direcciones</h2>
 <div class="ui-g ui-fluid form-group">
-    <form [formGroup]="formulario" (ngSubmit)="siguiente()" >
+    <form [formGroup]="formulario"  >
 
         <div class="ui-g-12">
 
@@ -10,13 +10,13 @@
                 <div class="ui-g-12 ui-md-4">
                     <span class="ui-float-label">
                         <label class="label-list">País de origen</label>
-                        <p-dropdown placeholder="Seleccione"  id="pais_origen" formControlName="pais_origen" [options]="pais_ori" [autoWidth]="false" ></p-dropdown>
+                        <p-dropdown placeholder="Seleccione"  id="pais_origen" formControlName="pais_origen" [options]="pais_ori" [autoWidth]="false" filter="true" ></p-dropdown>
                       </span>
                 </div>
                 <div class="ui-g-12 ui-md-4">
                     <span class="ui-float-label">
                         <label class="label-list">Nacionalidad</label>
-                        <p-dropdown placeholder="Seleccione"  id="nacionalidad" formControlName="nacionalidad" [options]="nacional" [autoWidth]="false" ></p-dropdown>                   
+                        <p-dropdown placeholder="Seleccione"  id="nacionalidad" formControlName="nacionalidad" [options]="nacional" [autoWidth]="false" filter="true" ></p-dropdown>                   
                       </span>
                 </div>
                 <div class="ui-g-12 ui-md-4">
@@ -56,13 +56,13 @@
         <div class="ui-g-12 ui-md-6">
             <span class="ui-float-label">
                 <label class="label-list">Provincia</label>
-                <p-dropdown placeholder="Seleccione" id="provincia_dom" formControlName="provincia_dom" [options]="provincia" [autoWidth]="false" (onChange)="seleccionarProvDom($event)"></p-dropdown>
+                <p-dropdown placeholder="Seleccione" id="provincia_dom" formControlName="provincia_dom" [options]="provincia" [autoWidth]="false" (onChange)="seleccionarProvDom($event)" filter="true"></p-dropdown>
               </span>
         </div>
         <div class="ui-g-12 ui-md-6">
             <span class="ui-float-label">
                 <label class="label-list">Ciudad</label>
-                <p-dropdown placeholder="Seleccione"  id="ciudad_dom" formControlName="ciudad_dom" [options]="ciudad_dom" [autoWidth]="false" ></p-dropdown>
+                <p-dropdown placeholder="Seleccione"  id="ciudad_dom" formControlName="ciudad_dom" [options]="ciudad_dom" [autoWidth]="false" filter="true"></p-dropdown>
               </span>
         </div>
         <div class="ui-g-12 ui-md-6" >
@@ -132,13 +132,13 @@
             <div class="ui-g-12 ui-md-6">
                 <span class="ui-float-label">
                     <label class="label-list">Provincia</label>
-                    <p-dropdown placeholder="Seleccione" id="provincia_trab" formControlName="provincia_trab" [options]="provincia" [autoWidth]="false" (onChange)="seleccionarProvTrab($event)"></p-dropdown>
+                    <p-dropdown placeholder="Seleccione" id="provincia_trab" formControlName="provincia_trab" [options]="provincia" [autoWidth]="false" (onChange)="seleccionarProvTrab($event)" filter="true"></p-dropdown>
                   </span>
             </div>
             <div class="ui-g-12 ui-md-6">
                 <span class="ui-float-label">
                     <label class="label-list">Ciudad</label>
-                    <p-dropdown placeholder="Seleccione" id="ciudad_trab" formControlName="ciudad_trab" [options]="ciudad_trab" [autoWidth]="false" ></p-dropdown>
+                    <p-dropdown placeholder="Seleccione" id="ciudad_trab" formControlName="ciudad_trab" [options]="ciudad_trab" [autoWidth]="false" filter="true" ></p-dropdown>
                   </span>
             </div>
             <div class="ui-g-12 ui-md-6" >

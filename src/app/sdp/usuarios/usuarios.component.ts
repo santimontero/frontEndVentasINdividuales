@@ -58,7 +58,7 @@ export class UsuariosComponent implements OnInit {
       res => {
         this.usuarios = res;
         this.usuarios.forEach(element => {
-          console.log(element)
+     
         })
       }
     );
@@ -124,7 +124,7 @@ export class UsuariosComponent implements OnInit {
       usu_estado: this.formulario.get('usu_estado').value,
       //usu_usuario_crea: this.formulario.get('usu_usuario_crea').value,
     };
-    console.log(envio)
+  
     return envio;
   }
 
@@ -133,7 +133,7 @@ export class UsuariosComponent implements OnInit {
       this.ngOnInit()
     }
       , error => {
-        console.log(error)
+       
       });
     this.displayDialog = false;
   }

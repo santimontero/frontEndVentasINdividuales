@@ -109,8 +109,7 @@ export class LoginComponent implements OnInit {
                                                 "identificacion": respuestaSesion.usu_identificacion
                                             }
                                         };
-                                        console.log(loginInfoReturn)
-                                        console.log(respuestaSesion)
+                                      
                                         // Almacenamos la informacion del usuario dentro de la variable de sesion
                                         this.userInfoService.storeUserInfo(JSON.stringify(loginInfoReturn.user));
 
