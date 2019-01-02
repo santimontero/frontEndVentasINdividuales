@@ -3,6 +3,7 @@ import { SelectItem } from 'primeng/primeng';
 import { FormControl, FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms'
 import { AppComponent } from 'src/app/app.component';
 import { ApiRequestService } from 'src/app/services/api-request.service';
+import { Emision, Financiero } from 'src/app/domain/emision';
 
 @Component({
   selector: 'app-financiero',
@@ -13,6 +14,7 @@ export class FinancieroComponent implements OnInit {
 
   @Output() public enviarPadre = new EventEmitter();
   @Input() activeIndex: any;
+  @Input() emision: Emision;
   tipo_tit: SelectItem[];
   tipo_iden: SelectItem[];
   tipo_parentesco: SelectItem[];
@@ -22,6 +24,10 @@ export class FinancieroComponent implements OnInit {
   Act_econo: SelectItem[];
   es: any;
   formulario: FormGroup;
+  ingBus: any;
+  ingPat: any;
+  maxIngreso: number;
+  maxPatri: number;
   constructor(private formBuilder: FormBuilder,
     public appComponent: AppComponent, private api: ApiRequestService) {
     this.es = {
@@ -41,8 +47,8 @@ export class FinancieroComponent implements OnInit {
     this.nuevofurmulario();
     this.tipo_tit = [];
 
-    this.tipo_tit.push({ label: 'Si', value: 0 });
-    this.tipo_tit.push({ label: 'No', value: 1 });
+    this.tipo_tit.push({ label: 'Si', value: '0' });
+    this.tipo_tit.push({ label: 'No', value: '1' });
     this.tipo_iden = [];
     this.api.get('api/catalogos/tipoid', 'financiero').subscribe(
       tipoid => {
@@ -70,6 +76,7 @@ export class FinancieroComponent implements OnInit {
           var p = { label: patr[i].cat_descripcion, value: { id: (i + 1), name: patr[i].cat_descripcion, code: patr[i].cat_id_catalogo } };
           this.patrimonio.push(p);
         }
+
       }
     )
 
@@ -80,6 +87,7 @@ export class FinancieroComponent implements OnInit {
           var p = { label: ingr[i].cat_descripcion, value: { id: (i + 1), name: ingr[i].cat_descripcion, code: ingr[i].cat_id_catalogo } };
           this.Ingreso.push(p);
         }
+
       }
     )
 
@@ -102,20 +110,43 @@ export class FinancieroComponent implements OnInit {
         }
       }
     )
+    setTimeout(() => {
+      if (this.emision.financiero != null) {
+        this.cargarfurmulario();
+      }
+    }, 300);
 
   }
   nuevofurmulario() {
     return this.formulario = this.formBuilder.group({
-      tit_cuenta: new FormControl(''),
+      tit_cuenta: new FormControl('', Validators.required),
       tip_ident: new FormControl(''),
       ident_tit: new FormControl(''),
       nom_tit: new FormControl(''),
       paren_tit: new FormControl(''),
-      ran_ingreso: new FormControl(''),
+      ran_ingreso: new FormControl('', Validators.required),
       med_ingreso: new FormControl('', Validators.required),
-      ran_patrimonio: new FormControl(''),
+      ran_patrimonio: new FormControl('', Validators.required),
       med_patrimonio: new FormControl('', Validators.required),
+      ocupa: new FormControl('', Validators.required),
+      act_eco: new FormControl('', Validators.required),
+    });
 
+
+  }
+  cargarfurmulario() {
+    return this.formulario = this.formBuilder.group({
+      tit_cuenta: new FormControl(this.emision.financiero.tit_cuenta, Validators.required),
+      tip_ident: new FormControl(this.emision.financiero.tip_ident),
+      ident_tit: new FormControl(this.emision.financiero.ident_tit),
+      nom_tit: new FormControl(this.emision.financiero.nom_tit),
+      paren_tit: new FormControl(this.emision.financiero.paren_tit),
+      ran_ingreso: new FormControl(this.emision.financiero.ran_ingreso, Validators.required),
+      med_ingreso: new FormControl(this.emision.financiero.med_ingreso, Validators.required),
+      ran_patrimonio: new FormControl(this.emision.financiero.ran_patrimonio, Validators.required),
+      med_patrimonio: new FormControl(this.emision.financiero.med_patrimonio, Validators.required),
+      ocupa: new FormControl(this.emision.financiero.ocupa, Validators.required),
+      act_eco: new FormControl(this.emision.financiero.act_eco, Validators.required),
     });
 
 
@@ -129,8 +160,27 @@ export class FinancieroComponent implements OnInit {
 
     if (this.formulario.valid) {
       this.appComponent.loader = true; //activar cargando
-      this.enviarPadre.emit({ index: this.activeIndex + 1 });
 
+      var form = this.formulario.getRawValue();
+var error = 0;
+      if(form.tit_cuenta === "1" &&( form.tip_ident == ""||  form.ident_tit == ""||  form.nom_tit == "" || form.paren_tit == "") ){
+     
+        this.appComponent.message('error','Error', 'Todos los campos del titular de la cuenta son obligatorios');
+    error = error + 1;
+      }
+      if(this.ingBus == -1 && form.med_ingreso < this.maxIngreso){
+        this.appComponent.message('warn','Alerta', 'El valor del Ingresos debe ser mayor a '+this.maxIngreso);
+        error = error + 1;
+      }
+      if(this.ingPat == -1 && form.med_patrimonio < this.maxPatri){
+        this.appComponent.message('warn','Alerta', 'El valor del Patrimonio debe ser mayor a '+this.maxPatri);
+        error = error + 1;
+      }
+      if(error === 0){
+       this.emision.financiero = new Financiero();
+       this.emision.financiero = form; 
+      this.enviarPadre.emit({ index: this.activeIndex + 1, emision: this.emision });
+      }
       this.appComponent.loader = false; //desactivar cargando 
     } else {
       Object.keys(this.formulario.controls).forEach(field => { // {1}
@@ -143,7 +193,39 @@ export class FinancieroComponent implements OnInit {
   }
 
   anterior() {
-    this.enviarPadre.emit({ index: this.activeIndex - 1 });
+    this.enviarPadre.emit({ index: this.activeIndex - 1, emision: this.emision });
+  }
+
+  seleccionarIngreso(event) {
+
+    var valor = event.value.name.replace(/ /g, "").replace(',', "");
+    this.ingBus = valor.indexOf('-');
+    if (this.ingBus != -1) {
+      var menor = + valor.substring(0, this.ingBus);
+      var mayor = + valor.substring(this.ingBus + 1);
+      this.formulario.patchValue({ med_ingreso: ((mayor + menor) / 2) });
+    } else {
+      var b = valor.indexOf('>')
+      this.formulario.patchValue({ med_ingreso: 0 });
+      this.maxIngreso = + valor.substring(b + 1);
+
+    }
+
+  }
+  seleccionarPatrimonio(event) {
+    var valor = event.value.name.replace(/ /g, "");
+    this.ingPat = valor.indexOf('-');
+
+    if (this.ingPat != -1) {
+      var menor = + valor.substring(0, this.ingPat).replace(',', "");
+      var mayor = + valor.substring(this.ingPat + 1).replace(',', "");
+      this.formulario.patchValue({ med_patrimonio: ((mayor + menor) / 2) });
+    } else {
+      var b = valor.indexOf('>')
+      this.formulario.patchValue({ med_patrimonio: 0 });
+      this.maxPatri = + valor.substring(b + 1);
+
+    }
   }
 }
 

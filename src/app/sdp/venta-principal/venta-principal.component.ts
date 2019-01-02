@@ -15,7 +15,13 @@ export class VentaPrincipalComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    this.emision  = new Emision();
+    this.emision = new Emision();
+    this.cargarSteps(null);
+
+  }
+
+
+  cargarSteps(ramo) {
     this.items = [{
       label: 'Cotización',
       command: (event: any) => {
@@ -44,7 +50,7 @@ export class VentaPrincipalComponent implements OnInit {
 
       }
     }
-    ,
+      ,
     {
       label: 'Forma de Pago',
       command: (event: any) => {
@@ -53,13 +59,14 @@ export class VentaPrincipalComponent implements OnInit {
       }
     },
     {
-      label: 'Beneficiarios',
+     
+      label:  ramo== '04'? 'Datos Incendio':'Beneficiarios',
       command: (event: any) => {
-        this.activeIndex = 5;
+        this.activeIndex = ramo == '04'? 8:5;
 
       }
     }
-    ,
+      ,
     {
       label: 'Datos de Facturación',
       command: (event: any) => {
@@ -67,7 +74,7 @@ export class VentaPrincipalComponent implements OnInit {
 
       }
     }
-    ,
+      ,
     {
       label: 'Emitir',
       command: (event: any) => {
@@ -76,17 +83,15 @@ export class VentaPrincipalComponent implements OnInit {
       }
     }
     ];
-
   }
-
-
-
 
 
   public cerrarParcial(event) {
 
-    this.activeIndex  = event.index;
+    this.activeIndex = event.index;
 
+    this.emision = event.emision;
+    console.log(this.emision)
   }
 
 

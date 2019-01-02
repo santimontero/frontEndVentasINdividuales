@@ -95,7 +95,7 @@ export class ClienteComponent implements OnInit {
   }
   cargarfurmulario() {
     this.formulario = this.formBuilder.group({
-      tipo_identificacion: this.emision.cliente.tipo_identificacion,
+      tipo_identificacion: new FormControl(this.emision.cliente.tipo_identificacion, Validators.required),
       identificacion: new FormControl(this.emision.cliente.identificacion, Validators.required),
       primer_nombre: new FormControl(this.emision.cliente.primer_nombre, Validators.required),
       segundo_nombre: new FormControl(this.emision.cliente.segundo_nombre),
