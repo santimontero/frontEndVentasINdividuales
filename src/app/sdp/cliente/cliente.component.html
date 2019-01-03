@@ -44,6 +44,7 @@
           </div>
         </div>
       </p-panel>
+
     </div>
     <div class="ui-g-12 ui-md-6">
       <p-panel header="Datos del Asegurado">
@@ -76,6 +77,40 @@
             </span>
           </div>
 
+        </div>
+      </p-panel>
+
+
+      <p-panel    *ngIf="formulario.get('tipo_identificacion').value == '01'" header="Datos Pasaporte">
+
+        <div class="ui-g">
+          <div class="ui-g-12 ui-md-6">
+            <span class="ui-float-label">
+              <label class="label-list">Estado Migratorio</label>
+              <p-dropdown placeholder="Seleccione" formControlName="estado_migratorio" [options]="tipoId" [autoWidth]="false"></p-dropdown>
+            </span>
+          </div>
+          <div class="ui-g-12 ui-md-6">
+            <span class="ui-float-label">
+              <label class="label-list">Fecha Expedicion Pasaporte</label>
+              <p-calendar id="Fecha_Expedicion_Pasp" formControlName="Fecha_Expedicion_Pasp" [locale]="es" dateFormat="dd/mm/yy"
+                 [monthNavigator]="true" [yearNavigator]="true" yearRange="1940:2020"></p-calendar>
+            </span>
+          </div>
+          <div class="ui-g-12 ui-md-6">
+            <span class="ui-float-label">
+              <label class="label-list">Fecha Ingreso Pais</label>
+              <p-calendar id="Fecha_Ingreso_Pais" formControlName="Fecha_Ingreso_Pais" [locale]="es" dateFormat="dd/mm/yy"
+                [monthNavigator]="true" [yearNavigator]="true" yearRange="1940:2020"></p-calendar>
+            </span>
+          </div>
+          <div class="ui-g-12 ui-md-6">
+            <span class="ui-float-label">
+              <label class="label-list">Fecha Caducidad Pasaporte</label>
+              <p-calendar id="Fecha_Caducidad_Pasp" formControlName="Fecha_Caducidad_Pasp" [locale]="es" dateFormat="dd/mm/yy"
+                [monthNavigator]="true" [yearNavigator]="true" yearRange="1940:2020"></p-calendar>
+            </span>
+          </div>
         </div>
       </p-panel>
     </div>

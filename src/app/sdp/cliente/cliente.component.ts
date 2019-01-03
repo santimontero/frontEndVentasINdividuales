@@ -91,6 +91,10 @@ export class ClienteComponent implements OnInit {
       estado_civil: ['', Validators.required],
       fecha_nacimiento: new FormControl('', Validators.required),
       edad: new FormControl(''),
+      estado_migratorio: new FormControl(''),
+      Fecha_Expedicion_Pasp: new FormControl(''),
+      Fecha_Ingreso_Pais: new FormControl(''),
+      Fecha_Caducidad_Pasp: new FormControl(''),
     });
 
 
@@ -107,6 +111,11 @@ export class ClienteComponent implements OnInit {
       estado_civil: [this.emision.cliente.estado_civil, Validators.required],
       fecha_nacimiento: new FormControl(this.emision.cliente.fecha_nacimiento, Validators.required),
       edad: new FormControl(this.emision.cliente.edad),
+
+      estado_migratorio: new FormControl(this.emision.cliente.estado_migratorio),
+      Fecha_Expedicion_Pasp: new FormControl(this.emision.cliente.Fecha_Expedicion_Pasp),
+      Fecha_Ingreso_Pais: new FormControl(this.emision.cliente.Fecha_Ingreso_Pais),
+      Fecha_Caducidad_Pasp: new FormControl(this.emision.cliente.Fecha_Caducidad_Pasp),
     });
 
 

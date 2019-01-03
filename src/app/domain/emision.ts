@@ -46,6 +46,11 @@ export class Cliente {
     estado_civil?: any;
     fecha_nacimiento?: any;
     edad?: any;
+
+    estado_migratorio?: any;
+    Fecha_Expedicion_Pasp?: any;
+    Fecha_Ingreso_Pais?: any;
+    Fecha_Caducidad_Pasp?: any;
 }
 export class FormaPago {
   tipo_form_pago?: any;
