@@ -1,9 +1,10 @@
 export class Emision {
-  cotizacion:Cotizacion;
-  cliente:Cliente;
-  clienteDomicilio:ClienteDomicilio;
-  financiero:Financiero;
-  formaPago:FormaPago;
+  cotizacion: Cotizacion;
+  cliente: Cliente;
+  clienteDomicilio: ClienteDomicilio;
+  financiero: Financiero;
+  formaPago: FormaPago;
+  beneficiarios: Beneficiarios[];
 }
 
 export class Financiero {
@@ -36,21 +37,21 @@ export class Cotizacion {
 }
 
 export class Cliente {
-    tipo_identificacion?: any;
-    identificacion?: any;
-    primer_nombre?: any;
-    segundo_nombre?: any;
-    primer_apellido?: any;
-    segundo_apellido?: any;
-    genero?: any;
-    estado_civil?: any;
-    fecha_nacimiento?: any;
-    edad?: any;
+  tipo_identificacion?: any;
+  identificacion?: any;
+  primer_nombre?: any;
+  segundo_nombre?: any;
+  primer_apellido?: any;
+  segundo_apellido?: any;
+  genero?: any;
+  estado_civil?: any;
+  fecha_nacimiento?: any;
+  edad?: any;
 
-    estado_migratorio?: any;
-    Fecha_Expedicion_Pasp?: any;
-    Fecha_Ingreso_Pais?: any;
-    Fecha_Caducidad_Pasp?: any;
+  estado_migratorio?: any;
+  Fecha_Expedicion_Pasp?: any;
+  Fecha_Ingreso_Pais?: any;
+  Fecha_Caducidad_Pasp?: any;
 }
 export class FormaPago {
   tipo_form_pago?: any;
@@ -61,6 +62,19 @@ export class FormaPago {
   ano_caducidad?: any;
   mes_caducidad?: any;
   cvv?: any;
+}
+export class Beneficiarios {
+  tipo_identificacion?: any;
+  identificacion?: any;
+  primer_nombre?: any;
+  segundo_nombre?: any;
+  primer_apellido?: any;
+  segundo_apellido?: any;
+  genero?: any;
+  fecha_nacimiento?: any;
+  edad?: any;
+  participacion?: any;
+
 }
 export class ClienteDomicilio {
   pais_origen?: any;

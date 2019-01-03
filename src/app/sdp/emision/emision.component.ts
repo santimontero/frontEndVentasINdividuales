@@ -2,6 +2,7 @@ import { Component, OnInit, Output, Input, EventEmitter } from '@angular/core';
 import { SelectItem } from 'primeng/primeng';
 import { ApiRequestService } from 'src/app/services/api-request.service';
 import { from } from 'rxjs';
+import { Emision } from 'src/app/domain/emision';
 
 @Component({
   selector: 'app-emision',
@@ -11,6 +12,7 @@ import { from } from 'rxjs';
 export class EmisionComponent implements OnInit {
   @Output() public enviarPadre = new EventEmitter();
   @Input() activeIndex: any;
+  @Input() emision: Emision;
   productos: any[];
   coberturas: any[];
   plazo: SelectItem[];
@@ -92,8 +94,7 @@ export class EmisionComponent implements OnInit {
   }
 
   anterior() {
-    this.enviarPadre.emit({ index: this.activeIndex - 1 });
+    this.enviarPadre.emit({ index: this.activeIndex - 1, emision: this.emision });
   }
-
 
 }

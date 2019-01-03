@@ -4,6 +4,7 @@ import { FormControl, FormGroup, FormBuilder, Validators, FormArray } from '@ang
 import { AppComponent } from 'src/app/app.component';
 import { totalmem } from 'os';
 import { ApiRequestService } from 'src/app/services/api-request.service';
+import { Emision, Beneficiarios } from 'src/app/domain/emision';
 @Component({
   selector: 'app-beneficiarios-dependientes',
   templateUrl: './beneficiarios-dependientes.component.html',
@@ -13,6 +14,7 @@ export class BeneficiariosDependientesComponent implements OnInit {
 
   @Output() public enviarPadre = new EventEmitter();
   @Input() activeIndex: any;
+  @Input() emision: Emision;
   tipoId: SelectItem[];
   generos: SelectItem[];
   estadoCivil: SelectItem[];
@@ -97,7 +99,13 @@ export class BeneficiariosDependientesComponent implements OnInit {
         }
       }
     )
-
+    if (this.emision.beneficiarios.length > 0) {
+      this.appComponent.loader = true;
+      setTimeout(() => {
+        this.cargarfurmulario();
+        this.appComponent.loader = false;
+      }, 1000);
+    }
   }
   nuevofurmulario() {
     this.gruposelect = { id: null, name: "" }
@@ -117,6 +125,10 @@ export class BeneficiariosDependientesComponent implements OnInit {
 
 
   }
+  cargarfurmulario(){
+    this.table = this.emision.beneficiarios;
+    this.calcular_part();
+  }
   getControls(frmGrp: FormGroup, key: string) {
     return (<FormArray>frmGrp.controls[key]).controls;
   }
@@ -125,7 +137,7 @@ export class BeneficiariosDependientesComponent implements OnInit {
 
     if(event.value.name.includes('BENEFICIARI')){
 
-      if(+this.part_total>=100){
+      if(+this.part_total>100){
         this.gruposelect = { id: null, name: ""}
         this.appComponent.message('error','Error', 'la participación no puede superar el 100%, modifique algun beneficiario');
       }
@@ -202,9 +214,10 @@ export class BeneficiariosDependientesComponent implements OnInit {
     }
   }
   guardar() {
-
+console.log(this.part_total)
+console.log(+this.formulario.get('participacion').value )
     if (this.formulario.valid) {
-      if(+this.part_total + this.formulario.get('participacion').value > 100){
+      if(+this.part_total + +this.formulario.get('participacion').value > 100){
         this.appComponent.message('error','Error', 'la participación no puede superar el 100%');
       }else{
 
@@ -249,19 +262,17 @@ export class BeneficiariosDependientesComponent implements OnInit {
   }
   siguiente() {
 
-    if (this.formulario.valid) {
+  
       this.appComponent.loader = true; //activar cargando
-      this.enviarPadre.emit({ index: this.activeIndex + 1 });
+      this.emision.beneficiarios = new Array<Beneficiarios>();
+      this.table.forEach(element => {
+        this.emision.beneficiarios.push(element)
+      });
+      console.log(this.emision)
+      this.enviarPadre.emit({ index: this.activeIndex + 1, emision: this.emision });
 
       this.appComponent.loader = false; //desactivar cargando 
-    } else {
-      Object.keys(this.formulario.controls).forEach(field => { // {1}
-        const control = this.formulario.get(field);
-        control.markAsDirty({ onlySelf: true });            // {2}
-        control.markAsTouched({ onlySelf: true });       // {3}
-      });
 
-    }
   }
 
   calcular_part() {
@@ -272,6 +283,6 @@ export class BeneficiariosDependientesComponent implements OnInit {
 
   }
   anterior() {
-    this.enviarPadre.emit({ index: this.activeIndex - 1 });
+    this.enviarPadre.emit({ index: this.activeIndex - 1, emision: this.emision });
   }
 }

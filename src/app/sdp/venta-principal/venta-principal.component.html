@@ -26,15 +26,15 @@
       </div>
 
       <div  *ngIf="activeIndex == 5">
-        <app-beneficiarios-dependientes [activeIndex]="activeIndex" (enviarPadre)="cerrarParcial($event)"></app-beneficiarios-dependientes>
+        <app-beneficiarios-dependientes [activeIndex]="activeIndex" [emision]="emision"  (enviarPadre)="cerrarParcial($event)"></app-beneficiarios-dependientes>
     
       </div>
       <div  *ngIf="activeIndex == 6">
-        <app-datos-facturacion [activeIndex]="activeIndex"  (enviarPadre)="cerrarParcial($event)"></app-datos-facturacion>
+        <app-datos-facturacion [activeIndex]="activeIndex"  [emision]="emision"  (enviarPadre)="cerrarParcial($event)"></app-datos-facturacion>
     
       </div>
       <div  *ngIf="activeIndex == 7">
-        <app-emision [activeIndex]="activeIndex"  (enviarPadre)="cerrarParcial($event)"></app-emision>
+        <app-emision [activeIndex]="activeIndex" [emision]="emision"   (enviarPadre)="cerrarParcial($event)"></app-emision>
     
       </div>
 
