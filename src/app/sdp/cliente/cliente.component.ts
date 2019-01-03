@@ -69,11 +69,13 @@ export class ClienteComponent implements OnInit {
       }
     )
 
-    setTimeout(() => {
-      if (this.emision.cliente != null) {
+    if (this.emision.cliente != null) {
+      this.appComponent.loader = true; 
+    setTimeout(() => { 
         this.cargarfurmulario();
-      }
-    }, 300);
+        this.appComponent.loader = false; 
+    }, 1000);
+    }
 
   }
 

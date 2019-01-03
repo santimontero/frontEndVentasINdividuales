@@ -43,7 +43,7 @@ export class ClienteDomicilioComponent implements OnInit {
     this.api.get('api/catalogos/paises', 'direccion').subscribe(
       paises => {
         for (let i = 0; i < paises.length; i++) {
-          var p = { label: paises[i].cat_descripcion, value: { id: (i + 1), name: paises[i].cat_descripcion, code: paises[i].cat_id_catalogo } };
+          var p = { label: paises[i].cat_descripcion, value: paises[i].cat_id_catalogo };
           this.pais_ori.push(p);
         }
       }
@@ -53,7 +53,7 @@ export class ClienteDomicilioComponent implements OnInit {
     this.api.get('api/catalogos/nacionalidades', 'direccion').subscribe(
       nac => {
         for (let i = 0; i < nac.length; i++) {
-          var p = { label: nac[i].cat_descripcion, value: { id: (i + 1), name: nac[i].cat_descripcion, code: nac[i].cat_id_catalogo } };
+          var p = { label: nac[i].cat_descripcion, value: nac[i].cat_id_catalogo };
           this.nacional.push(p);
         }
       }
@@ -67,18 +67,43 @@ export class ClienteDomicilioComponent implements OnInit {
     this.api.get('api/catalogos/provincias', 'direccion').subscribe(
       prov => {
         for (let i = 0; i < prov.length; i++) {
-          var p = { label: prov[i].cat_descripcion, value: { id: (i + 1), name: prov[i].cat_descripcion, code: prov[i].cat_id_catalogo } };
+          var p = { label: prov[i].cat_descripcion, value: prov[i].cat_id_catalogo };
           this.provincia.push(p);
         }
       }
     )
 
-    setTimeout(() => {
-      if (this.emision.clienteDomicilio != null) {
-        this.cargarfurmulario();
-      }
-    }, 300);
+    if (this.emision.clienteDomicilio != null) {
 
+
+      this.ciudad_trab = [];
+      this.api.get('api/catalogos/ciudades?codProv=' + this.emision.clienteDomicilio.provincia_trab, 'direccion').subscribe(
+        ciud => {
+          for (let i = 0; i < ciud.length; i++) {
+            var p = { label: ciud[i].cat_descripcion, value: ciud[i].cat_id_catalogo };
+            this.ciudad_trab.push(p);
+          }
+        }
+      )
+
+      this.ciudad_dom = [];
+      this.api.get('api/catalogos/ciudades?codProv=' + this.emision.clienteDomicilio.provincia_dom, 'direccion').subscribe(
+        ciud => {
+          for (let i = 0; i < ciud.length; i++) {
+            var p = { label: ciud[i].cat_descripcion, value: ciud[i].cat_id_catalogo };
+            this.ciudad_dom.push(p);
+          }
+
+        }
+      )
+    }
+    if (this.emision.clienteDomicilio != null) {
+      this.appComponent.loader = true; 
+    setTimeout(() => { 
+        this.cargarfurmulario();
+        this.appComponent.loader = false; 
+    }, 1000);
+    }
   }
   nuevofurmulario() {
     return this.formulario = this.formBuilder.group({
@@ -112,7 +137,6 @@ export class ClienteDomicilioComponent implements OnInit {
       tel_trab: new FormControl('', Validators.required),
       ext_trab: new FormControl(''),
 
-      fax: new FormControl(''),
       nom_empresa: new FormControl('', Validators.required),
       hora_desde_trab: new FormControl(''),
       hora_hasta_trab: new FormControl(''),
@@ -121,7 +145,7 @@ export class ClienteDomicilioComponent implements OnInit {
 
   }
   cargarfurmulario() {
-    return this.formulario = this.formBuilder.group({
+    this.formulario = this.formBuilder.group({
       pais_origen: new FormControl(this.emision.clienteDomicilio.pais_origen, Validators.required),
       nacionalidad: new FormControl(this.emision.clienteDomicilio.nacionalidad, Validators.required),
       nomb_familiar: new FormControl(this.emision.clienteDomicilio.nomb_familiar, Validators.required),
@@ -152,12 +176,10 @@ export class ClienteDomicilioComponent implements OnInit {
       tel_trab: new FormControl(this.emision.clienteDomicilio.tel_trab, Validators.required),
       ext_trab: new FormControl(this.emision.clienteDomicilio.ext_trab),
 
-      fax: new FormControl(this.emision.clienteDomicilio.fax),
-      nom_empresa: new FormControl(this.emision.clienteDomicilio.nom_empresa, Validators.required),
+         nom_empresa: new FormControl(this.emision.clienteDomicilio.nom_empresa, Validators.required),
       hora_desde_trab: new FormControl(this.emision.clienteDomicilio.hora_desde_trab),
       hora_hasta_trab: new FormControl(this.emision.clienteDomicilio.hora_hasta_trab),
     });
-
 
   }
   getControls(frmGrp: FormGroup, key: string) {
@@ -182,7 +204,7 @@ export class ClienteDomicilioComponent implements OnInit {
       this.emision.clienteDomicilio = new ClienteDomicilio();
       this.emision.clienteDomicilio = this.formulario.getRawValue(); // {name: '', description: ''}
 
-      this.enviarPadre.emit({ index: this.activeIndex + 1, emision: this.emision  });
+      this.enviarPadre.emit({ index: this.activeIndex + 1, emision: this.emision });
 
       this.appComponent.loader = false; //desactivar cargando 
     } else {
@@ -196,27 +218,27 @@ export class ClienteDomicilioComponent implements OnInit {
   }
 
   anterior() {
-    this.enviarPadre.emit({ index: this.activeIndex - 1,emision: this.emision });
+    this.enviarPadre.emit({ index: this.activeIndex - 1, emision: this.emision });
   }
 
-  seleccionarProvDom(event){
+  seleccionarProvDom(event) {
     this.ciudad_dom = [];
-    this.api.get('api/catalogos/ciudades?codProv=' + event.value.code, 'direccion').subscribe(
+    this.api.get('api/catalogos/ciudades?codProv=' + event.value, 'direccion').subscribe(
       ciud => {
         for (let i = 0; i < ciud.length; i++) {
-          var p = { label: ciud[i].cat_descripcion, value: { id: (i + 1), name: ciud[i].cat_descripcion, code: ciud[i].cat_id_catalogo } };
+          var p = { label: ciud[i].cat_descripcion, value: ciud[i].cat_id_catalogo };
           this.ciudad_dom.push(p);
         }
       }
     )
   }
 
-  seleccionarProvTrab(event){
+  seleccionarProvTrab(event) {
     this.ciudad_trab = [];
-    this.api.get('api/catalogos/ciudades?codProv=' + event.value.code, 'direccion').subscribe(
+    this.api.get('api/catalogos/ciudades?codProv=' + event.value, 'direccion').subscribe(
       ciud => {
         for (let i = 0; i < ciud.length; i++) {
-          var p = { label: ciud[i].cat_descripcion, value: { id: (i + 1), name: ciud[i].cat_descripcion, code: ciud[i].cat_id_catalogo } };
+          var p = { label: ciud[i].cat_descripcion, value: ciud[i].cat_id_catalogo };
           this.ciudad_trab.push(p);
         }
       }

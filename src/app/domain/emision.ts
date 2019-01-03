@@ -3,6 +3,7 @@ export class Emision {
   cliente:Cliente;
   clienteDomicilio:ClienteDomicilio;
   financiero:Financiero;
+  formaPago:FormaPago;
 }
 
 export class Financiero {
@@ -46,6 +47,16 @@ export class Cliente {
     fecha_nacimiento?: any;
     edad?: any;
 }
+export class FormaPago {
+  tipo_form_pago?: any;
+  banco?: any;
+  numero?: any;
+  tipo_tarjeta?: any;
+  pais_emisor?: any;
+  ano_caducidad?: any;
+  mes_caducidad?: any;
+  cvv?: any;
+}
 export class ClienteDomicilio {
   pais_origen?: any;
   nacionalidad?: any;
@@ -75,7 +86,6 @@ export class ClienteDomicilio {
   piso_trab?: any;
   tel_trab?: any;
   ext_trab?: any;
-  fax?: any;
   nom_empresa?: any;
   hora_desde_trab?: any;
   hora_hasta_trab?: any;

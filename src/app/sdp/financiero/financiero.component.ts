@@ -110,11 +110,15 @@ export class FinancieroComponent implements OnInit {
         }
       }
     )
-    setTimeout(() => {
-      if (this.emision.financiero != null) {
+
+
+    if (this.emision.financiero != null) {
+      this.appComponent.loader = true;
+      setTimeout(() => {
         this.cargarfurmulario();
-      }
-    }, 300);
+        this.appComponent.loader = false;
+      }, 1000);
+    }
 
   }
   nuevofurmulario() {
@@ -162,24 +166,24 @@ export class FinancieroComponent implements OnInit {
       this.appComponent.loader = true; //activar cargando
 
       var form = this.formulario.getRawValue();
-var error = 0;
-      if(form.tit_cuenta === "1" &&( form.tip_ident == ""||  form.ident_tit == ""||  form.nom_tit == "" || form.paren_tit == "") ){
-     
-        this.appComponent.message('error','Error', 'Todos los campos del titular de la cuenta son obligatorios');
-    error = error + 1;
-      }
-      if(this.ingBus == -1 && form.med_ingreso < this.maxIngreso){
-        this.appComponent.message('warn','Alerta', 'El valor del Ingresos debe ser mayor a '+this.maxIngreso);
+      var error = 0;
+      if (form.tit_cuenta === "1" && (form.tip_ident == "" || form.ident_tit == "" || form.nom_tit == "" || form.paren_tit == "")) {
+
+        this.appComponent.message('error', 'Error', 'Todos los campos del titular de la cuenta son obligatorios');
         error = error + 1;
       }
-      if(this.ingPat == -1 && form.med_patrimonio < this.maxPatri){
-        this.appComponent.message('warn','Alerta', 'El valor del Patrimonio debe ser mayor a '+this.maxPatri);
+      if (this.ingBus == -1 && form.med_ingreso < this.maxIngreso) {
+        this.appComponent.message('warn', 'Alerta', 'El valor del Ingresos debe ser mayor a ' + this.maxIngreso);
         error = error + 1;
       }
-      if(error === 0){
-       this.emision.financiero = new Financiero();
-       this.emision.financiero = form; 
-      this.enviarPadre.emit({ index: this.activeIndex + 1, emision: this.emision });
+      if (this.ingPat == -1 && form.med_patrimonio < this.maxPatri) {
+        this.appComponent.message('warn', 'Alerta', 'El valor del Patrimonio debe ser mayor a ' + this.maxPatri);
+        error = error + 1;
+      }
+      if (error === 0) {
+        this.emision.financiero = new Financiero();
+        this.emision.financiero = form;
+        this.enviarPadre.emit({ index: this.activeIndex + 1, emision: this.emision });
       }
       this.appComponent.loader = false; //desactivar cargando 
     } else {

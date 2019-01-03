@@ -20,12 +20,12 @@
                         <span class="ui-float-label">
                             <label class="label-list">Banco</label>
                             <p-dropdown placeholder="Seleccione" id="banco" formControlName="banco" [options]="bancos"
-                                [autoWidth]="false"></p-dropdown>
+                                [autoWidth]="false" filter="true"></p-dropdown>
                         </span>
                     </div>
                     <div class="ui-g-12 ui-md-6">
                         <span class="ui-float-label">
-                            <input id="numero" formControlName="numero" type="text" pInputText>
+                            <input id="numero" formControlName="numero" type="text" maxlength="20" pInputText>
                             <label for="float-input" *ngIf="formulario.get('tipo_form_pago').value.code != 21">Número de
                                 cuenta</label>
                             <label for="float-input" *ngIf="formulario.get('tipo_form_pago').value.code == 21">Número de
@@ -38,19 +38,19 @@
                         <span class="ui-float-label">
                             <label class="label-list">Tipo de tarjeta</label>
                             <p-dropdown placeholder="Seleccione" id="tipo_tarjeta" formControlName="tipo_tarjeta"
-                                [options]="tipo_tarjeta" [autoWidth]="false"></p-dropdown>
+                                [options]="tipo_tarjeta" [autoWidth]="false" filter="true"></p-dropdown>
                         </span>
                     </div>
                     <div class="ui-g-12 ui-md-6">
                         <span class="ui-float-label">
                             <label class="label-list">Páis emisor</label>
                             <p-dropdown placeholder="Seleccione" id="pais_emisor" formControlName="pais_emisor"
-                                [options]="pais_emisor" [autoWidth]="false"></p-dropdown>
+                                [options]="pais_emisor" [autoWidth]="false" filter="true"></p-dropdown>
                         </span>
                     </div>
                     <div class="ui-g-12 ui-md-4">
                         <span class="ui-float-label">
-                            <input id="ano_caducidad" formControlName="ano_caducidad" type="text" pInputText>
+                            <input id="ano_caducidad" formControlName="ano_caducidad" type="text"  maxlength="4" pKeyFilter="pnum"  pInputText>
                             <label for="float-input">Año caducidad</label>
                         </span>
                     </div>
@@ -63,7 +63,7 @@
                     </div>
                     <div class="ui-g-12 ui-md-4">
                         <span class="ui-float-label">
-                            <input id="cvv" formControlName="cvv" type="text" pInputText>
+                            <input id="cvv" formControlName="cvv" type="text" pKeyFilter="pnum" maxlength="4"  pInputText>
                             <label for="float-input">CVV</label>
                         </span>
                     </div>

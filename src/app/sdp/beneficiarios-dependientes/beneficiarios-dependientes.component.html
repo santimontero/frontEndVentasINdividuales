@@ -30,7 +30,7 @@
             </div>
             <div class="ui-g-12 ui-md-3">
                 <span class="ui-float-label">
-                    <input id="identificacion"  formControlName="identificacion"   type="text"  pInputText>
+                    <input id="identificacion"  formControlName="identificacion"   type="text" maxlength="15" pInputText>
                     <label >Identificación</label>
                   </span>
             </div>
@@ -43,31 +43,31 @@
             </div>
             <div class="ui-g-12 ui-md-3">
                 <span class="ui-float-label">
-                    <input id="edad"  formControlName="edad" type="text" size="30" pInputText readonly=true>
+                    <input id="edad"  formControlName="edad" type="text"  pInputText readonly=true>
                     <label for="float-input">Edad</label>
                   </span>
             </div>
             <div class="ui-g-12 ui-md-3" >
                 <span class="ui-float-label">
-                    <input id="primer_nombre" formControlName="primer_nombre"   type="text"  pInputText>
+                    <input id="primer_nombre" formControlName="primer_nombre"   type="text"  maxlength="15" pInputText>
                     <label for="float-input">Primer Nombre</label>
                   </span>
             </div>
             <div class="ui-g-12 ui-md-3">
                 <span class="ui-float-label">
-                    <input id="segundo_nombre"  formControlName="segundo_nombre"  type="text"  pInputText>
+                    <input id="segundo_nombre"  formControlName="segundo_nombre"  type="text" maxlength="15" pInputText>
                     <label for="float-input">Segundo Nombre</label>
                   </span>
             </div>
             <div class="ui-g-12 ui-md-3">
                 <span class="ui-float-label">
-                    <input  id="primer_apellido"   formControlName="primer_apellido"   type="text"  pInputText>
+                    <input  id="primer_apellido"   formControlName="primer_apellido"   type="text" maxlength="15" pInputText>
                     <label for="float-input">Primer Apellido</label>
                   </span>
             </div>
             <div class="ui-g-12 ui-md-3">
                 <span class="ui-float-label">
-                    <input id="segundo_apellido"  formControlName="segundo_apellido" type="text"  pInputText>
+                    <input id="segundo_apellido"  formControlName="segundo_apellido" type="text" maxlength="15" pInputText>
                     <label for="float-input">Segundo Apellido</label>
                   </span>
             </div>
@@ -85,7 +85,7 @@
             </div>
             <div class="ui-g-12 ui-md-3">
                 <span class="ui-float-label" *ngIf="gruposelect.name.includes('BENEFICIARI')">
-                    <input id="participacion"  formControlName="participacion" type="text"  pInputText>
+                    <input id="participacion"  formControlName="participacion" type="text" maxlength="3" pKeyFilter="pnum"  pInputText>
                     <label for="float-input">Participación</label>
                   </span>
             </div>
