@@ -214,8 +214,7 @@ export class BeneficiariosDependientesComponent implements OnInit {
     }
   }
   guardar() {
-console.log(this.part_total)
-console.log(+this.formulario.get('participacion').value )
+
     if (this.formulario.valid) {
       if(+this.part_total + +this.formulario.get('participacion').value > 100){
         this.appComponent.message('error','Error', 'la participación no puede superar el 100%');
