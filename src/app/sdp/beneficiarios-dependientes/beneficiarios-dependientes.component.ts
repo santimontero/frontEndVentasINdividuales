@@ -54,12 +54,19 @@ export class BeneficiariosDependientesComponent implements OnInit {
       { field: 'edad', header: 'Edad' },
       { field: 'participacion', header: 'Participación' }
     ];
+
+    
   }
 
   ngOnInit() {
     this.part_total = 0;
     this.table = [];
-    this.nuevofurmulario();
+    this.nuevofurmulario();        
+
+    if(this.emision.comercializacion.cfc_ingbenef != 'S'){
+      this.siguiente();
+    }
+
     this.tipoId = [];
     this.api.get('api/catalogos/tipoid', 'beneficiarios-dependientes').subscribe(
       tipoid => {
