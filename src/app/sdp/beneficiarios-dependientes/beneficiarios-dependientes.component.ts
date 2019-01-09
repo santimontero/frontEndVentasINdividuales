@@ -63,14 +63,14 @@ export class BeneficiariosDependientesComponent implements OnInit {
     }
 
     this.grupos = [
-      { label: 'BENEFICIARIOS', value: { id: 0, name: 'BENEFICIARIOS' } },
+      { label: 'BENEFICIARIOS', value: { id: 1, name: 'BENEFICIARIOS', code: 0 } },
     ];
 
     this.gruposconfig = [];
     this.api.get('api/configuraciones/gruposproducto?ramo=' + this.emision.cotizacion.pda_ramo + '&codigo=' + this.emision.cotizacion.pda_codigo_plan, 'beneficiarios-dependientes').subscribe(
       gruposProd => {
         for (let index = 0; index < gruposProd.length; index++) {
-          var p = { label: 'DEPENDIENTES ' + gruposProd[index].gxp_descripcion, value: { id: gruposProd[index].gxp_grupo, name: 'DEPENDIENTES ' + gruposProd[index].gxp_descripcion } };
+          var p = { label: 'DEPENDIENTES ' + gruposProd[index].gxp_descripcion, value: { id: (index + 2), name: 'DEPENDIENTES ' + gruposProd[index].gxp_descripcion, code: gruposProd[index].gxp_grupo } };
           this.grupos.push(p);
           var c = {
             prd_ramo: gruposProd[index].prd_ramo,

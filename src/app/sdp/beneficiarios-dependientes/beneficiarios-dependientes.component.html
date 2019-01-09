@@ -5,10 +5,8 @@
           <p-listbox [options]="grupos" [(ngModel)]="gruposelect"  [listStyle]="{'max-height':'250px'}"
             (onChange)="seleccionarGrupo($event)">
             <ng-template let-car pTemplate="item">
-                <div  [ngClass]="{'bene': car.label.includes('BENEFICIARI'),
-                'conyu':  car.label.includes('CONYU'),
-                'hijos': car.label.includes('HIJO'),
-                'otros': car.label.includes('OTROS')}" >
+                <div  [ngClass]="{'bene': car.label.includes('BENEFICIARI'),                
+                'otros': car.label.includes('DEPENDIENTES')}" >
                   <span >{{car.label}}</span>
                 </div>
               </ng-template>
@@ -110,9 +108,7 @@
                   </ng-template>
                   <ng-template pTemplate="body" let-rowData let-columns="columns">
                       <tr [ngClass]="{'beneTab': rowData.grupo_name.includes('BENEFICIARI'),
-                      'conyuTab':  rowData.grupo_name.includes('CONYU'),
-                      'hijosTab': rowData.grupo_name.includes('HIJO'),
-                      'otrosTab': rowData.grupo_name.includes('OTROS')}" >
+                      'otrosTab': rowData.grupo_name.includes('DEPENDIENTES')}" >
                           <td>
                               <button pButton icon="pi pi-clone" [disabled]="gruposelect.id == null" style="margin: 2px;" class="ui-button-success ui-button-rounded"(click)="clone(rowData)"></button>
                               <button pButton icon="pi pi-pencil" style="margin: 2px;"  class=" ui-button-rounded" (click)="edit(rowData)" ></button>
