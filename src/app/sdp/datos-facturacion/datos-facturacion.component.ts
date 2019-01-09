@@ -3,7 +3,7 @@ import { SelectItem } from 'primeng/primeng';
 import { FormControl, FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms'
 import { AppComponent } from 'src/app/app.component';
 import { ApiRequestService } from 'src/app/services/api-request.service';
-import { Emision } from 'src/app/domain/emision';
+import { Emision, Factura } from 'src/app/domain/emision';
 
 @Component({
   selector: 'app-datos-facturacion',
@@ -46,8 +46,28 @@ export class DatosFacturacionComponent implements OnInit {
         }
       }
     )
+    if (this.emision.factura != null) {
+      this.appComponent.loader = true; 
+    setTimeout(() => { 
+        this.cargarfurmulario();
+        this.appComponent.loader = false; 
+    }, 1000);
+    }
+  }
+  cargarfurmulario() {
+    return this.formulario = this.formBuilder.group({
+      tipo_identificacion: new FormControl(this.emision.factura.tipo_identificacion,Validators.required),
+      identificacion: new FormControl(this.emision.factura.identificacion, Validators.required),
+      email: new FormControl(this.emision.factura.email, Validators.required),
+      telefono: new FormControl(this.emision.factura.telefono, Validators.required),
+      nombre: new FormControl(this.emision.factura.nombre, Validators.required),
+      direccion: new FormControl(this.emision.factura.direccion,Validators.required),
+ 
+    });
+
 
   }
+
   nuevofurmulario() {
     return this.formulario = this.formBuilder.group({
       tipo_identificacion: new FormControl('',Validators.required),
@@ -65,22 +85,16 @@ export class DatosFacturacionComponent implements OnInit {
     return (<FormArray>frmGrp.controls[key]).controls;
   }
 
-  public CalculateAge(): void {
-    if (this.formulario.get('fecha_nacimiento').value) {
-      var timeDiff = Math.abs(Date.now() - this.formulario.get('fecha_nacimiento').value);
-      //Used Math.floor instead of Math.ceil
-      //so 26 years and 140 days would be considered as 26, not 27.
-
-      this.formulario.patchValue({ edad: Math.floor((timeDiff / (1000 * 3600 * 24)) / 365) });
-
-    }
-  }
+ 
 
   siguiente() {
 
     if (this.formulario.valid) {
       this.appComponent.loader = true; //activar cargando
-      this.enviarPadre.emit({ index: this.activeIndex + 1 });
+      this.emision.factura = new Factura();
+      this.emision.factura = this.formulario.getRawValue(); // {name: '', description: ''}
+
+      this.enviarPadre.emit({ index: this.activeIndex + 1, emision: this.emision });
 
       this.appComponent.loader = false; //desactivar cargando 
     } else {

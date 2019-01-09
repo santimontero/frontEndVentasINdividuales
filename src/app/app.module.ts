@@ -116,6 +116,7 @@ import { RecuperarCuentaComponent } from './sdp/recuperar-cuenta/recuperar-cuent
 import { FormaPagoComponent } from './sdp/forma-pago/forma-pago.component';
 import { DatosFacturacionComponent } from './sdp/datos-facturacion/datos-facturacion.component';
 import { CurrencyMaskModule } from "ng2-currency-mask";
+import { HogarComponent } from './sdp/hogar/hogar.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -143,6 +144,7 @@ import { CurrencyMaskModule } from "ng2-currency-mask";
     RecuperarCuentaComponent,
     FormaPagoComponent,
     DatosFacturacionComponent,
+    HogarComponent,
   ],
   imports: [
     CurrencyMaskModule,

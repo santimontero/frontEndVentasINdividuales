@@ -4,7 +4,9 @@ export class Emision {
   clienteDomicilio: ClienteDomicilio;
   financiero: Financiero;
   formaPago: FormaPago;
-  beneficiarios: Beneficiarios[];
+  factura: Factura;
+  hogar?: Hogar;
+  beneficiarios?: Beneficiarios[];
   comercializacion: ConfiguraComercializacion;
 }
 
@@ -20,6 +22,24 @@ export class Financiero {
   med_patrimonio?: any;
   ocupa?: any;
   act_eco?: any;
+}
+export class Factura {
+  tipo_identificacion?: any;
+  identificacion?: any;
+  nombre?: any;
+  email?: any;
+  telefono?: any;
+  direccion?: any;
+}
+export class Hogar {
+  provincia?: any;
+  ciudad?: any;
+  calle_prin?: any;
+  num?: any;
+  trasv?: any;
+  refe?: any;
+  barrio?: any;
+  tel?: any;
 }
 
 export class Cotizacion {

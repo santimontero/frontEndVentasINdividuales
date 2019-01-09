@@ -304,6 +304,14 @@ export class BeneficiariosDependientesComponent implements OnInit {
   }
   siguiente() {
 
+  
+      this.appComponent.loader = true; //activar cargando
+      this.emision.beneficiarios = new Array<Beneficiarios>();
+      this.table.forEach(element => {
+        this.emision.beneficiarios.push(element)
+      });
+   
+      this.enviarPadre.emit({ index: this.activeIndex + 1, emision: this.emision });
 
     this.appComponent.loader = true; //activar cargando
     this.emision.beneficiarios = new Array<Beneficiarios>();

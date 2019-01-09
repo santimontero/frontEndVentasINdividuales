@@ -54,7 +54,7 @@ export class RecuperarCuentaComponent implements OnInit {
       this.loader = true; //activar cargando
       this.recuperarCuentaService.sendMail4NewPassw(this.model.email2send).subscribe(
         (data: string) => {
-          console.log(data);
+   
           this.loader = false;
           this.model.email2send = '';
           //this.router.navigate(['/login']);

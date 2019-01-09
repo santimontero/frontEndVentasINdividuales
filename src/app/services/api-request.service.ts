@@ -117,7 +117,7 @@ export class ApiRequestService {
         return this.http.request(new Request(requestOptions))
             .map(resp => resp.json())
             .catch(function (error: any) {
-                console.log(error)
+             
                 let resp: any = JSON.parse(error['_body']);
 
                 if (error.status === 401 || error.status === 403) {
@@ -171,7 +171,7 @@ export class ApiRequestService {
         return this.http.post(this.appConfig.baseApiPathAuth + url, urlParam)
             .map(resp => resp.json())
             .catch(function (error: any) {
-                console.log(error)
+      
                 if (error.status === 401) {
                 // me.userInfoService.removeUserInfo();                         me.router.navigate(['/login']);
                 }
