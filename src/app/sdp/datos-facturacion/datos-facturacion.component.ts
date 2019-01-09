@@ -108,7 +108,12 @@ export class DatosFacturacionComponent implements OnInit {
   }
 
   anterior() {
-    this.enviarPadre.emit({ index: this.activeIndex - 1, emision: this.emision });
+    if(this.emision.comercializacion.cfc_ingbenef != 'S'){
+      this.enviarPadre.emit({ index: this.activeIndex - 2, emision: this.emision });
+    }
+    else{
+      this.enviarPadre.emit({ index: this.activeIndex - 1, emision: this.emision });
+    }    
   }
 }
 

@@ -7,6 +7,7 @@ export class Emision {
   factura: Factura;
   hogar?: Hogar;
   beneficiarios?: Beneficiarios[];
+  comercializacion: ConfiguraComercializacion;
 }
 
 export class Financiero {
@@ -129,5 +130,36 @@ export class ClienteDomicilio {
   hora_desde_trab?: any;
   hora_hasta_trab?: any;
 
+}
 
+export class ConfiguraComercializacion{
+  prd_ramo: any;
+  prd_codigo: any;
+  cfc_prima_comercializacion?: any; 
+  cfc_limite?: any; 
+  cfc_codigo_estructura?: any;
+  cfc_porcentaje_estructura?: any;
+  cfc_cerrado_abierto: any;
+  cfc_item_cod: any;
+  cfc_numero_meses?: any;
+  cfc_valor_rda?: any;
+  cfc_plurianual: any;
+  cfc_ingbenef: any; 
+  cfc_formapago?: any;
+  cfc_imprimirtodascoberturas: any;
+  cfc_tipodnegocio: any;
+  cfc_ctarembolso: any;
+  cfc_valida_beneficiario: any;
+  cfc_configuracion_maestra: any;
+  cfc_calular_comision: any;
+  cfc_cod_banco: any;
+  cfc_homologarcobertura: any; 
+  cfc_declaracion_salud: any; 
+  cfc_validadependiente_declaracion_salud: any;
+  cfc_valida_suma_asegurada: any;
+  cfc_valida_fechanacimiento_dependiente: any; 
+  cfc_tipoventa: any;
+  cfc_ruc_institucion_educativa: any;
+  cfc_modificabienasegurado: any;
+  cfc_flag_item: any; 
 }
