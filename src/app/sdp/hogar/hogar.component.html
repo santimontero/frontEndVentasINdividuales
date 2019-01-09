@@ -1,0 +1,73 @@
+<h2 class="titulo">Bien Asegurado</h2>
+<div class="ui-g ui-fluid form-group">
+  <form [formGroup]="formulario">
+    <div class="ui-g-12 ">
+
+      <p-panel header="Dirección">
+
+        <div class="ui-g">
+          <div class="ui-g-12 ui-md-6">
+            <span class="ui-float-label">
+              <label class="label-list">Provincia</label>
+              <p-dropdown placeholder="Seleccione" id="provincia" formControlName="provincia" [options]="provincia"
+                [autoWidth]="false" (onChange)="seleccionarProvDom($event)" filter="true"></p-dropdown>
+            </span>
+          </div>
+          <div class="ui-g-12 ui-md-6">
+            <span class="ui-float-label">
+              <label class="label-list">Ciudad</label>
+              <p-dropdown placeholder="Seleccione" id="ciudad" formControlName="ciudad" [options]="ciudad"
+                [autoWidth]="false" filter="true"></p-dropdown>
+            </span>
+          </div>
+          <div class="ui-g-12 ui-md-6">
+            <span class="ui-float-label">
+              <input id="calle_prin" formControlName="calle_prin" maxlength="120" type="text" pInputText>
+              <label for="float-input">Calle Principal</label>
+            </span>
+          </div>
+          <div class="ui-g-12 ui-md-6">
+            <span class="ui-float-label">
+              <input id="num" formControlName="num" type="text" maxlength="10" pInputText>
+              <label for="float-input">Numeración</label>
+            </span>
+          </div>
+          <div class="ui-g-12 ui-md-6">
+            <span class="ui-float-label">
+              <input id="trasv" formControlName="trasv" type="text" maxlength="40" pInputText>
+              <label for="float-input">Calle trasversal</label>
+            </span>
+          </div>
+          <div class="ui-g-12 ui-md-6">
+            <span class="ui-float-label">
+              <input id="barrio" formControlName="barrio" type="text" maxlength="60" pInputText>
+              <label for="float-input">Barrio </label>
+            </span>
+          </div>
+          <div class="ui-g-12">
+            <span class="ui-float-label">
+              <input id="refe" formControlName="refe" type="text" maxlength="255" pInputText>
+              <label for="float-input">Referencia </label>
+            </span>
+          </div>
+
+          <div class="ui-g-12 ui-md-6">
+            <span class="ui-float-label">
+              <input id="tel" formControlName="tel" type="text" maxlength="15" pInputText>
+              <label for="float-input">Telefono  </label>
+            </span>
+          </div>
+       
+        </div>
+      </p-panel>
+    </div>
+    <div class=" ui-g-12">
+      <div class=" ui-g-6">
+        <p-button icon="pi pi-arrow-left" label="Atras" (click)=" anterior()"></p-button>
+      </div>
+      <div class=" ui-g-6" style="text-align:right">
+        <p-button icon="pi pi-arrow-right" iconPos="right" label="Siguiente" (click)="siguiente()"></p-button>
+      </div>
+    </div>
+  </form>
+</div>

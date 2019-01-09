@@ -114,7 +114,7 @@ export class CotizacionComponent implements OnInit {
     this.emision.cotizacion.fren_pago= this.fren_pago;
     this.emision.cotizacion.coberturas= this.coberturas;
 
-   console.log(this.emision)
+
     this.enviarPadre.emit({ index: this.activeIndex + 1,emision: this.emision  });
 
   }

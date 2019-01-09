@@ -12,6 +12,7 @@ export class VentaPrincipalComponent implements OnInit {
 
   activeIndex: number = 0;
   emision: Emision;
+  ramo: null
   constructor() { }
 
   ngOnInit() {
@@ -62,7 +63,7 @@ export class VentaPrincipalComponent implements OnInit {
      
       label:  ramo== '04'? 'Datos Incendio':'Beneficiarios',
       command: (event: any) => {
-        this.activeIndex = ramo == '04'? 8:5;
+        this.activeIndex = 5;
 
       }
     }
@@ -87,11 +88,12 @@ export class VentaPrincipalComponent implements OnInit {
 
 
   public cerrarParcial(event) {
-
+    this.ramo = event.emision.cotizacion.pda_ramo;
+    this.cargarSteps(event.emision.cotizacion.pda_ramo)
     this.activeIndex = event.index;
 
     this.emision = event.emision;
-    console.log(this.emision)
+
   }
 
 

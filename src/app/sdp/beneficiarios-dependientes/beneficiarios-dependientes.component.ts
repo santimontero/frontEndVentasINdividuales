@@ -267,7 +267,7 @@ export class BeneficiariosDependientesComponent implements OnInit {
       this.table.forEach(element => {
         this.emision.beneficiarios.push(element)
       });
-      console.log(this.emision)
+   
       this.enviarPadre.emit({ index: this.activeIndex + 1, emision: this.emision });
 
       this.appComponent.loader = false; //desactivar cargando 
