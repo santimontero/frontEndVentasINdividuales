@@ -114,9 +114,7 @@ export class CotizacionComponent implements OnInit {
     this.emision.cotizacion.fren_pago= this.fren_pago;
     this.emision.cotizacion.coberturas= this.coberturas;
 
-<<<<<<< HEAD
 
-=======
     this.api.get('api/configuraciones/comercializacion?ramo=' + this.emision.cotizacion.pda_ramo + '&codigo=' + this.emision.cotizacion.pda_codigo_plan, 'cotizacion').subscribe(
       configuraComerc => {
         this.emision.comercializacion = configuraComerc;
@@ -124,7 +122,6 @@ export class CotizacionComponent implements OnInit {
     )
 
    console.log(this.emision)
->>>>>>> bcd71d06d9708ee8df5de0135bbef48456a3a527
     this.enviarPadre.emit({ index: this.activeIndex + 1,emision: this.emision  });
 
   }
