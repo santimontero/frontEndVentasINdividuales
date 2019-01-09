@@ -5,6 +5,7 @@ import { AppComponent } from 'src/app/app.component';
 import { totalmem } from 'os';
 import { ApiRequestService } from 'src/app/services/api-request.service';
 import { Emision, Beneficiarios } from 'src/app/domain/emision';
+import { gruposproducto } from 'src/app/domain/gruposproducto';
 @Component({
   selector: 'app-beneficiarios-dependientes',
   templateUrl: './beneficiarios-dependientes.component.html',
@@ -21,6 +22,7 @@ export class BeneficiariosDependientesComponent implements OnInit {
   tipo_parentesco: SelectItem[];
   es: any;
   formulario: FormGroup;
+  gruposconfig: gruposproducto[];
   grupos: any[];
   gruposelect: { id: number; name: string };
   table: any;
@@ -39,12 +41,6 @@ export class BeneficiariosDependientesComponent implements OnInit {
       today: 'Hoy',
       clear: 'Borrar'
     }
-    this.grupos = [
-      { label: 'BENEFICIARIOS', value: { id: 1, name: 'BENEFICIARIOS' } },
-      { label: 'CONYUGUE', value: { id: 2, name: 'CONYUGUE' } },
-      { label: 'HIJOS', value: { id: 3, name: 'HIJOS' } },
-      { label: 'OTROS DEPENDIENTES', value: { id: 4, name: 'OTROS DEPENDIENTES' } },
-    ];
 
     this.cols = [
       { field: 'grupo_name', header: 'Grupo' },
@@ -55,17 +51,57 @@ export class BeneficiariosDependientesComponent implements OnInit {
       { field: 'participacion', header: 'Participación' }
     ];
 
-    
   }
 
   ngOnInit() {
     this.part_total = 0;
     this.table = [];
-    this.nuevofurmulario();        
+    this.nuevofurmulario();
 
-    if(this.emision.comercializacion.cfc_ingbenef != 'S'){
+    if (this.emision.comercializacion.cfc_ingbenef != 'S') {
       this.siguiente();
     }
+
+    this.grupos = [
+      { label: 'BENEFICIARIOS', value: { id: 0, name: 'BENEFICIARIOS' } },
+    ];
+
+    this.gruposconfig = [];
+    this.api.get('api/configuraciones/gruposproducto?ramo=' + this.emision.cotizacion.pda_ramo + '&codigo=' + this.emision.cotizacion.pda_codigo_plan, 'beneficiarios-dependientes').subscribe(
+      gruposProd => {
+        for (let index = 0; index < gruposProd.length; index++) {
+          var p = { label: 'DEPENDIENTES ' + gruposProd[index].gxp_descripcion, value: { id: gruposProd[index].gxp_grupo, name: 'DEPENDIENTES ' + gruposProd[index].gxp_descripcion } };
+          this.grupos.push(p);
+          var c = {
+            prd_ramo: gruposProd[index].prd_ramo,
+            prd_codigo: gruposProd[index].prd_codigo,
+            gxp_grupo: gruposProd[index].gxp_grupo,
+            gxp_necesario: gruposProd[index].gxp_necesario,
+            gxp_descripcion: gruposProd[index].gxp_descripcion,
+            gxp_pxp: gruposProd[index].gxp_pxp,
+            gxp_tipo: gruposProd[index].gxp_tipo,
+            gxp_factor: gruposProd[index].gxp_factor,
+            gxp_tran: gruposProd[index].gxp_tran,
+            gxp_sa: gruposProd[index].gxp_sa,
+            gxp_bi: gruposProd[index].gxp_bi,
+            gxp_sexo: gruposProd[index].gxp_sexo,
+            gxp_num_per: gruposProd[index].gxp_num_per,
+            gxp_edad_min: gruposProd[index].gxp_edad_min,
+            gxp_edad_max: gruposProd[index].gxp_edad_max,
+            gxp_bd_edad: gruposProd[index].gxp_bd_edad,
+            gxp_edad_prom: gruposProd[index].gxp_edad_prom,
+          }
+          this.gruposconfig.push(c);
+        }
+      }
+    )
+
+    // this.grupos = [
+    //   { label: 'BENEFICIARIOS', value: { id: 1, name: 'BENEFICIARIOS' } },
+    //   { label: 'CONYUGUE', value: { id: 2, name: 'CONYUGUE' } },
+    //   { label: 'HIJOS', value: { id: 3, name: 'HIJOS' } },
+    //   { label: 'OTROS DEPENDIENTES', value: { id: 4, name: 'OTROS DEPENDIENTES' } },
+    // ];
 
     this.tipoId = [];
     this.api.get('api/catalogos/tipoid', 'beneficiarios-dependientes').subscribe(
@@ -132,7 +168,7 @@ export class BeneficiariosDependientesComponent implements OnInit {
 
 
   }
-  cargarfurmulario(){
+  cargarfurmulario() {
     this.table = this.emision.beneficiarios;
     this.calcular_part();
   }
@@ -142,17 +178,17 @@ export class BeneficiariosDependientesComponent implements OnInit {
 
   seleccionarGrupo(event) {
 
-    if(event.value.name.includes('BENEFICIARI')){
+    if (event.value.name.includes('BENEFICIARI')) {
 
-      if(+this.part_total>100){
-        this.gruposelect = { id: null, name: ""}
-        this.appComponent.message('error','Error', 'la participación no puede superar el 100%, modifique algun beneficiario');
+      if (+this.part_total > 100) {
+        this.gruposelect = { id: null, name: "" }
+        this.appComponent.message('error', 'Error', 'la participación no puede superar el 100%, modifique algun beneficiario');
       }
-  
-    }else{
-      if(+this.part_total<100){
-        this.gruposelect = { id: null, name: ""}
-        this.appComponent.message('warn','Atención', 'la participación tiene que ser 100% antes de seleccionar otro grupo.');
+
+    } else {
+      if (+this.part_total < 100) {
+        this.gruposelect = { id: null, name: "" }
+        this.appComponent.message('warn', 'Atención', 'la participación tiene que ser 100% antes de seleccionar otro grupo.');
       }
     }
   }
@@ -216,68 +252,68 @@ export class BeneficiariosDependientesComponent implements OnInit {
       this.table.push(form)
       this.nuevofurmulario();
     }
-    else{
-      
+    else {
+
     }
   }
   guardar() {
 
     if (this.formulario.valid) {
-      if(+this.part_total + +this.formulario.get('participacion').value > 100){
-        this.appComponent.message('error','Error', 'la participación no puede superar el 100%');
-      }else{
-
-      this.appComponent.loader = true; //activar cargando
-
-      const form = {
-
-        tipo_identificacion: this.formulario.get('tipo_identificacion').value,
-        identificacion: this.formulario.get('identificacion').value,
-        primer_nombre: this.formulario.get('primer_nombre').value,
-        segundo_nombre: this.formulario.get('segundo_nombre').value,
-        primer_apellido: this.formulario.get('primer_apellido').value,
-        segundo_apellido: this.formulario.get('segundo_apellido').value,
-        genero: this.formulario.get('genero').value,
-        paren: this.formulario.get('paren').value,
-        paren_name: this.formulario.get('paren').value.name,
-        fecha_nacimiento: this.formulario.get('fecha_nacimiento').value,
-        edad: this.formulario.get('edad').value,
-        participacion: this.formulario.get('participacion').value,
-        grupo_id: this.gruposelect.id,
-        grupo_name: this.gruposelect.name
-      }
-      var existe = this.table.find(e => e.identificacion == form.identificacion && e.grupo_id == form.grupo_id);
-      if (existe) {
-        this.table[this.table.indexOf(existe)] = form;
+      if (+this.part_total + +this.formulario.get('participacion').value > 100) {
+        this.appComponent.message('error', 'Error', 'la participación no puede superar el 100%');
       } else {
-        this.table.push(form)
+
+        this.appComponent.loader = true; //activar cargando
+
+        const form = {
+
+          tipo_identificacion: this.formulario.get('tipo_identificacion').value,
+          identificacion: this.formulario.get('identificacion').value,
+          primer_nombre: this.formulario.get('primer_nombre').value,
+          segundo_nombre: this.formulario.get('segundo_nombre').value,
+          primer_apellido: this.formulario.get('primer_apellido').value,
+          segundo_apellido: this.formulario.get('segundo_apellido').value,
+          genero: this.formulario.get('genero').value,
+          paren: this.formulario.get('paren').value,
+          paren_name: this.formulario.get('paren').value.name,
+          fecha_nacimiento: this.formulario.get('fecha_nacimiento').value,
+          edad: this.formulario.get('edad').value,
+          participacion: this.formulario.get('participacion').value,
+          grupo_id: this.gruposelect.id,
+          grupo_name: this.gruposelect.name
+        }
+        var existe = this.table.find(e => e.identificacion == form.identificacion && e.grupo_id == form.grupo_id);
+        if (existe) {
+          this.table[this.table.indexOf(existe)] = form;
+        } else {
+          this.table.push(form)
+        }
+        this.calcular_part();
+        this.nuevofurmulario();
+        this.appComponent.loader = false; //desactivar cargando 
       }
-      this.calcular_part();
-      this.nuevofurmulario();
-      this.appComponent.loader = false; //desactivar cargando 
-    }
     } else {
       Object.keys(this.formulario.controls).forEach(field => { // {1}
         const control = this.formulario.get(field);
         control.markAsDirty({ onlySelf: true });            // {2}
         control.markAsTouched({ onlySelf: true });       // {3}
       });
-    
+
     }
-  
+
   }
   siguiente() {
 
-  
-      this.appComponent.loader = true; //activar cargando
-      this.emision.beneficiarios = new Array<Beneficiarios>();
-      this.table.forEach(element => {
-        this.emision.beneficiarios.push(element)
-      });
-      console.log(this.emision)
-      this.enviarPadre.emit({ index: this.activeIndex + 1, emision: this.emision });
 
-      this.appComponent.loader = false; //desactivar cargando 
+    this.appComponent.loader = true; //activar cargando
+    this.emision.beneficiarios = new Array<Beneficiarios>();
+    this.table.forEach(element => {
+      this.emision.beneficiarios.push(element)
+    });
+    console.log(this.emision)
+    this.enviarPadre.emit({ index: this.activeIndex + 1, emision: this.emision });
+
+    this.appComponent.loader = false; //desactivar cargando 
 
   }
 
