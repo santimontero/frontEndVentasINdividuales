@@ -83,6 +83,11 @@ export class ClienteDomicilioComponent implements OnInit {
             var p = { label: ciud[i].cat_descripcion, value: ciud[i].cat_id_catalogo };
             this.ciudad_trab.push(p);
           }
+          this.appComponent.loader = true; 
+          setTimeout(() => { 
+              this.cargarfurmulario();
+              this.appComponent.loader = false; 
+          }, 100);
         }
       )
 
@@ -97,13 +102,7 @@ export class ClienteDomicilioComponent implements OnInit {
         }
       )
     }
-    if (this.emision.clienteDomicilio != null) {
-      this.appComponent.loader = true; 
-    setTimeout(() => { 
-        this.cargarfurmulario();
-        this.appComponent.loader = false; 
-    }, 1000);
-    }
+ 
   }
   nuevofurmulario() {
     return this.formulario = this.formBuilder.group({

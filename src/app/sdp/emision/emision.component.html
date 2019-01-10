@@ -4,19 +4,18 @@
   <div class="ui-g-12 ui-md-6">
     <p-panel header="Cliente">
 
-      Identificación: <label style="color: #2062af;font-weight: 600;">1715521413 </label>
+      Identificación: <label style="color: #2062af;font-weight: 600;">{{emision.cliente.identificacion}} </label>
       <br>
-      Nombre: <label style="color: #2062af;font-weight: 600;">Santiago Alejandro Montero
-        Santacruz </label>
+      Nombre: <label style="color: #2062af;font-weight: 600;">{{emision.cliente.primer_nombre}} {{emision.cliente.segundo_nombre}} {{emision.cliente.primer_apellido}} {{emision.cliente.segundo_apellido}}</label>
 
     </p-panel>
   </div>
   <div class="ui-g-12 ui-md-6">
     <p-panel header="Forma de Pago">
 
-      Tipo Pago: <label style="color: #2062af;font-weight: 600;">Tarjeta de credito Visa</label>
+      Tipo Pago: <label style="color: #2062af;font-weight: 600;">{{emision.formaPago.tipo_form_pago.name}} </label>
      <br>
-      Numero: <label style="color: #2062af;font-weight: 600;">   23423423423452</label>
+  Numero: <label style="color: #2062af;font-weight: 600;">  {{emision.formaPago.numero}}</label>
    
     </p-panel>
 
@@ -25,13 +24,13 @@
   <div class="ui-g-12 ui-md-4">
     <p-panel header="Productos">
 
-      <label style="color: #2062af;font-weight: 600;">Plan Contigo</label>
+      <label style="color: #2062af;font-weight: 600;"> {{emision.cotizacion.pda_descrip_conf_prod}}</label>
 
     </p-panel>
 
     <p-panel header="Coberturas">
 
-      <p-listbox [options]="coberturas" optionLabel="descripcion" [listStyle]="{'max-height':'250px'}" readonly="true"></p-listbox>
+      <p-listbox [options]="emision.cotizacion.coberturas" optionLabel="descripcion" [listStyle]="{'max-height':'250px'}" readonly="true"></p-listbox>
 
     </p-panel>
 
@@ -42,19 +41,19 @@
 
       <div class="ui-g">
         <div class="ui-g-12">
-          Id: <label style="color: #2062af;"> 1715521413</label>
+          Id: <label style="color: #2062af;"> {{emision.factura.identificacion}}</label>
         </div>
         <div class="ui-g-12">
-          nombre: <label style="color: #2062af;"> Santiago Montero</label>
+          nombre: <label style="color: #2062af;"> {{emision.factura.nombre}}</label>
         </div>
         <div class="ui-g-12">
-          Direccion: <label style="color: #2062af;"> Santiago Montero Santiago Montero Santiago Montero Santiago MonteroSantiago Montero</label>
+          Direccion: <label style="color: #2062af;"> {{emision.factura.direccion}}</label>
         </div>
         <div class="ui-g-12">
-          Telefono: <label style="color: #2062af;"> 345345345345345</label>
+          Telefono: <label style="color: #2062af;"> {{emision.factura.telefono}}</label>
         </div>
         <div class="ui-g-12">
-          Email: <label style="color: #2062af;"> santiago.montero92@gmail.com</label>
+          Email: <label style="color: #2062af;"> {{emision.factura.email}}</label>
         </div>
       </div>
     </p-panel>
@@ -69,17 +68,17 @@
 
       <div class="ui-g">
         <div class="ui-g-12">
-          Suma Asegurada: <label style="color: #2062af;font-size: large;font-weight: 600;float: right;"> {{sumaaseg |
+          Suma Asegurada: <label style="color: #2062af;font-size: large;font-weight: 600;float: right;"> {{emision.cotizacion.suma_aseg |
             currency: 'USD':'symbol':'1.2-2'}}</label>
         </div>
         <div class="ui-g-12">
-          <label style="color: #2062af;font-size: large;font-weight: 600;text-align: center;"> VALOR A PAGAR</label>
+          <label style="color: #2062af;font-size: large;font-weight: 600;text-align: center;"> VALOR A PAGAR {{emision.cotizacion.fren_pago.name}}</label>
         </div>
         <div class="ui-g-12 valor-total">
-          {{prima | currency: 'USD': 'symbol': '1.2-2'}}
+          {{emision.cotizacion.val_pagar | currency: 'USD': 'symbol': '1.2-2'}}
         </div>
         <div class="ui-g-12" style="text-align:right">
-          Valor Anualizado: {{anual | currency: 'USD': 'symbol': '1.2-2'}}
+          Valor Anualizado: {{emision.cotizacion.prima | currency: 'USD': 'symbol': '1.2-2'}}
         </div>
       </div>
     </p-panel>

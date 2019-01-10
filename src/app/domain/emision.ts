@@ -44,6 +44,7 @@ export class Hogar {
 
 export class Cotizacion {
   prima?: any;
+  val_pagar?:any
   suma_aseg?: any;
   fren_pago?: any;
   coberturas?: any;

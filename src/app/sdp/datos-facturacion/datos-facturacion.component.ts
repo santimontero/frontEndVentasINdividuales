@@ -38,21 +38,28 @@ export class DatosFacturacionComponent implements OnInit {
   ngOnInit() {
     this.nuevofurmulario();
     this.tipoId = [];
+    this.appComponent.loader = true; 
     this.api.get('api/catalogos/tipoid', 'cliente').subscribe(
       tipoid => {
         for (let i = 0; i < tipoid.length; i++) {
-          var p = { label: tipoid[i].cat_descripcion, value: { id: (i + 1), name: tipoid[i].cat_descripcion, code: tipoid[i].cat_id_catalogo } };
-          this.tipoId.push(p);
+          this.tipoId.push({ label: tipoid[i].cat_descripcion, value: tipoid[i].cat_id_catalogo });
+        }
+       
+        if (this.emision.factura != null) {
+              
+            this.cargarfurmulario();
+            this.appComponent.loader = false; 
+       
+        }else{
+       
+            this.nuevofurmulario2();
+            console.log(this.formulario)
+            this.appComponent.loader = false; 
+       
         }
       }
     )
-    if (this.emision.factura != null) {
-      this.appComponent.loader = true; 
-    setTimeout(() => { 
-        this.cargarfurmulario();
-        this.appComponent.loader = false; 
-    }, 1000);
-    }
+ 
   }
   cargarfurmulario() {
     return this.formulario = this.formBuilder.group({
@@ -68,6 +75,19 @@ export class DatosFacturacionComponent implements OnInit {
 
   }
 
+  nuevofurmulario2() {
+    return this.formulario = this.formBuilder.group({
+      tipo_identificacion: new FormControl(this.emision.cliente.tipo_identificacion,Validators.required),
+      identificacion: new FormControl(this.emision.cliente.identificacion, Validators.required),
+      email: new FormControl(this.emision.clienteDomicilio.email, Validators.required),
+      telefono: new FormControl(this.emision.clienteDomicilio.tel_dom, Validators.required),
+      nombre: new FormControl(this.emision.cliente.primer_nombre + ' '+ this.emision.cliente.primer_apellido, Validators.required),
+      direccion: new FormControl(this.emision.clienteDomicilio.calle_prin_dom + ' ' + this.emision.clienteDomicilio.num_dom + ' ' +this.emision.clienteDomicilio.trasv_dom ,Validators.required),
+ 
+    });
+
+   
+  }
   nuevofurmulario() {
     return this.formulario = this.formBuilder.group({
       tipo_identificacion: new FormControl('',Validators.required),

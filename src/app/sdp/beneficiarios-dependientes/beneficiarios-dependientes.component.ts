@@ -71,8 +71,7 @@ export class BeneficiariosDependientesComponent implements OnInit {
     this.api.get('api/catalogos/tipoid', 'beneficiarios-dependientes').subscribe(
       tipoid => {
         for (let i = 0; i < tipoid.length; i++) {
-          var p = { label: tipoid[i].cat_descripcion, value: { id: (i + 1), name: tipoid[i].cat_descripcion, code: tipoid[i].cat_id_catalogo } };
-          this.tipoId.push(p);
+          this.tipoId.push({ label: tipoid[i].cat_descripcion, value: tipoid[i].cat_id_catalogo });
         }
       }
     )
