@@ -304,7 +304,8 @@ a {
 
 @media (max-width: 1024px) {
   .layout-wrapper .layout-topbar {
-    height: 120px; }
+    /* height: 120px; */
+   }
     .layout-wrapper .layout-topbar #topbar-menu-button {
       display: block;
       text-decoration: none; }
@@ -333,12 +334,13 @@ a {
         position: absolute;
         left: 10px; }
     .layout-wrapper .layout-topbar .logo-container {
-      top: -30px;
+      /* top: -30px; */
       left: -20px; }
     .layout-wrapper .layout-topbar #topbar-profile-menu-button {
       position: absolute;
       right: 0;
-      top: 60px; }
+      top: 0px;
+     }
       .layout-wrapper .layout-topbar #topbar-profile-menu-button span {
         display: none; }
     .layout-wrapper .layout-topbar #topbar-usermenu {
@@ -779,6 +781,7 @@ a {
   .layout-wrapper.layout-menu-slim .layout-main {
     margin-left: 60px; } }
 @media (max-width: 1024px) {
+  
   .layout-wrapper .layout-sidebar {
     display: none; }
   @-webkit-keyframes showNav {
@@ -793,7 +796,7 @@ a {
       opacity: 1; } }
   .layout-wrapper.layout-menu-mobile-active .layout-sidebar {
     display: block;
-    top: 120px;
+    /* top: 120px; */
     width: 100%;
     animation: showNav 250ms ease-in-out both; }
     .layout-wrapper.layout-menu-mobile-active .layout-sidebar .ui-scrollpanel .menu-scroll-content {
@@ -839,7 +842,8 @@ body .layout-wrapper .layout-main {
     padding: 14px; }
 @media (max-width: 1024px) {
   body .layout-wrapper .layout-main {
-    margin-top: 60px; } }
+    /* margin-top: 60px; */
+   } }
 
 .layout-wrapper .layout-main {
   -moz-transition: margin-left 0.3s;

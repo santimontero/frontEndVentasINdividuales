@@ -137,8 +137,8 @@
     <div class=" ui-g-6">
       <p-button icon="pi pi-arrow-left" label="Atras" (click)=" anterior()"></p-button>
     </div>
-    <div class=" ui-g-6" style="text-align:right">
-      <p-button icon="pi pi-arrow-right" iconPos="right" [disabled] = "part_total ==100" label="Siguiente" (click)="siguiente()"></p-button>
+    <div *ngIf="part_total===100" class=" ui-g-6" style="text-align:right">
+      <p-button icon="pi pi-arrow-right" iconPos="right"  label="Siguiente" (click)="siguiente()"></p-button>
     </div>
   </div>
 </div>

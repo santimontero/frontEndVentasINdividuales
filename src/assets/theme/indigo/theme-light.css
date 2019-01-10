@@ -2527,3 +2527,12 @@ body .ui-terminal {
     height: 15px; }
   body .ui-terminal .ui-terminal-command {
     height: 15px; }
+    @media (max-width: 1023px){
+      .ui-steps .ui-steps-item .ui-steps-title {
+        display: none !important;
+
+    }
+    body .ui-steps:before{
+      top: 55%;
+    }
+    }

@@ -21,14 +21,15 @@ export class EmisionComponent implements OnInit {
   anual: number;
 
   constructor(private api: ApiRequestService) {
-    this.api.get('api/configuraciones/productosxasesor?tipoIdent=' + this.api.getInfoUsuario().tipoIdent + '&ident=' + this.api.getInfoUsuario().identificacion, 'cotizacion').subscribe(
-      productosAsesor => {
-        this.productos = productosAsesor;
-      }
-    )
+    // this.api.get('api/configuraciones/productosxasesor?tipoIdent=' + this.api.getInfoUsuario().tipoIdent + '&ident=' + this.api.getInfoUsuario().identificacion, 'cotizacion').subscribe(
+    //   productosAsesor => {
+    //     this.productos = productosAsesor;
+    //   }
+    // )
   }
 
   ngOnInit() {
+    console.log(this.emision.formaPago.tipo_form_pago.name)
     this.plazo = [];
     this.plazo.push({ label: 'Periodo de tiempo', value: null });
     this.api.get('api/catalogos/frecuenciapago', 'cotizacion').subscribe(
@@ -89,7 +90,7 @@ export class EmisionComponent implements OnInit {
   }
 
   siguiente() {
-    this.enviarPadre.emit({ index: this.activeIndex + 1 });
+    this.enviarPadre.emit({ index: this.activeIndex + 1 , emision: this.emision });
 
   }
 

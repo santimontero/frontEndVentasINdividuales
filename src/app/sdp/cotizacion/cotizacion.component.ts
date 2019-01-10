@@ -109,7 +109,8 @@ export class CotizacionComponent implements OnInit {
 
   siguiente() {
   
-    this.emision.cotizacion.prima= this.anual; 
+    this.emision.cotizacion.prima= this.anual;
+    this.emision.cotizacion.val_pagar =this.prima;
     this.emision.cotizacion.suma_aseg= this.sumaaseg;
     this.emision.cotizacion.fren_pago= this.fren_pago;
     this.emision.cotizacion.coberturas= this.coberturas;

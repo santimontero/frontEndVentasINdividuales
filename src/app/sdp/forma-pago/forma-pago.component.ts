@@ -145,6 +145,7 @@ export class FormaPagoComponent implements OnInit {
       if(error === 0){
         this.emision.formaPago = new FormaPago();
         this.emision.formaPago = form; 
+        console.log( this.emision)
        this.enviarPadre.emit({ index: this.activeIndex + 1, emision: this.emision });
        }
       this.appComponent.loader = false; //desactivar cargando 

@@ -17,8 +17,8 @@ export class HogarComponent implements OnInit {
   @Input() activeIndex: any;
   @Input() emision: Emision;
   
-  provincia: SelectItem[];
-  ciudad: SelectItem[];
+  provincia_dom: SelectItem[];
+  ciudad_dom: SelectItem[];
   es: any;
   formulario: FormGroup;
   constructor(private formBuilder: FormBuilder,
@@ -37,39 +37,54 @@ export class HogarComponent implements OnInit {
   }
 
   ngOnInit() {
+
     this.nuevofurmulario();
-       this.provincia = [];
+       this.provincia_dom = [];
     this.api.get('api/catalogos/provincias', 'direccion').subscribe(
       prov => {
         for (let i = 0; i < prov.length; i++) {
           var p = { label: prov[i].cat_descripcion, value: prov[i].cat_id_catalogo };
-          this.provincia.push(p);
+          this.provincia_dom.push(p);
         }
       }
     )
 
     if (this.emision.hogar != null) {
-
-      this.ciudad = [];
+      this.appComponent.loader = true; 
+  
+      this.ciudad_dom = [];
       this.api.get('api/catalogos/ciudades?codProv=' + this.emision.hogar.provincia, 'direccion').subscribe(
         ciud => {
           for (let i = 0; i < ciud.length; i++) {
             var p = { label: ciud[i].cat_descripcion, value: ciud[i].cat_id_catalogo };
-            this.ciudad.push(p);
+            this.ciudad_dom.push(p);
           }
-
+          setTimeout(() => { 
+            this.cargarfurmulario();
+            this.appComponent.loader = false; 
+        }, 100);
+        }
+      )
+    }else{
+      this.ciudad_dom = [];
+      this.api.get('api/catalogos/ciudades?codProv=' + this.emision.clienteDomicilio.provincia_dom, 'direccion').subscribe(
+        ciud => {
+          for (let i = 0; i < ciud.length; i++) {
+            var p = { label: ciud[i].cat_descripcion, value: ciud[i].cat_id_catalogo };
+            this.ciudad_dom.push(p);
+          }
+          setTimeout(() => { 
+            this.nuevofurmulario2();
+            this.appComponent.loader = false; 
+        }, 100);
         }
       )
     }
-    if (this.emision.hogar != null) {
-      this.appComponent.loader = true; 
-    setTimeout(() => { 
-        this.cargarfurmulario();
-        this.appComponent.loader = false; 
-    }, 1000);
-    }
+  
+    
   }
   nuevofurmulario() {
+  
     return this.formulario = this.formBuilder.group({
    
       provincia: new FormControl('', Validators.required),
@@ -80,6 +95,23 @@ export class HogarComponent implements OnInit {
       refe: ['',],
       barrio: new FormControl('', Validators.required),
       tel: new FormControl('', Validators.required)
+     
+    });
+
+
+  }
+  nuevofurmulario2() {
+  
+    return this.formulario = this.formBuilder.group({
+   
+      provincia: new FormControl(this.emision.clienteDomicilio.provincia_dom, Validators.required),
+      ciudad: new FormControl(this.emision.clienteDomicilio.ciudad_dom, Validators.required),
+      calle_prin: new FormControl(this.emision.clienteDomicilio.calle_prin_dom, Validators.required),
+      num: new FormControl(this.emision.clienteDomicilio.num_dom, Validators.required),
+      trasv: [this.emision.clienteDomicilio.trasv_dom,],
+      refe: [this.emision.clienteDomicilio.refe_dom,],
+      barrio: new FormControl(this.emision.clienteDomicilio.barrio_dom, Validators.required),
+      tel: new FormControl(this.emision.clienteDomicilio.tel_dom, Validators.required)
      
     });
 
@@ -138,12 +170,12 @@ export class HogarComponent implements OnInit {
   }
 
   seleccionarProvDom(event) {
-    this.ciudad = [];
+    this.ciudad_dom = [];
     this.api.get('api/catalogos/ciudades?codProv=' + event.value, 'direccion').subscribe(
       ciud => {
         for (let i = 0; i < ciud.length; i++) {
           var p = { label: ciud[i].cat_descripcion, value: ciud[i].cat_id_catalogo };
-          this.ciudad.push(p);
+          this.ciudad_dom.push(p);
         }
       }
     )
