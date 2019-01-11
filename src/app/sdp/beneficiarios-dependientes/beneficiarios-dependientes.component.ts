@@ -258,22 +258,16 @@ export class BeneficiariosDependientesComponent implements OnInit {
   guardar() {
 
     if (this.formulario.valid) {
-<<<<<<< HEAD
-      if (+this.part_total + +this.formulario.get('participacion').value > 100) {
-        this.appComponent.message('error', 'Error', 'la participación no puede superar el 100%');
-      } else {
-=======
       if(!this.table.find(e => e.identificacion == this.formulario.get('identificacion').value && e.grupo_id == this.gruposelect.id) && (+this.part_total + +this.formulario.get('participacion').value )> 100){
         this.appComponent.message('error','Error', 'la participación no puede superar el 100%');
       }else{
->>>>>>> b7046ca535d21d019526186d015dc95d039519cd
 
         this.appComponent.loader = true; //activar cargando
 
         const form = {
 
           tipo_identificacion: this.formulario.get('tipo_identificacion').value,
-          identificacion: this.formulario.get('identificacion').value,
+          identificacion: this.formulario. get('identificacion').value,
           primer_nombre: this.formulario.get('primer_nombre').value,
           segundo_nombre: this.formulario.get('segundo_nombre').value,
           primer_apellido: this.formulario.get('primer_apellido').value,
