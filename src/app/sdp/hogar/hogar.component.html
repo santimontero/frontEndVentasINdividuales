@@ -10,50 +10,50 @@
             <span class="ui-float-label">
               <label class="label-list">Provincia</label>
               <p-dropdown placeholder="Seleccione" id="provincia" formControlName="provincia" [options]="provincia_dom"
-                [autoWidth]="false" (onChange)="seleccionarProvDom($event)" filter="true"></p-dropdown>
+                [autoWidth]="false" (onChange)="seleccionarProvDom($event)" filter="true" [disabled]="emision.comercializacion.cfc_modificabienasegurado == 'N'"></p-dropdown>
             </span>
           </div>
           <div class="ui-g-12 ui-md-6">
             <span class="ui-float-label">
               <label class="label-list">Ciudad</label>
               <p-dropdown placeholder="Seleccione" id="ciudad" formControlName="ciudad" [options]="ciudad_dom"
-                [autoWidth]="false" filter="true"></p-dropdown>
+                [autoWidth]="false" filter="true" [disabled]="emision.comercializacion.cfc_modificabienasegurado == 'N'"></p-dropdown>
             </span>
           </div>
           <div class="ui-g-12 ui-md-6">
             <span class="ui-float-label">
-              <input id="calle_prin" formControlName="calle_prin" maxlength="120" type="text" pInputText>
-              <label for="float-input">Calle Principal</label>
+              <input id="calle_prin" formControlName="calle_prin" maxlength="120" type="text" pInputText [readonly]="emision.comercializacion.cfc_modificabienasegurado == 'N'">
+              <label for="float-input" >Calle Principal</label>
             </span>
           </div>
           <div class="ui-g-12 ui-md-6">
             <span class="ui-float-label">
-              <input id="num" formControlName="num" type="text" maxlength="10" pInputText>
+              <input id="num" formControlName="num" type="text" maxlength="10" pInputText [readonly]="emision.comercializacion.cfc_modificabienasegurado == 'N'">
               <label for="float-input">Numeración</label>
             </span>
           </div>
           <div class="ui-g-12 ui-md-6">
             <span class="ui-float-label">
-              <input id="trasv" formControlName="trasv" type="text" maxlength="40" pInputText>
+              <input id="trasv" formControlName="trasv" type="text" maxlength="40" pInputText [readonly]="emision.comercializacion.cfc_modificabienasegurado == 'N'">
               <label for="float-input">Calle trasversal</label>
             </span>
           </div>
           <div class="ui-g-12 ui-md-6">
             <span class="ui-float-label">
-              <input id="barrio" formControlName="barrio" type="text" maxlength="60" pInputText>
+              <input id="barrio" formControlName="barrio" type="text" maxlength="60" pInputText [readonly]="emision.comercializacion.cfc_modificabienasegurado == 'N'">
               <label for="float-input">Barrio </label>
             </span>
           </div>
           <div class="ui-g-12">
             <span class="ui-float-label">
-              <input id="refe" formControlName="refe" type="text" maxlength="255" pInputText>
+              <input id="refe" formControlName="refe" type="text" maxlength="255" pInputText [readonly]="emision.comercializacion.cfc_modificabienasegurado == 'N'">
               <label for="float-input">Referencia </label>
             </span>
           </div>
 
           <div class="ui-g-12 ui-md-6">
             <span class="ui-float-label">
-              <input id="tel" formControlName="tel" type="text" maxlength="15" pInputText>
+              <input id="tel" formControlName="tel" type="text" maxlength="15" pInputText [readonly]="emision.comercializacion.cfc_modificabienasegurado == 'N'">
               <label for="float-input">Telefono  </label>
             </span>
           </div>

@@ -128,7 +128,7 @@ export class DatosFacturacionComponent implements OnInit {
   }
 
   anterior() {
-    if(this.emision.comercializacion.cfc_ingbenef != 'S'){
+    if(this.emision.comercializacion.cfc_ingbenef != 'S' && this.emision.cotizacion.pda_ramo != "04"){
       this.enviarPadre.emit({ index: this.activeIndex - 2, emision: this.emision });
     }
     else{

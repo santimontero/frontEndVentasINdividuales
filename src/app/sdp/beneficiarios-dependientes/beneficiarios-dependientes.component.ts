@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, Input, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, Input, EventEmitter, AfterViewInit } from '@angular/core';
 import { SelectItem } from 'primeng/primeng';
 import { FormControl, FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms'
 import { AppComponent } from 'src/app/app.component';
@@ -267,7 +267,7 @@ export class BeneficiariosDependientesComponent implements OnInit {
         const form = {
 
           tipo_identificacion: this.formulario.get('tipo_identificacion').value,
-          identificacion: this.formulario.get('identificacion').value,
+          identificacion: this.formulario. get('identificacion').value,
           primer_nombre: this.formulario.get('primer_nombre').value,
           segundo_nombre: this.formulario.get('segundo_nombre').value,
           primer_apellido: this.formulario.get('primer_apellido').value,

@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, Input, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, Input, EventEmitter, AfterViewInit } from '@angular/core';
 import { SelectItem } from 'primeng/primeng';
 import { FormControl, FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms'
 import { AppComponent } from 'src/app/app.component';
@@ -39,12 +39,14 @@ export class FormaPagoComponent implements OnInit {
   ngOnInit() {
     this.nuevofurmulario();
     this.tipo_form_pago = [];
+    this.appComponent.loader = true; 
     this.api.get('api/catalogos/formaspago', 'forma_pago').subscribe(
       formpag => {
         for (let i = 0; i < formpag.length; i++) {
           var p = { label: formpag[i].cat_descripcion, value: { id: (i + 1), name: formpag[i].cat_descripcion, code: formpag[i].cat_id_catalogo } };
           this.tipo_form_pago.push(p);
         }
+        this.appComponent.loader = false; 
       }
     )
 
@@ -95,6 +97,8 @@ export class FormaPagoComponent implements OnInit {
     }, 1000);
     }
   }
+  
+
   nuevofurmulario() {
     return this.formulario = this.formBuilder.group({
       tipo_form_pago: new FormControl('', Validators.required),
@@ -110,6 +114,7 @@ export class FormaPagoComponent implements OnInit {
 
   }
   cargarfurmulario() {
+ 
     return this.formulario = this.formBuilder.group({
       tipo_form_pago: new FormControl(this.emision.formaPago.tipo_form_pago, Validators.required),
       banco: new FormControl(this.emision.formaPago.banco, Validators.required),
