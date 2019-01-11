@@ -59,7 +59,8 @@ export class Cotizacion {
   pda_tipo_asesor?: any;  
   //De la tabla tb_ven_producto
   prd_edad_min?: any;
-  prd_edad_max?: any;
+  prd_edad_max?: any; 
+  
 }
 
 export class Cliente {

@@ -127,6 +127,7 @@ export class CotizacionComponent implements OnInit {
         this.emision.comercializacion = configuraComerc;
       }
     )
+    
 
    console.log(this.emision)
     this.enviarPadre.emit({ index: this.activeIndex + 1,emision: this.emision  });
