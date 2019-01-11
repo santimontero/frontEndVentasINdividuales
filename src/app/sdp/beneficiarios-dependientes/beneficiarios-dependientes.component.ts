@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, Input, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, Input, EventEmitter, AfterViewInit } from '@angular/core';
 import { SelectItem } from 'primeng/primeng';
 import { FormControl, FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms'
 import { AppComponent } from 'src/app/app.component';

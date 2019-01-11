@@ -9,7 +9,7 @@ import { Emision, FormaPago } from 'src/app/domain/emision';
   templateUrl: './forma-pago.component.html',
   styleUrls: ['./forma-pago.component.css']
 })
-export class FormaPagoComponent implements OnInit, AfterViewInit {
+export class FormaPagoComponent implements OnInit {
 
   @Output() public enviarPadre = new EventEmitter();
   @Input() activeIndex: any;
@@ -89,14 +89,16 @@ export class FormaPagoComponent implements OnInit, AfterViewInit {
         }
       }
     )
-
-  }
-  
-  ngAfterViewInit() {
     if (this.emision.formaPago != null) {
-        this.cargarfurmulario();    
+      this.appComponent.loader = true; 
+    setTimeout(() => { 
+        this.cargarfurmulario();
+        this.appComponent.loader = false; 
+    }, 1000);
     }
   }
+  
+
   nuevofurmulario() {
     return this.formulario = this.formBuilder.group({
       tipo_form_pago: new FormControl('', Validators.required),
