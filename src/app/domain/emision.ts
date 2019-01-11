@@ -48,6 +48,7 @@ export class Cotizacion {
   suma_aseg?: any;
   fren_pago?: any;
   coberturas?: any;
+  //De la tabla tb_ven_productoxasesor
   pda_codigo_canal_subc?: any;
   pda_codigo_conf_prd?: any;
   pda_codigo_plan?: any;
@@ -55,7 +56,10 @@ export class Cotizacion {
   pda_num_identifica_asesor?: any;
   pda_ramo?: any;
   pda_solicita_intermediario?: any;
-  pda_tipo_asesor?: any;
+  pda_tipo_asesor?: any;  
+  //De la tabla tb_ven_producto
+  prd_edad_min?: any;
+  prd_edad_max?: any;
 }
 
 export class Cliente {

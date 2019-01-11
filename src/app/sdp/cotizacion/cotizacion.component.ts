@@ -115,6 +115,12 @@ export class CotizacionComponent implements OnInit {
     this.emision.cotizacion.fren_pago= this.fren_pago;
     this.emision.cotizacion.coberturas= this.coberturas;
 
+    this.api.get('api/configuraciones/producto?codRamo=' + this.emision.cotizacion.pda_ramo + '&codProd=' + this.emision.cotizacion.pda_codigo_plan, 'cotizacion').subscribe(
+      product => {
+        this.emision.cotizacion.prd_edad_min = product.prd_edad_min;
+        this.emision.cotizacion.prd_edad_max = product.prd_edad_max;
+      }
+    )
 
     this.api.get('api/configuraciones/comercializacion?ramo=' + this.emision.cotizacion.pda_ramo + '&codigo=' + this.emision.cotizacion.pda_codigo_plan, 'cotizacion').subscribe(
       configuraComerc => {
