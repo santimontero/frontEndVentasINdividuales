@@ -37,7 +37,7 @@ export class ClienteComponent implements OnInit {
 
   ngOnInit() {
     this.nuevofurmulario();
-
+   console.log( this.api.getInfoUsuario())
     this.tipoId = [];
     this.api.get('api/catalogos/tipoid', 'cliente').subscribe(
       tipoid => {
@@ -70,11 +70,11 @@ export class ClienteComponent implements OnInit {
     )
 
     if (this.emision.cliente != null) {
-      this.appComponent.loader = true; 
-    setTimeout(() => { 
+      this.appComponent.loader = true;
+      setTimeout(() => {
         this.cargarfurmulario();
-        this.appComponent.loader = false; 
-    }, 1000);
+        this.appComponent.loader = false;
+      }, 1000);
     }
 
   }
@@ -129,8 +129,18 @@ export class ClienteComponent implements OnInit {
       var timeDiff = Math.abs(Date.now() - this.formulario.get('fecha_nacimiento').value);
       //Used Math.floor instead of Math.ceil
       //so 26 years and 140 days would be considered as 26, not 27.
+      var edad = Math.floor((timeDiff / (1000 * 3600 * 24)) / 365);
 
-      this.formulario.patchValue({ edad: Math.floor((timeDiff / (1000 * 3600 * 24)) / 365) });
+      if (edad >= this.emision.cotizacion.prd_edad_max || edad <= this.emision.cotizacion.prd_edad_min) {
+        this.formulario.patchValue({ fecha_nacimiento: '' });
+        this.formulario.patchValue({ edad: '' });
+        this.appComponent.message('warn', 'Atención', 'La fecha e nacimiento ingreasada no esta permitida para este producto.');
+
+      } else {
+        this.formulario.patchValue({ edad: edad });
+      }
+
+
 
     }
   }
@@ -140,10 +150,33 @@ export class ClienteComponent implements OnInit {
     if (this.formulario.valid) {
       this.appComponent.loader = true; //activar cargando
 
-      this.emision.cliente = new Cliente();
-      this.emision.cliente = this.formulario.getRawValue(); // {name: '', description: ''}
 
-      this.enviarPadre.emit({ index: this.activeIndex + 1, emision: this.emision });
+      var cli = this.formulario.getRawValue();
+      console.log(cli)
+      this.api.get('api/cliente/validaidentificacion?tipoId=' + cli.tipo_identificacion + '&identificacion=' + cli.identificacion, 'cotizacion').subscribe(
+        valCe => {
+          console.log(valCe)
+        }
+      )
+
+      // OFAC
+      this.api.post('api/cliente/ofac', this.datosEnvioOFAC(), 'cotizacion').subscribe(Data => {
+  console.log(Data)
+
+      });
+
+      // RESTRICCION DE VENTAS
+      this.api.post('api/cliente/validarestriccion', this.datosEnvioRESTVENTA(), 'cotizacion').subscribe(Data => {
+        console.log(Data)
+
+      });
+
+
+
+      // this.emision.cliente = new Cliente();
+      // this.emision.cliente = cli
+
+      // this.enviarPadre.emit({ index: this.activeIndex + 1, emision: this.emision });
 
       this.appComponent.loader = false; //desactivar cargando 
     } else {
@@ -155,7 +188,37 @@ export class ClienteComponent implements OnInit {
 
     }
   }
+  datosEnvioOFAC() {
 
+    const ofac = {
+      tipoCliente: 'N',
+      tipoId: this.formulario.get('tipo_identificacion').value,
+      cedula: this.formulario.get('identificacion').value,
+      primerNombre: this.formulario.get('primer_nombre').value,
+      segundoNombre: this.formulario.get('segundo_nombre').value,
+      primerApellido: this.formulario.get('primer_apellido').value,
+      segundoApellido: this.formulario.get('segundo_apellido').value,
+      identificacion:this.api.getInfoUsuario().identificacion,
+      codigoUsuario: this.api.getInfoUsuario().displayName,
+    };
+
+    return ofac;
+
+
+  }
+  datosEnvioRESTVENTA() {
+
+    const data = {
+      tipoId:  this.formulario.get('tipo_identificacion').value,
+      num_id:  this.formulario.get('identificacion').value,
+      ramo: this.emision.cotizacion.pda_ramo,
+      cod_producto: this.emision.cotizacion.pda_codigo_plan,
+      cod_prod_comercializado:this.emision.cotizacion.pda_codigo_conf_prd,
+      am_sa: this.emision.cotizacion.suma_aseg,
+    };
+
+    return data;
+  }
   anterior() {
     this.enviarPadre.emit({ index: this.activeIndex - 1, emision: this.emision });
   }
