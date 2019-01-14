@@ -47,8 +47,8 @@ export class FinancieroComponent implements OnInit {
     this.nuevofurmulario();
     this.tipo_tit = [];
 
-    this.tipo_tit.push({ label: 'Si', value: '0' });
-    this.tipo_tit.push({ label: 'No', value: '1' });
+    this.tipo_tit.push({ label: 'Si', value: 'S' });
+    this.tipo_tit.push({ label: 'No', value: 'N' });
     this.tipo_iden = [];
     this.api.get('api/catalogos/tipoid', 'financiero').subscribe(
       tipoid => {
