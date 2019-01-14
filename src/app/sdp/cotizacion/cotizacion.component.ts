@@ -27,7 +27,11 @@ export class CotizacionComponent implements OnInit {
     this.api.get('api/configuraciones/productosxasesor?tipoIdent=' + this.api.getInfoUsuario().tipoIdent + '&ident=' + this.api.getInfoUsuario().identificacion, 'cotizacion').subscribe(
       productosAsesor => {
         this.productos = productosAsesor;
-        this.appComponent.loader = false;
+       
+      },
+      error=>{
+console.log(error)
+this.appComponent.loader = false;
       }
     )
   }
@@ -42,6 +46,12 @@ export class CotizacionComponent implements OnInit {
           var p = { label: frecPag[i].cat_descripcion, value: { name: frecPag[i].cat_descripcion, code: frecPag[i].cat_id_catalogo } };
           this.plazo.push(p);
         }
+        this.appComponent.loader = false;
+      }
+      ,
+      error=>{
+console.log(error)
+this.appComponent.loader = false;
       }
     )
 

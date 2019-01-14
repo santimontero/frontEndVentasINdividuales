@@ -53,7 +53,7 @@ export class FinancieroComponent implements OnInit {
     this.api.get('api/catalogos/tipoid', 'financiero').subscribe(
       tipoid => {
         for (let i = 0; i < tipoid.length; i++) {
-          var p = { label: tipoid[i].cat_descripcion, value: { id: (i + 1), name: tipoid[i].cat_descripcion, code: tipoid[i].cat_id_catalogo } };
+          var p = { label: tipoid[i].cat_descripcion, value:  tipoid[i].cat_id_catalogo  };
           this.tipo_iden.push(p);
         }
       }
@@ -163,7 +163,7 @@ export class FinancieroComponent implements OnInit {
   siguiente() {
 
     if (this.formulario.valid) {
-      this.appComponent.loader = true; //activar cargando
+    
 
       var form = this.formulario.getRawValue();
       var error = 0;
@@ -181,11 +181,27 @@ export class FinancieroComponent implements OnInit {
         error = error + 1;
       }
       if (error === 0) {
-        this.emision.financiero = new Financiero();
-        this.emision.financiero = form;
-        this.enviarPadre.emit({ index: this.activeIndex + 1, emision: this.emision });
+console.log(form)
+        this.appComponent.loader = true; //activar cargando
+        this.api.get('api/cliente/validaidentificacion?tipoId=' + form.tip_ident + '&identificacion=' + form.ident_tit, 'cotizacion').subscribe(
+          valCe => {
+
+console.log(valCe)
+            if (valCe.resultado == "OK") {  
+              this.appComponent.loader = false; 
+
+              this.emision.financiero = new Financiero();
+              this.emision.financiero = form;
+              this.enviarPadre.emit({ index: this.activeIndex + 1, emision: this.emision });
+            } else {
+              this.appComponent.loader = false; 
+              this.appComponent.message('warn', 'Validación Identificación', valCe.resultado);
+
+            }
+          }
+        )
       }
-      this.appComponent.loader = false; //desactivar cargando 
+    //desactivar cargando 
     } else {
       Object.keys(this.formulario.controls).forEach(field => { // {1}
         const control = this.formulario.get(field);

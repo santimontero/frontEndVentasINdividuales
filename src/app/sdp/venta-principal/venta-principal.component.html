@@ -26,8 +26,8 @@
       </div>
 
       <div  *ngIf="activeIndex == 5">
-        <app-beneficiarios-dependientes  *ngIf="ramo !==  '04'" [activeIndex]="activeIndex" [emision]="emision"  (enviarPadre)="cerrarParcial($event)"></app-beneficiarios-dependientes>
-        <app-hogar *ngIf="ramo ===  '04'" [activeIndex]="activeIndex" [emision]="emision"   (enviarPadre)="cerrarParcial($event)"></app-hogar>
+        <app-beneficiarios-dependientes  *ngIf="ramo !==  '04' && ramo !==  '36' " [activeIndex]="activeIndex" [emision]="emision"  (enviarPadre)="cerrarParcial($event)"></app-beneficiarios-dependientes>
+        <app-hogar *ngIf="ramo ===  '04' || ramo ===  '36'" [activeIndex]="activeIndex" [emision]="emision"   (enviarPadre)="cerrarParcial($event)"></app-hogar>
     
       </div>
       <div  *ngIf="activeIndex == 6">

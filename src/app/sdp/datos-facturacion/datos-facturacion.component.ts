@@ -17,7 +17,7 @@ export class DatosFacturacionComponent implements OnInit {
   @Input() activeIndex: any;
   @Input() emision: Emision;
   tipoId: SelectItem[];
-  
+
   es: any;
   formulario: FormGroup;
   constructor(private formBuilder: FormBuilder,
@@ -38,38 +38,38 @@ export class DatosFacturacionComponent implements OnInit {
   ngOnInit() {
     this.nuevofurmulario();
     this.tipoId = [];
-    this.appComponent.loader = true; 
+    this.appComponent.loader = true;
     this.api.get('api/catalogos/tipoid', 'cliente').subscribe(
       tipoid => {
         for (let i = 0; i < tipoid.length; i++) {
           this.tipoId.push({ label: tipoid[i].cat_descripcion, value: tipoid[i].cat_id_catalogo });
         }
-       
+
         if (this.emision.factura != null) {
-              
-            this.cargarfurmulario();
-            this.appComponent.loader = false; 
-       
-        }else{
-       
-            this.nuevofurmulario2();
-            console.log(this.formulario)
-            this.appComponent.loader = false; 
-       
+
+          this.cargarfurmulario();
+          this.appComponent.loader = false;
+
+        } else {
+
+          this.nuevofurmulario2();
+          console.log(this.formulario)
+          this.appComponent.loader = false;
+
         }
       }
     )
- 
+
   }
   cargarfurmulario() {
     return this.formulario = this.formBuilder.group({
-      tipo_identificacion: new FormControl(this.emision.factura.tipo_identificacion,Validators.required),
+      tipo_identificacion: new FormControl(this.emision.factura.tipo_identificacion, Validators.required),
       identificacion: new FormControl(this.emision.factura.identificacion, Validators.required),
       email: new FormControl(this.emision.factura.email, Validators.required),
       telefono: new FormControl(this.emision.factura.telefono, Validators.required),
       nombre: new FormControl(this.emision.factura.nombre, Validators.required),
-      direccion: new FormControl(this.emision.factura.direccion,Validators.required),
- 
+      direccion: new FormControl(this.emision.factura.direccion, Validators.required),
+
     });
 
 
@@ -77,26 +77,26 @@ export class DatosFacturacionComponent implements OnInit {
 
   nuevofurmulario2() {
     return this.formulario = this.formBuilder.group({
-      tipo_identificacion: new FormControl(this.emision.cliente.tipo_identificacion,Validators.required),
+      tipo_identificacion: new FormControl(this.emision.cliente.tipo_identificacion, Validators.required),
       identificacion: new FormControl(this.emision.cliente.identificacion, Validators.required),
       email: new FormControl(this.emision.clienteDomicilio.email, Validators.required),
       telefono: new FormControl(this.emision.clienteDomicilio.tel_dom, Validators.required),
-      nombre: new FormControl(this.emision.cliente.primer_nombre + ' '+ this.emision.cliente.primer_apellido, Validators.required),
-      direccion: new FormControl(this.emision.clienteDomicilio.calle_prin_dom + ' ' + this.emision.clienteDomicilio.num_dom + ' ' +this.emision.clienteDomicilio.trasv_dom ,Validators.required),
- 
+      nombre: new FormControl(this.emision.cliente.primer_nombre + ' ' + this.emision.cliente.primer_apellido, Validators.required),
+      direccion: new FormControl(this.emision.clienteDomicilio.calle_prin_dom + ' ' + this.emision.clienteDomicilio.num_dom + ' ' + this.emision.clienteDomicilio.trasv_dom, Validators.required),
+
     });
 
-   
+
   }
   nuevofurmulario() {
     return this.formulario = this.formBuilder.group({
-      tipo_identificacion: new FormControl('',Validators.required),
+      tipo_identificacion: new FormControl('', Validators.required),
       identificacion: new FormControl('', Validators.required),
       email: new FormControl('', Validators.required),
       telefono: new FormControl('', Validators.required),
       nombre: new FormControl('', Validators.required),
-      direccion: new FormControl('',Validators.required),
- 
+      direccion: new FormControl('', Validators.required),
+
     });
 
 
@@ -105,17 +105,31 @@ export class DatosFacturacionComponent implements OnInit {
     return (<FormArray>frmGrp.controls[key]).controls;
   }
 
- 
+
 
   siguiente() {
 
     if (this.formulario.valid) {
       this.appComponent.loader = true; //activar cargando
-      this.emision.factura = new Factura();
-      this.emision.factura = this.formulario.getRawValue(); // {name: '', description: ''}
 
-      this.enviarPadre.emit({ index: this.activeIndex + 1, emision: this.emision });
+      var cli = this.formulario.getRawValue();
 
+      this.api.get('api/cliente/validaidentificacion?tipoId=' + cli.tipo_identificacion + '&identificacion=' + cli.identificacion, 'cotizacion').subscribe(
+        valCe => {
+
+
+          if (valCe.resultado == "OK") {
+
+            this.emision.factura = new Factura();
+            this.emision.factura = cli // {name: '', description: ''}
+
+            this.enviarPadre.emit({ index: this.activeIndex + 1, emision: this.emision });
+          } else {
+            this.appComponent.message('warn', 'Validación Identificación', valCe.resultado);
+
+          }
+        }
+      )
       this.appComponent.loader = false; //desactivar cargando 
     } else {
       Object.keys(this.formulario.controls).forEach(field => { // {1}
@@ -128,12 +142,12 @@ export class DatosFacturacionComponent implements OnInit {
   }
 
   anterior() {
-    if(this.emision.comercializacion.cfc_ingbenef != 'S' && this.emision.cotizacion.pda_ramo != "04"){
+    if (this.emision.comercializacion.cfc_ingbenef != 'S' && (this.emision.cotizacion.pda_ramo != "04"&&this.emision.cotizacion.pda_ramo != "36" ) )  {
       this.enviarPadre.emit({ index: this.activeIndex - 2, emision: this.emision });
     }
-    else{
+    else {
       this.enviarPadre.emit({ index: this.activeIndex - 1, emision: this.emision });
-    }    
+    }
   }
 }
 

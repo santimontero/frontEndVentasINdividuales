@@ -130,8 +130,8 @@ export class ClienteComponent implements OnInit {
       //Used Math.floor instead of Math.ceil
       //so 26 years and 140 days would be considered as 26, not 27.
       var edad = Math.floor((timeDiff / (1000 * 3600 * 24)) / 365);
-
-      if (edad >= this.emision.cotizacion.prd_edad_max || edad <= this.emision.cotizacion.prd_edad_min) {
+console.log(this.emision.cotizacion)
+      if (edad >= this.emision.cotizacion.prd_edad_max || edad <= this.emision.cotizacion.prd_edad_min ) {
         this.formulario.patchValue({ fecha_nacimiento: '' });
         this.formulario.patchValue({ edad: '' });
         this.appComponent.message('warn', 'Atención', 'La fecha e nacimiento ingreasada no esta permitida para este producto.');
@@ -152,33 +152,52 @@ export class ClienteComponent implements OnInit {
 
 
       var cli = this.formulario.getRawValue();
-      console.log(cli)
+
       this.api.get('api/cliente/validaidentificacion?tipoId=' + cli.tipo_identificacion + '&identificacion=' + cli.identificacion, 'cotizacion').subscribe(
         valCe => {
-          console.log(valCe)
+ 
+
+          if(valCe.resultado == "OK"){
+
+            this.api.post('api/cliente/ofac', this.datosEnvioOFAC(), 'cotizacion').subscribe(Data => {
+              console.log(Data)
+              if(Data.resultado == "OK"){
+                this.api.post('api/cliente/validarestriccion', this.datosEnvioRESTVENTA(), 'cotizacion').subscribe(Data2 => {
+                  if(Data2.ai_num_error == 0){
+      this.emision.cliente = new Cliente();
+      this.emision.cliente = cli
+
+      this.enviarPadre.emit({ index: this.activeIndex + 1, emision: this.emision });
+      this.appComponent.loader = false;
+
+                  }else{
+                    this.appComponent.loader = false;
+                    this.appComponent.message('warn', 'Restriccion de Ventas', Data2.avc_desc_error);
+                  }
+                });
+              }else{
+                this.appComponent.loader = false;
+                this.appComponent.message('warn', 'Validación Listas OFAC', Data.resultado);
+              }
+             });
+          }else{
+            this.appComponent.loader = false;
+            this.appComponent.message('warn', 'Validación Identificación', valCe.resultado);
+    
+          }
         }
       )
 
       // OFAC
-      this.api.post('api/cliente/ofac', this.datosEnvioOFAC(), 'cotizacion').subscribe(Data => {
-  console.log(Data)
-
-      });
+  
 
       // RESTRICCION DE VENTAS
-      this.api.post('api/cliente/validarestriccion', this.datosEnvioRESTVENTA(), 'cotizacion').subscribe(Data => {
-        console.log(Data)
-
-      });
+    
 
 
 
-      // this.emision.cliente = new Cliente();
-      // this.emision.cliente = cli
-
-      // this.enviarPadre.emit({ index: this.activeIndex + 1, emision: this.emision });
-
-      this.appComponent.loader = false; //desactivar cargando 
+    
+   //desactivar cargando 
     } else {
       Object.keys(this.formulario.controls).forEach(field => { // {1}
         const control = this.formulario.get(field);

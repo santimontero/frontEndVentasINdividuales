@@ -61,7 +61,7 @@ export class VentaPrincipalComponent implements OnInit {
     },
     {
      
-      label:  ramo== '04'? 'Datos Incendio':'Beneficiarios',
+      label:  ramo== '04' || ramo== '36'? 'Datos Incendio':'Beneficiarios',
       command: (event: any) => {
         this.activeIndex = 5;
 

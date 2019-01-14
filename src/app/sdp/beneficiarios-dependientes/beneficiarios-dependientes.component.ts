@@ -4,7 +4,7 @@ import { FormControl, FormGroup, FormBuilder, Validators, FormArray } from '@ang
 import { AppComponent } from 'src/app/app.component';
 import { totalmem } from 'os';
 import { ApiRequestService } from 'src/app/services/api-request.service';
-import { Emision, Beneficiarios } from 'src/app/domain/emision';
+import { Emision, Beneficiarios, confGrupo } from 'src/app/domain/emision';
 import { gruposproducto } from 'src/app/domain/gruposproducto';
 @Component({
   selector: 'app-beneficiarios-dependientes',
@@ -20,17 +20,19 @@ export class BeneficiariosDependientesComponent implements OnInit {
   generos: SelectItem[];
   estadoCivil: SelectItem[];
   tipo_parentesco: SelectItem[];
+  tipo_parentesco_final: SelectItem[];
   es: any;
   formulario: FormGroup;
   gruposconfig: gruposproducto[];
   grupos: any[];
-  gruposelect: { id: number; name: string };
+  gruposelect: { id: number; name: string; code: number };
   table: any;
   part_total: number = 0;
   cols: { field: string; header: string; }[];
+  confGrupo: confGrupo;
   constructor(private formBuilder: FormBuilder,
     public appComponent: AppComponent, private api: ApiRequestService) {
-    this.gruposelect = { id: null, name: "" }
+    this.gruposelect = { id: null, name: "", code: null }
     this.es = {
       firstDayOfWeek: 1,
       dayNames: ["domingo", "lunes", "martes", "miércoles", "jueves", "viernes", "sábado"],
@@ -54,23 +56,16 @@ export class BeneficiariosDependientesComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.confGrupo = new confGrupo();
     this.part_total = 0;
     this.table = [];
     this.nuevofurmulario();
-
-    if (this.emision.comercializacion.cfc_ingbenef != 'S') {
-      this.siguiente();
-    }
-
-    this.grupos = [
-      { label: 'BENEFICIARIOS', value: { id: 1, name: 'BENEFICIARIOS', code: 0 } },
-    ];
-
     this.gruposconfig = [];
     this.api.get('api/configuraciones/gruposproducto?ramo=' + this.emision.cotizacion.pda_ramo + '&codigo=' + this.emision.cotizacion.pda_codigo_plan, 'beneficiarios-dependientes').subscribe(
       gruposProd => {
+        this.grupos = [];
         for (let index = 0; index < gruposProd.length; index++) {
-          var p = { label: 'DEPENDIENTES ' + gruposProd[index].gxp_descripcion, value: { id: (index + 2), name: 'DEPENDIENTES ' + gruposProd[index].gxp_descripcion, code: gruposProd[index].gxp_grupo } };
+          var p = { label: gruposProd[index].gxp_descripcion, value: { id: (index + 1), name: gruposProd[index].gxp_descripcion, code: gruposProd[index].gxp_grupo } };
           this.grupos.push(p);
           var c = {
             prd_ramo: gruposProd[index].prd_ramo,
@@ -96,6 +91,7 @@ export class BeneficiariosDependientesComponent implements OnInit {
       }
     )
 
+    console.log(this.gruposconfig)
     // this.grupos = [
     //   { label: 'BENEFICIARIOS', value: { id: 1, name: 'BENEFICIARIOS' } },
     //   { label: 'CONYUGUE', value: { id: 2, name: 'CONYUGUE' } },
@@ -104,6 +100,8 @@ export class BeneficiariosDependientesComponent implements OnInit {
     // ];
 
     this.tipoId = [];
+    this.tipoId.push({ label: "NO TIENE", value: "04" });
+
     this.api.get('api/catalogos/tipoid', 'beneficiarios-dependientes').subscribe(
       tipoid => {
         for (let i = 0; i < tipoid.length; i++) {
@@ -133,15 +131,18 @@ export class BeneficiariosDependientesComponent implements OnInit {
     )
 
     this.tipo_parentesco = [];
+    this.tipo_parentesco_final = [];
     this.api.get('api/catalogos/parentescostitular', 'beneficiarios-dependientes').subscribe(
       parent => {
         for (let i = 0; i < parent.length; i++) {
           var p = { label: parent[i].cat_descripcion, value: { id: (i + 1), name: parent[i].cat_descripcion, code: parent[i].cat_id_catalogo } };
           this.tipo_parentesco.push(p);
+          this.tipo_parentesco_final.push(p);
         }
+
       }
     )
-    if (this.emision.beneficiarios.length > 0) {
+    if (this.emision.beneficiarios != null) {
       this.appComponent.loader = true;
       setTimeout(() => {
         this.cargarfurmulario();
@@ -150,18 +151,18 @@ export class BeneficiariosDependientesComponent implements OnInit {
     }
   }
   nuevofurmulario() {
-    this.gruposelect = { id: null, name: "" }
+    this.gruposelect = { id: null, name: "", code: null }
     return this.formulario = this.formBuilder.group({
       tipo_identificacion: ['', Validators.required],
-      identificacion: new FormControl('', Validators.required),
+      identificacion: new FormControl(''),
       primer_nombre: new FormControl('', Validators.required),
       segundo_nombre: new FormControl(''),
       primer_apellido: new FormControl('', Validators.required),
       segundo_apellido: new FormControl(''),
       genero: ['', Validators.required],
       paren: ['', Validators.required],
-      fecha_nacimiento: new FormControl('', Validators.required),
-      edad: new FormControl(''),
+      fecha_nacimiento: new FormControl(''),
+      edad: new FormControl('', Validators.required),
       participacion: new FormControl(''),
     });
 
@@ -177,17 +178,42 @@ export class BeneficiariosDependientesComponent implements OnInit {
 
   seleccionarGrupo(event) {
 
-    if (event.value.name.includes('BENEFICIARI')) {
+    if (event.value.code == 1) {
 
       if (+this.part_total > 100) {
-        this.gruposelect = { id: null, name: "" }
+        this.gruposelect = { id: null, name: "", code: null }
         this.appComponent.message('error', 'Error', 'la participación no puede superar el 100%, modifique algun beneficiario');
       }
-
+      console.log(this.gruposelect )
     } else {
       if (+this.part_total < 100) {
-        this.gruposelect = { id: null, name: "" }
+        this.gruposelect = { id: null, name: "", code: null }
         this.appComponent.message('warn', 'Atención', 'la participación tiene que ser 100% antes de seleccionar otro grupo.');
+      }
+      else {
+       
+        this.tipo_parentesco_final = []
+        this.confGrupo = this.gruposconfig.find(a => a.gxp_grupo == this.gruposelect.code)
+        if (this.gruposelect.name.includes('CONYU')) {
+          this.tipo_parentesco.forEach(a => {
+            if (a.value.code == "14" || a.value.code == "21") {
+              this.tipo_parentesco_final.push(a);
+            }
+          })
+        } else if (this.gruposelect.name.includes('HIJO')) {
+          this.tipo_parentesco.forEach(a => {
+            if (a.value.code == "22" || a.value.code == "19") {
+              this.tipo_parentesco_final.push(a);
+            }
+          })
+        } else {
+
+          this.tipo_parentesco.forEach(a => {
+            this.tipo_parentesco_final.push(a);
+          })
+        }
+
+
       }
     }
   }
@@ -210,26 +236,45 @@ export class BeneficiariosDependientesComponent implements OnInit {
     this.calcular_part();
   }
   edit(event) {
-
-    this.gruposelect = { id: event.grupo_id, name: event.grupo_name }
+    console.log(event)
+    this.gruposelect = { id: event.grupo_id, name: event.grupo_name, code: event.grupo_id }
     this.formulario = this.formBuilder.group({
 
       tipo_identificacion: new FormControl(event.tipo_identificacion, Validators.required),
-      identificacion: new FormControl(event.identificacion, Validators.required),
+      identificacion: new FormControl(event.identificacion),
       primer_nombre: new FormControl(event.primer_nombre, Validators.required),
       segundo_nombre: new FormControl(event.segundo_nombre),
       primer_apellido: new FormControl(event.primer_apellido, Validators.required),
       segundo_apellido: new FormControl(event.segundo_apellido),
       genero: new FormControl(event.genero, Validators.required),
       paren: new FormControl(event.paren, Validators.required),
-      fecha_nacimiento: new FormControl(event.fecha_nacimiento, Validators.required),
-      edad: new FormControl(event.edad),
+      fecha_nacimiento: new FormControl(event.fecha_nacimiento),
+      edad: new FormControl(event.edad, Validators.required),
       participacion: new FormControl(event.participacion),
     })
   }
   clone(event) {
-    var existe = this.table.find(e => e.identificacion == event.identificacion && e.grupo_id == this.gruposelect.id);
-    if (!existe && !this.gruposelect.name.includes('BENEFICIARI')) {
+    var existe = this.table.find(e => e.identificacion == event.identificacion && e.grupo_id == this.gruposelect.id  && e.primer_nombre == event.primer_nombre && e.primer_apellido == event.primer_apellido);
+    var existe2 = null
+    if(this.gruposelect.name.includes('CONYU'))
+    {
+     existe2 = this.table.find(e => e.identificacion == event.identificacion && e.grupo_name.includes('HIJO') && e.primer_nombre == event.primer_nombre && e.primer_apellido == event.primer_apellido);
+    
+    }
+    if(this.gruposelect.name.includes('HIJO'))
+    {
+     existe2 = this.table.find(e => e.identificacion == event.identificacion && e.grupo_name.includes('CONYU') && e.primer_nombre == event.primer_nombre && e.primer_apellido == event.primer_apellido);
+    }
+    console.log(this.gruposelect)
+    console.log(this.table)
+console.log(this.table.filter(e => e.grupo_id == this.gruposelect.code))
+
+    if(this.confGrupo.gxp_num_per <= this.table.filter(e => e.grupo_id == this.gruposelect.code).length ){
+      this.appComponent.message('warn', 'Atención', 'No puede superar el maximo número de persona configurado');
+    }else if((this.confGrupo.gxp_edad_min >   event.edad)  || ( event.edad > this.confGrupo.gxp_edad_max)  ){
+      this.appComponent.message('warn', 'Atención', 'La edad ingresada no esta permitida para este grupo.');
+    }else{
+    if (!existe && !(this.gruposelect.code == 1) && !existe2 ) {
       const form = {
 
         tipo_identificacion: event.tipo_identificacion,
@@ -244,7 +289,7 @@ export class BeneficiariosDependientesComponent implements OnInit {
         fecha_nacimiento: event.fecha_nacimiento,
         edad: event.edad,
         participacion: null,
-        grupo_id: this.gruposelect.id,
+        grupo_id: this.gruposelect.code,
         grupo_name: this.gruposelect.name
       }
 
@@ -252,45 +297,72 @@ export class BeneficiariosDependientesComponent implements OnInit {
       this.nuevofurmulario();
     }
     else {
-
+      this.appComponent.message('warn', 'Atención', 'Ya existe para este grupo o no se puede duplicar.');
     }
+  }
   }
   guardar() {
 
     if (this.formulario.valid) {
-      if(!this.table.find(e => e.identificacion == this.formulario.get('identificacion').value && e.grupo_id == this.gruposelect.id) && (+this.part_total + +this.formulario.get('participacion').value )> 100){
-        this.appComponent.message('error','Error', 'la participación no puede superar el 100%');
+
+        var cli = this.formulario.getRawValue();
+console.log(this.table)
+console.log(this.gruposelect)
+     if (!this.table.find(e => e.identificacion == this.formulario.get('identificacion').value && e.grupo_id == this.gruposelect.id) && (+this.part_total + +this.formulario.get('participacion').value) > 100) {
+        this.appComponent.message('error', 'Error', 'la participación no puede superar el 100%');
+      } else if(this.confGrupo.gxp_num_per <= this.table.filter(e => e.grupo_id == this.gruposelect.id).length ){
+        this.appComponent.message('warn', 'Atención', 'No puede superar el maximo número de persona configurado');
+      }else if((this.confGrupo.gxp_edad_min >  this.formulario.get('edad').value)  || (this.formulario.get('edad').value> this.confGrupo.gxp_edad_max)  ){
+        this.appComponent.message('warn', 'Atención', 'La edad ingresada no esta permitida para este grupo.');
       }else{
 
-        this.appComponent.loader = true; //activar cargando
+        this.api.get('api/cliente/validaidentificacion?tipoId=' + cli.tipo_identificacion + '&identificacion=' + cli.identificacion, 'cotizacion').subscribe(
+          valCe => {
 
-        const form = {
 
-          tipo_identificacion: this.formulario.get('tipo_identificacion').value,
-          identificacion: this.formulario. get('identificacion').value,
-          primer_nombre: this.formulario.get('primer_nombre').value,
-          segundo_nombre: this.formulario.get('segundo_nombre').value,
-          primer_apellido: this.formulario.get('primer_apellido').value,
-          segundo_apellido: this.formulario.get('segundo_apellido').value,
-          genero: this.formulario.get('genero').value,
-          paren: this.formulario.get('paren').value,
-          paren_name: this.formulario.get('paren').value.name,
-          fecha_nacimiento: this.formulario.get('fecha_nacimiento').value,
-          edad: this.formulario.get('edad').value,
-          participacion: this.formulario.get('participacion').value,
-          grupo_id: this.gruposelect.id,
-          grupo_name: this.gruposelect.name
-        }
-        var existe = this.table.find(e => e.identificacion == form.identificacion && e.grupo_id == form.grupo_id);
-        if (existe) {
-          this.table[this.table.indexOf(existe)] = form;
-        } else {
-          this.table.push(form)
-        }
-        this.calcular_part();
-        this.nuevofurmulario();
-        this.appComponent.loader = false; //desactivar cargando 
+            if (valCe.resultado == "OK" || cli.tipo_identificacion == "04") {
+
+
+
+              this.appComponent.loader = true; //activar cargando
+
+              const form = {
+
+                tipo_identificacion: this.formulario.get('tipo_identificacion').value,
+                identificacion: cli.tipo_identificacion == "04" ? null : this.formulario.get('identificacion').value,
+                primer_nombre: this.formulario.get('primer_nombre').value,
+                segundo_nombre: this.formulario.get('segundo_nombre').value,
+                primer_apellido: this.formulario.get('primer_apellido').value,
+                segundo_apellido: this.formulario.get('segundo_apellido').value,
+                genero: this.formulario.get('genero').value,
+                paren: this.formulario.get('paren').value,
+                paren_name: this.formulario.get('paren').value.name,
+                fecha_nacimiento: this.formulario.get('fecha_nacimiento').value,
+                edad: this.formulario.get('edad').value,
+                participacion: this.formulario.get('participacion').value,
+                grupo_id: this.gruposelect.id,
+                grupo_name: this.gruposelect.name
+              }
+              var existe = this.table.find(e => e.identificacion == form.identificacion && e.grupo_id == form.grupo_id);
+              if (existe) {
+                this.table[this.table.indexOf(existe)] = form;
+              } else {
+                this.table.push(form)
+              }
+              this.calcular_part();
+              this.nuevofurmulario();
+              this.appComponent.loader = false; //desactivar cargando 
+
+
+            } else {
+              this.appComponent.message('warn', 'Validación Identificación', valCe.resultado);
+
+            }
+          }
+        );
+
       }
+
     } else {
       Object.keys(this.formulario.controls).forEach(field => { // {1}
         const control = this.formulario.get(field);
@@ -303,21 +375,21 @@ export class BeneficiariosDependientesComponent implements OnInit {
   }
   siguiente() {
 
-  
-      this.appComponent.loader = true; //activar cargando
-      this.emision.beneficiarios = new Array<Beneficiarios>();
-      this.table.forEach(element => {
-        this.emision.beneficiarios.push(element)
-      });
-   
-      this.enviarPadre.emit({ index: this.activeIndex + 1, emision: this.emision });
 
     this.appComponent.loader = true; //activar cargando
     this.emision.beneficiarios = new Array<Beneficiarios>();
     this.table.forEach(element => {
       this.emision.beneficiarios.push(element)
     });
-    console.log(this.emision)
+
+    this.enviarPadre.emit({ index: this.activeIndex + 1, emision: this.emision });
+
+    this.appComponent.loader = true; //activar cargando
+    this.emision.beneficiarios = new Array<Beneficiarios>();
+    this.table.forEach(element => {
+      this.emision.beneficiarios.push(element)
+    });
+
     this.enviarPadre.emit({ index: this.activeIndex + 1, emision: this.emision });
 
     this.appComponent.loader = false; //desactivar cargando 
@@ -333,5 +405,10 @@ export class BeneficiariosDependientesComponent implements OnInit {
   }
   anterior() {
     this.enviarPadre.emit({ index: this.activeIndex - 1, emision: this.emision });
+  }
+
+  modificaEdad() {
+    this.formulario.patchValue({ fecha_nacimiento: null });
+
   }
 }

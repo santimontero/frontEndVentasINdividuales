@@ -169,3 +169,9 @@ export class ConfiguraComercializacion{
   cfc_modificabienasegurado: any;
   cfc_flag_item: any; 
 }
+
+export class confGrupo{
+  gxp_num_per: any; 
+  gxp_edad_min: any; 
+  gxp_edad_max: any; 
+}

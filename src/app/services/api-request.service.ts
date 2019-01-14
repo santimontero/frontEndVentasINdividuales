@@ -119,14 +119,17 @@ export class ApiRequestService {
             .catch(function (error: any) {
              
                 let resp: any = JSON.parse(error['_body']);
-
-                if (error.status === 401 || error.status === 403) {
+console.log(resp)
+                if (error.status === 401 || error.status === 403 || error.toString().indexOf("token o") >0) {
                     me.userInfoService.removeUserInfo();
                     me.router.navigate(['/login']);
 
                 } else if (resp.operationStatus != null && resp.operationStatus != undefined) {
                     me.mensaje.mensajeServer(resp.operationStatus, resp.operationMessage, tituloPagina);
                     return Observable.throw(error || 'Server error');
+                }else{
+                    me.mensaje.mensajeServer("error", "No hay Conexion de Internet", tituloPagina);
+                   
                 }
 
             });
