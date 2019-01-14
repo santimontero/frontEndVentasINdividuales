@@ -184,6 +184,7 @@ export class BeneficiariosDependientesComponent implements OnInit {
         this.gruposelect = { id: null, name: "", code: null }
         this.appComponent.message('error', 'Error', 'la participación no puede superar el 100%, modifique algun beneficiario');
       }
+      this.confGrupo = new confGrupo();
       console.log(this.gruposelect )
     } else {
       if (+this.part_total < 100) {
@@ -265,13 +266,11 @@ export class BeneficiariosDependientesComponent implements OnInit {
     {
      existe2 = this.table.find(e => e.identificacion == event.identificacion && e.grupo_name.includes('CONYU') && e.primer_nombre == event.primer_nombre && e.primer_apellido == event.primer_apellido);
     }
-    console.log(this.gruposelect)
-    console.log(this.table)
-console.log(this.table.filter(e => e.grupo_id == this.gruposelect.code))
 
-    if(this.confGrupo.gxp_num_per <= this.table.filter(e => e.grupo_id == this.gruposelect.code).length ){
+
+    if(this.confGrupo.gxp_num_per <= this.table.filter(e => e.grupo_id == this.gruposelect.code).length  && this.gruposelect.code !=1){
       this.appComponent.message('warn', 'Atención', 'No puede superar el maximo número de persona configurado');
-    }else if((this.confGrupo.gxp_edad_min >   event.edad)  || ( event.edad > this.confGrupo.gxp_edad_max)  ){
+    }else if((this.confGrupo.gxp_edad_min >   event.edad)  || ( event.edad > this.confGrupo.gxp_edad_max)  && this.gruposelect.code !=1 ){
       this.appComponent.message('warn', 'Atención', 'La edad ingresada no esta permitida para este grupo.');
     }else{
     if (!existe && !(this.gruposelect.code == 1) && !existe2 ) {
@@ -306,13 +305,11 @@ console.log(this.table.filter(e => e.grupo_id == this.gruposelect.code))
     if (this.formulario.valid) {
 
         var cli = this.formulario.getRawValue();
-console.log(this.table)
-console.log(this.gruposelect)
      if (!this.table.find(e => e.identificacion == this.formulario.get('identificacion').value && e.grupo_id == this.gruposelect.id) && (+this.part_total + +this.formulario.get('participacion').value) > 100) {
         this.appComponent.message('error', 'Error', 'la participación no puede superar el 100%');
-      } else if(this.confGrupo.gxp_num_per <= this.table.filter(e => e.grupo_id == this.gruposelect.id).length ){
+      } else if(this.confGrupo.gxp_num_per <= this.table.filter(e => e.grupo_id == this.gruposelect.id).length  && this.gruposelect.code !=1  ){
         this.appComponent.message('warn', 'Atención', 'No puede superar el maximo número de persona configurado');
-      }else if((this.confGrupo.gxp_edad_min >  this.formulario.get('edad').value)  || (this.formulario.get('edad').value> this.confGrupo.gxp_edad_max)  ){
+      }else if((this.confGrupo.gxp_edad_min >  this.formulario.get('edad').value)  || (this.formulario.get('edad').value> this.confGrupo.gxp_edad_max)  && this.gruposelect.code !=1 ){
         this.appComponent.message('warn', 'Atención', 'La edad ingresada no esta permitida para este grupo.');
       }else{
 
