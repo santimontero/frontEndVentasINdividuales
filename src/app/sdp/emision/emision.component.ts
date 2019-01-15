@@ -90,7 +90,11 @@ export class EmisionComponent implements OnInit {
   }
 
   siguiente() {
-    this.enviarPadre.emit({ index: this.activeIndex + 1 , emision: this.emision });
+
+/// objeto a enviarse a guardar
+
+    console.log(this.emision)
+    this.enviarPadre.emit({ index: 0 , emision: this.emision });
 
   }
 
