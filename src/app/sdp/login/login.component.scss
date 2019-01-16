@@ -147,7 +147,7 @@
   .login {
     position: relative;
     height: 100%;
-    background: linear-gradient(to bottom, rgba(0, 128, 255, 0.63) 0%, black 100%);
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0.63) 0%, white 100%);;
     transition: opacity 0.1s, transform 0.3s cubic-bezier(0.17, -0.65, 0.665, 1.25);
     transform: scale(1);
     
@@ -191,7 +191,7 @@
     &__row {
       height: 5rem;
       padding-top: 1rem;
-      border-bottom: 1px solid rgba(255,255,255,0.2);
+      border-bottom: 1px solid rgb(32, 78, 154);;
     }
     
     &__icon {
@@ -217,7 +217,8 @@
       padding-left: 1.5rem;
       font-size: 1.5rem;
       background: transparent;
-      color: #FDFCFD;
+      color: #204e9a;
+      font-weight: bold;
     }
     
     &__submit {
@@ -280,8 +281,9 @@
       color: #ABA8AE;
       
       a {
-        color: #fff;
+        color: #000;
         cursor: pointer;
+        font-weight: 500;
       }
     }
     

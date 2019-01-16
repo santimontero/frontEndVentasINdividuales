@@ -131,10 +131,16 @@ export class UsuariosComponent implements OnInit {
   save() {
     this.api.post('/api/usuarios/guardar/', this.datosEnvio(), 'Usuarios').subscribe(Data => {
       this.ngOnInit()
-    }
-      , error => {
+      this.appComponent.message('success', 'Exitoso', 'Se guardo correctamente.');
        
-      });
+      // this.appComponent.loader = false; //desactivar cargando
+     },
+       error => {
+         this.appComponent.message('error', 'Error', error);
+     
+         //this.appComponent.loader = false; //desactivar cargando        
+       }
+     );
     this.displayDialog = false;
   }
 
@@ -144,8 +150,16 @@ export class UsuariosComponent implements OnInit {
     this.api.get('/api/usuarios/elimina', 'Usuarios', params).subscribe(
       res => {
         this.ngOnInit();
-      }
-    );
+        this.appComponent.message('success', 'Exitoso', 'Se borro correctamente.');
+       
+        // this.appComponent.loader = false; //desactivar cargando
+       },
+         error => {
+           this.appComponent.message('error', 'Error', error);
+       
+           //this.appComponent.loader = false; //desactivar cargando        
+         }
+       );
     this.usuario = null;
     this.displayDialog = false;
   }

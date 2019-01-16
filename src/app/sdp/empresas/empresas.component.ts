@@ -99,9 +99,12 @@ export class EmpresasComponent implements OnInit {
 
     this.api.post('/api/empresas/guardar/', this.datosEnvio(), 'Empresa').subscribe(Data => {
       this.ngOnInit()
-
+      this.appComponent.message('success', 'Exitoso', 'Se guardo correctamente.');
+     
     }
       , error => {
+    this.appComponent.message('error', 'Error', error);
+     
         console.log(error)
       }
 
@@ -117,7 +120,14 @@ export class EmpresasComponent implements OnInit {
     this.api.get('/api/empresas/elimina', 'Empresas', params).subscribe(
       res => {
         this.ngOnInit();
+        this.appComponent.message('success', 'Exitoso', 'Se borro correctamente.');
+     
       }
+        , error => {
+      this.appComponent.message('error', 'Error', error);
+       
+          console.log(error)
+        }
     );
     this.empresa = null;
     this.displayDialog = false;

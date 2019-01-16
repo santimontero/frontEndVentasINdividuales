@@ -89,9 +89,13 @@ export class PerfilesComponent implements OnInit {
     this.api.post('/api/Perfiles/guardar/', this.datosEnvio(), 'Perfil').subscribe(Data => {
       this.ngOnInit()
 
+      this.appComponent.message('success', 'Exitoso', 'Se guardo correctamente.');
+     
     }
       , error => {
-   
+    this.appComponent.message('error', 'Error', error);
+     
+        console.log(error)
       }
 
     );;
@@ -108,9 +112,14 @@ export class PerfilesComponent implements OnInit {
 
         this.ngOnInit();
 
-
-
+        this.appComponent.message('success', 'Exitoso', 'Se borro correctamente.');
+     
       }
+        , error => {
+      this.appComponent.message('error', 'Error', error);
+       
+          console.log(error)
+        }
     );
 
     this.displayDialog = false;

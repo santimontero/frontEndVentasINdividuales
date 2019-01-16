@@ -92,9 +92,13 @@ export class OpcionesComponent implements OnInit {
     this.api.post('/api/opciones/guardar/', this.datosEnvio(), 'Opcion').subscribe(Data => {
       this.ngOnInit()
 
+      this.appComponent.message('success', 'Exitoso', 'Se guardo correctamente.');
+     
     }
       , error => {
+    this.appComponent.message('error', 'Error', error);
      
+        console.log(error)
       }
 
     );;
@@ -113,7 +117,14 @@ export class OpcionesComponent implements OnInit {
 
 
 
+        this.appComponent.message('success', 'Exitoso', 'Se borro correctamente.');
+     
       }
+        , error => {
+      this.appComponent.message('error', 'Error', error);
+       
+          console.log(error)
+        }
     );
     this.opcion = null;
     this.displayDialog = false;

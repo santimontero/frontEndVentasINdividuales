@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { TreeNode } from 'primeng/primeng';
 
 
-
+import { AppComponent } from 'src/app/app.component';
 import { SelectItem } from 'primeng/components/common/selectitem';
 import { ApiRequestService } from 'src/app/services/api-request.service';
 import { UserInfoService } from 'src/app/services/user-info.service';
@@ -39,7 +39,7 @@ export class PermisosComponent implements OnInit {
   tituloHTML: string = 'Perfil Menú';
 
 
-  constructor(private api: ApiRequestService ) { }
+  constructor(private api: ApiRequestService,public appComponent: AppComponent ) { }
 
 
 
@@ -133,13 +133,14 @@ export class PermisosComponent implements OnInit {
 
    // this.appComponent.loader = true;
     this.api.post('/api/Permisos/guardar', perfilMenuEnviar, this.tituloHTML).subscribe(res => {
-      if (res !== undefined && res !== null && res.operationStatus === "SUCCESS") {
 
-      }
-   
+        this.appComponent.message('success', 'Exitoso', 'Se guardo correctamente.');
+       
      // this.appComponent.loader = false; //desactivar cargando
     },
       error => {
+        this.appComponent.message('error', 'Error', error);
+    
         //this.appComponent.loader = false; //desactivar cargando        
       }
     );
