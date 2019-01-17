@@ -129,18 +129,18 @@ this.appComponent.loader = false;
       product => {
         this.emision.cotizacion.prd_edad_min = product.prd_edad_min;
         this.emision.cotizacion.prd_edad_max = product.prd_edad_max;
-      }
-    )
-
+   
     this.api.get('api/configuraciones/comercializacion?ramo=' + this.emision.cotizacion.pda_ramo + '&codigo=' + this.emision.cotizacion.pda_codigo_plan, 'cotizacion').subscribe(
       configuraComerc => {
         this.emision.comercializacion = configuraComerc;
+
+        this.enviarPadre.emit({ index: this.activeIndex + 1,emision: this.emision  });
+
       }
     )
     
-
-   console.log(this.emision)
-    this.enviarPadre.emit({ index: this.activeIndex + 1,emision: this.emision  });
+  }
+  )
 
   }
 

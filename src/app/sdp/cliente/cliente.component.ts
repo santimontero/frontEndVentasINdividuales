@@ -20,6 +20,8 @@ export class ClienteComponent implements OnInit {
   estadoCivil: SelectItem[];
   es: any;
   formulario: FormGroup;
+  dec_tit:boolean=false;
+  dec_ben:boolean=false;
   constructor(private formBuilder: FormBuilder,
     public appComponent: AppComponent, private api: ApiRequestService) {
     this.es = {
@@ -37,7 +39,8 @@ export class ClienteComponent implements OnInit {
 
   ngOnInit() {
     this.nuevofurmulario();
-   console.log( this.api.getInfoUsuario())
+
+console.log(this.emision.comercializacion)
     this.tipoId = [];
     this.api.get('api/catalogos/tipoid', 'cliente').subscribe(
       tipoid => {
@@ -95,6 +98,10 @@ export class ClienteComponent implements OnInit {
       Fecha_Expedicion_Pasp: new FormControl(''),
       Fecha_Ingreso_Pais: new FormControl(''),
       Fecha_Caducidad_Pasp: new FormControl(''),
+      dec_tit: new FormControl(''),
+      dec_ben: new FormControl(''),
+      descla_salud_tit: new FormControl('DECLARO NO PADECER NINGUN TIPO DE ENFERMEDAD'),
+      descla_salud_bene: new FormControl('DECLARO NO PADECER NINGUN TIPO DE ENFERMEDAD'),
     });
 
 
@@ -116,6 +123,10 @@ export class ClienteComponent implements OnInit {
       Fecha_Expedicion_Pasp: new FormControl(this.emision.cliente.Fecha_Expedicion_Pasp),
       Fecha_Ingreso_Pais: new FormControl(this.emision.cliente.Fecha_Ingreso_Pais),
       Fecha_Caducidad_Pasp: new FormControl(this.emision.cliente.Fecha_Caducidad_Pasp),
+
+      descla_salud_tit: new FormControl(this.emision.cliente.descla_salud_tit),
+      descla_salud_bene: new FormControl(this.emision.cliente.descla_salud_bene),
+
     });
 
 
@@ -130,8 +141,8 @@ export class ClienteComponent implements OnInit {
       //Used Math.floor instead of Math.ceil
       //so 26 years and 140 days would be considered as 26, not 27.
       var edad = Math.floor((timeDiff / (1000 * 3600 * 24)) / 365);
-console.log(this.emision.cotizacion)
-      if (edad >= this.emision.cotizacion.prd_edad_max || edad <= this.emision.cotizacion.prd_edad_min ) {
+      console.log(this.emision.cotizacion)
+      if (edad >= this.emision.cotizacion.prd_edad_max || edad <= this.emision.cotizacion.prd_edad_min) {
         this.formulario.patchValue({ fecha_nacimiento: '' });
         this.formulario.patchValue({ edad: '' });
         this.appComponent.message('warn', 'Atención', 'La fecha e nacimiento ingreasada no esta permitida para este producto.');
@@ -155,49 +166,49 @@ console.log(this.emision.cotizacion)
 
       this.api.get('api/cliente/validaidentificacion?tipoId=' + cli.tipo_identificacion + '&identificacion=' + cli.identificacion, 'cotizacion').subscribe(
         valCe => {
- 
 
-          if(valCe.resultado == "OK"){
+
+          if (valCe.resultado == "OK") {
 
             this.api.post('api/cliente/ofac', this.datosEnvioOFAC(), 'cotizacion').subscribe(Data => {
               console.log(Data)
-              if(Data.resultado == "OK"){
+              if (Data.resultado == "OK") {
                 this.api.post('api/cliente/validarestriccion', this.datosEnvioRESTVENTA(), 'cotizacion').subscribe(Data2 => {
-                  if(Data2.ai_num_error == 0){
-      this.emision.cliente = new Cliente();
-      this.emision.cliente = cli
+                  if (Data2.ai_num_error == 0) {
+                    this.emision.cliente = new Cliente();
+                    this.emision.cliente = cli
 
-      this.enviarPadre.emit({ index: this.activeIndex + 1, emision: this.emision });
-      this.appComponent.loader = false;
+                    this.enviarPadre.emit({ index: this.activeIndex + 1, emision: this.emision });
+                    this.appComponent.loader = false;
 
-                  }else{
+                  } else {
                     this.appComponent.loader = false;
                     this.appComponent.message('warn', 'Restriccion de Ventas', Data2.avc_desc_error);
                   }
                 });
-              }else{
+              } else {
                 this.appComponent.loader = false;
                 this.appComponent.message('warn', 'Validación Listas OFAC', Data.resultado);
               }
-             });
-          }else{
+            });
+          } else {
             this.appComponent.loader = false;
             this.appComponent.message('warn', 'Validación Identificación', valCe.resultado);
-    
+
           }
         }
       )
 
       // OFAC
-  
+
 
       // RESTRICCION DE VENTAS
-    
 
 
 
-    
-   //desactivar cargando 
+
+
+      //desactivar cargando 
     } else {
       Object.keys(this.formulario.controls).forEach(field => { // {1}
         const control = this.formulario.get(field);
@@ -217,7 +228,7 @@ console.log(this.emision.cotizacion)
       segundoNombre: this.formulario.get('segundo_nombre').value,
       primerApellido: this.formulario.get('primer_apellido').value,
       segundoApellido: this.formulario.get('segundo_apellido').value,
-      identificacion:this.api.getInfoUsuario().identificacion,
+      identificacion: this.api.getInfoUsuario().identificacion,
       codigoUsuario: this.api.getInfoUsuario().displayName,
     };
 
@@ -228,11 +239,11 @@ console.log(this.emision.cotizacion)
   datosEnvioRESTVENTA() {
 
     const data = {
-      tipoId:  this.formulario.get('tipo_identificacion').value,
-      num_id:  this.formulario.get('identificacion').value,
+      tipoId: this.formulario.get('tipo_identificacion').value,
+      num_id: this.formulario.get('identificacion').value,
       ramo: this.emision.cotizacion.pda_ramo,
       cod_producto: this.emision.cotizacion.pda_codigo_plan,
-      cod_prod_comercializado:this.emision.cotizacion.pda_codigo_conf_prd,
+      cod_prod_comercializado: this.emision.cotizacion.pda_codigo_conf_prd,
       am_sa: this.emision.cotizacion.suma_aseg,
     };
 
@@ -240,5 +251,19 @@ console.log(this.emision.cotizacion)
   }
   anterior() {
     this.enviarPadre.emit({ index: this.activeIndex - 1, emision: this.emision });
+  }
+  ChangeTit(event){
+    if(event.checked){
+    this.formulario.patchValue({ descla_salud_tit: "" });
+    }else{
+      this.formulario.patchValue({ descla_salud_tit: "DECLARO NO PADECER NINGUN TIPO DE ENFERMEDAD" });
+    }
+  }
+  ChangeBen(event){
+    if(event.checked){
+      this.formulario.patchValue({ descla_salud_bene: "" });
+      }else{
+        this.formulario.patchValue({ descla_salud_bene: "DECLARO NO PADECER NINGUN TIPO DE ENFERMEDAD" });
+     }
   }
 }

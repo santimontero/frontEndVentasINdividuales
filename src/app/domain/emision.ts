@@ -79,6 +79,9 @@ export class Cliente {
   Fecha_Expedicion_Pasp?: any;
   Fecha_Ingreso_Pais?: any;
   Fecha_Caducidad_Pasp?: any;
+
+  descla_salud_tit:any
+  descla_salud_bene:any
 }
 export class FormaPago {
   tipo_form_pago?: any;
@@ -89,6 +92,12 @@ export class FormaPago {
   ano_caducidad?: any;
   mes_caducidad?: any;
   cvv?: any;
+
+  //rembolso 
+
+  tip_cuenta_rembolso:any;
+  banco_rembolso:any;
+  numero_rembolso:any;
 }
 export class Beneficiarios {
   tipo_identificacion?: any;
