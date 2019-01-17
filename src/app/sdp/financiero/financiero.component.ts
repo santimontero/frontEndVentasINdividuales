@@ -167,7 +167,7 @@ export class FinancieroComponent implements OnInit {
 
       var form = this.formulario.getRawValue();
       var error = 0;
-      if (form.tit_cuenta === "1" && (form.tip_ident == "" || form.ident_tit == "" || form.nom_tit == "" || form.paren_tit == "")) {
+      if (form.tit_cuenta === "N" && (form.tip_ident == "" || form.ident_tit == "" || form.nom_tit == "" || form.paren_tit == "")) {
 
         this.appComponent.message('error', 'Error', 'Todos los campos del titular de la cuenta son obligatorios');
         error = error + 1;
@@ -235,7 +235,6 @@ console.log(valCe)
   seleccionarPatrimonio(event) {
     var valor = event.value.name.replace(/ /g, "");
     this.ingPat = valor.indexOf('-');
-
     if (this.ingPat != -1) {
       var menor = + valor.substring(0, this.ingPat).replace(',', "");
       var mayor = + valor.substring(this.ingPat + 1).replace(',', "");
@@ -243,8 +242,10 @@ console.log(valCe)
     } else {
       var b = valor.indexOf('>')
       this.formulario.patchValue({ med_patrimonio: 0 });
-      this.maxPatri = + valor.substring(b + 1);
-
+      console.log(b)
+      console.log(valor)
+      this.maxPatri = +valor.substring(b + 1).replace(',', "");;
+console.log( this.maxPatri )
     }
   }
 }
