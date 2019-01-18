@@ -159,10 +159,21 @@ console.log(this.emision.comercializacion)
   siguiente() {
 
     if (this.formulario.valid) {
-      this.appComponent.loader = true; //activar cargando
-
-
+      
       var cli = this.formulario.getRawValue();
+      var error = 0; //activar cargando
+      if(this.emision.comercializacion.cfc_declaracion_salud === 'S' &&( cli.descla_salud_tit == "" ) ){
+
+        this.appComponent.message('warn','Atención', 'El campo declaración de salud no puede ir vacio');
+       error = error + 1;
+        } if (this.emision.comercializacion.cfc_validadependiente_declaracion_salud === 'S' &&( cli.descla_salud_bene == "" ) ){
+
+          this.appComponent.message('warn','Atención', 'El campo declaración de salud dependiente no puede ir vacio');
+         error = error + 1;
+          }
+
+else if(error == 0) {
+  this.appComponent.loader = true;
 
       this.api.get('api/cliente/validaidentificacion?tipoId=' + cli.tipo_identificacion + '&identificacion=' + cli.identificacion, 'cotizacion').subscribe(
         valCe => {
@@ -198,7 +209,7 @@ console.log(this.emision.comercializacion)
           }
         }
       )
-
+      }
       // OFAC
 
 

@@ -60,8 +60,8 @@ export class ClienteDomicilioComponent implements OnInit {
     )
 
     this.envio_core = [];
-    this.envio_core.push({ label: 'Domicilio', value: { id: 1, name: 'Domicilio', code: 'D' } });
-    this.envio_core.push({ label: 'Trabajo', value: { id: 2, name: 'Trabajo', code: 'T' } });
+    this.envio_core.push({ label: 'Domicilio', value: { id: 1, name: 'Domicilio', code: 'C' } });
+    this.envio_core.push({ label: 'Trabajo', value: { id: 2, name: 'Oficina', code: 'O' } });
 
     this.provincia = [];
     this.api.get('api/catalogos/provincias', 'direccion').subscribe(

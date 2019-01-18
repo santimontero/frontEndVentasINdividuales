@@ -18,6 +18,7 @@ export class FormaPagoComponent implements OnInit {
   bancos: SelectItem[];
   tipo_tarjeta: SelectItem[];
   pais_emisor: SelectItem[];
+  tipo_cuenta: SelectItem[];
   mes: SelectItem[];
   es: any;
   formulario: FormGroup;
@@ -38,6 +39,12 @@ export class FormaPagoComponent implements OnInit {
 
   ngOnInit() {
     this.nuevofurmulario();
+
+    this.tipo_cuenta = [];
+
+    this.tipo_cuenta.push({ label: 'AHORROS', value: 'A' });
+    this.tipo_cuenta.push({ label: 'CORRIENTE', value: 'C' });
+
     this.tipo_form_pago = [];
     this.appComponent.loader = true; 
     this.api.get('api/catalogos/formaspago', 'forma_pago').subscribe(
@@ -109,6 +116,10 @@ export class FormaPagoComponent implements OnInit {
       ano_caducidad: new FormControl(''),
       mes_caducidad: new FormControl(''),
       cvv: new FormControl(''),
+
+      tip_cuenta_rembolso: new FormControl(''),
+      banco_rembolso: new FormControl(''),
+      numero_rembolso: new FormControl(''),
     });
 
 
@@ -124,6 +135,10 @@ export class FormaPagoComponent implements OnInit {
       ano_caducidad: new FormControl(this.emision.formaPago.ano_caducidad),
       mes_caducidad: new FormControl(this.emision.formaPago.mes_caducidad),
       cvv: new FormControl(this.emision.formaPago.cvv),
+
+      tip_cuenta_rembolso: new FormControl(this.emision.formaPago.tip_cuenta_rembolso),
+      banco_rembolso: new FormControl(this.emision.formaPago.banco_rembolso),
+      numero_rembolso: new FormControl(this.emision.formaPago.numero_rembolso),
     });
 
 
@@ -144,8 +159,14 @@ export class FormaPagoComponent implements OnInit {
       if(form.tipo_form_pago === 21 &&( form.tipo_tarjeta == ""||  form.pais_emisor == ""||  form.ano_caducidad == "" || form.mes_caducidad == "") ){
      
         this.appComponent.message('error','Error', 'Todos los campos de la tarjeta de crédito son obligatorios');
-    error = error + 1;
-      }
+       error = error + 1;
+      }else
+
+      if(this.emision.comercializacion.cfc_ctarembolso === 'S' &&( form.tip_cuenta_rembolso == ""||  form.banco_rembolso == ""||  form.numero_rembolso == "" ) ){
+     
+        this.appComponent.message('error','Error', 'Todos los campos de la cuenta de rembolso son obligatorios');
+       error = error + 1;
+        }else
 
       if(error === 0){
         this.emision.formaPago = new FormaPago();
