@@ -4,7 +4,7 @@ import { Component, OnInit } from '@angular/core';
 import { ApiRequestService } from 'src/app/services/api-request.service';
 import { Http } from '@angular/http';
 import { AppComponent } from 'src/app/app.component';
-import { ConfirmationService } from 'primeng/primeng';
+import { ConfirmationService, SelectItem } from 'primeng/primeng';
 import { Empresa } from 'src/app/domain/empresa';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms'
 import { URLSearchParams } from '@angular/http';
@@ -27,12 +27,17 @@ export class EmpresasComponent implements OnInit {
 
   cols: any[];
   formulario: FormGroup;
-
+  tip_empresa: SelectItem[];
   constructor(
     private api: ApiRequestService,
     private formBuilder: FormBuilder,
     public appComponent: AppComponent) {
 
+
+      this.tip_empresa = [];
+
+      this.tip_empresa.push({ label: 'Broker', value: 'B' });
+      this.tip_empresa.push({ label: 'Sponsor', value: 'S' });
   }
 
   nuevofurmulario() {

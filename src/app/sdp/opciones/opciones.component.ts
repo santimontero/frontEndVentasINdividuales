@@ -59,9 +59,9 @@ export class OpcionesComponent implements OnInit {
     );
 
     this.cols = [
-      { field: 'opc_codigo_opcion', header: 'opc_codigo_opcion' },
-      { field: 'opc_descripcion', header: 'opc_descripcion' },
-      { field: 'opc_url', header: 'opc_url' }
+      { field: 'opc_codigo_opcion', header: 'Codigo' },
+      { field: 'opc_descripcion', header: 'Descripcion' },
+      { field: 'opc_url', header: 'URL' }
     ];
 
 

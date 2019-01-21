@@ -32,40 +32,45 @@
     </ng-template>
 </p-table>
 
-<p-dialog header="Empresa Detalle" [(visible)]="displayDialog" [responsive]="true" showEffect="fade" [modal]="true" [width]="300">
-  <form [formGroup]="formulario" >
+<p-dialog header="Empresa Detalle" [(visible)]="displayDialog" [responsive]="true" showEffect="fade" [modal]="true" [width]="600">
+    <div class="ui-g ui-fluid form-group"> 
+    <form [formGroup]="formulario" >
       <div class="ui-g form-group">
  
-      <div class="ui-g-12">
+      <div class="ui-g-12 ui-md-6">
         <span class="ui-float-label">
-          <input id="float-input" type="text" size="30" pInputText [(ngModel)]="formulario.get('emp_ruc').value"  formControlName="emp_ruc"> 
+          <input id="float-input" type="text" size="15" pInputText [(ngModel)]="formulario.get('emp_ruc').value"  formControlName="emp_ruc"> 
           <label for="float-input">Empresa Ruc</label>
       </span>
       </div>
-      <div class="ui-g-12">
+      <div class="ui-g-12 ui-md-6">
           <span class="ui-float-label">
               <input id="float-input" type="text" size="30" pInputText [(ngModel)]="formulario.get('emp_razon_social').value"  formControlName="emp_razon_social"> 
               <label for="float-input">Razon Social</label>
           </span>          
       </div>
-      <div class="ui-g-12">
+
+      <div class="ui-g-12 ui-md-6">
+        <span class="ui-float-label">
+            <label class="label-list">Tipo de empresa ?</label>
+            <p-dropdown placeholder="Seleccione" id="emp_tipo" formControlName="emp_tipo" [options]="tip_empresa"
+                [autoWidth]="false" [style]="{'width': '100%'}"></p-dropdown>
+        </span>
+        </div>
+      <div class="ui-g-12 ui-md-6">
           <span class="ui-float-label">
-              <input id="float-input" type="text" size="30" pInputText [(ngModel)]="formulario.get('emp_tipo').value"  formControlName="emp_tipo"> 
-              <label for="float-input">emp_tipo</label>
-          </span>          
-      </div>
-      <div class="ui-g-12">
-          <span class="ui-float-label">
-              <input id="float-input" type="text" size="30" pInputText [(ngModel)]="formulario.get('emp_email').value"  formControlName="emp_email"> 
+              <input id="float-input" type="email" size="30" pInputText [(ngModel)]="formulario.get('emp_email').value"  formControlName="emp_email"> 
               <label for="float-input">Email</label>
           </span>            
       </div>
   </div>
   </form>
+  </div>
   <p-footer>
       <div class="ui-dialog-buttonpane ui-helper-clearfix">
-          <button type="button" pButton icon="fa fa-close" (click)="delete()" label="Eliminar"  class="ui-button-danger ui-button-rounded"></button>
-          <button type="button" pButton icon="fa fa-check" (click)="save()" label="Guardar" class="ui-button-success ui-button-rounded"></button>
-      </div>
+        <button type="button" pButton icon="fa fa-check" (click)="save()" label="Guardar" class="ui-button-success ui-button-rounded"></button>
+     
+        <button type="button" pButton icon="fa fa-close" (click)="delete()" label="Eliminar"  class="ui-button-danger ui-button-rounded"></button>
+            </div>
   </p-footer>
 </p-dialog>

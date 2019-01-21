@@ -31,17 +31,17 @@
   </ng-template>    
 </p-table>
 
-<p-dialog header="Opcion Detalle" [(visible)]="displayDialog" [responsive]="true" showEffect="fade" [modal]="true" [width]="300">
+<p-dialog header="Opcion Detalle" [(visible)]="displayDialog" [responsive]="true" showEffect="fade" [modal]="true" [width]="600">
   <form [formGroup]="formulario" >
       <div class="ui-g form-group">
  
-      <div class="ui-g-12">
+      <div class="ui-g-12 ui-md-6">
         <span class="ui-float-label">
           <input id="float-input" type="text" size="30" pInputText [(ngModel)]="formulario.get('opc_descripcion').value"  formControlName="opc_descripcion"> 
           <label for="float-input">Opcion Descripcion</label>
       </span>
       </div>
-      <div class="ui-g-12">
+      <div class="ui-g-12 ui-md-6">
           <span class="ui-float-label">
               <input id="float-input" type="text" size="30" pInputText [(ngModel)]="formulario.get('opc_url').value"  formControlName="opc_url"> 
               <label for="float-input">Url</label>
@@ -52,8 +52,9 @@
   </form>
   <p-footer>
       <div class="ui-dialog-buttonpane ui-helper-clearfix">
-          <button type="button" pButton icon="fa fa-close" (click)="delete()" label="Eliminar"></button>
-          <button type="button" pButton icon="fa fa-check" (click)="save()" label="Guardar"></button>
-      </div>
+                <button type="button" pButton icon="fa fa-check" (click)="save()" label="Guardar" class="ui-button-success ui-button-rounded"></button>
+                <button type="button" pButton icon="fa fa-close" (click)="delete()" label="Eliminar" class="ui-button-danger ui-button-rounded"></button>
+   
+            </div>
   </p-footer>
 </p-dialog>
