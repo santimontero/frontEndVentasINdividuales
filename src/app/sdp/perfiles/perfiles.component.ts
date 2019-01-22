@@ -58,8 +58,8 @@ export class PerfilesComponent implements OnInit {
     );
 
     this.cols = [
-      { field: 'per_codigo_perfil', header: 'per_codigo_perfil' },
-      { field: 'per_descripcion', header: 'per_descripcion' }
+      { field: 'per_codigo_perfil', header: 'Codigo perfil' },
+      { field: 'per_descripcion', header: 'Perfil descripción' }
     ];
 
 

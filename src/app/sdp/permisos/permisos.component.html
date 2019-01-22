@@ -22,10 +22,7 @@
 
           <div class="ui-g-12 ui-md-6 form-group relative">
 
-            <div class="ui-g-12 ui-md-12 ">
-              <label class="etiquetaOtrosComponentes ">Perfil*</label>
-            </div>
-            <div class="ui-g-12 ui-md-12 ">
+            <div class="ui-g-12 ui-md-10 ">
               <p-dropdown placeholder="Seleccione" [options]="perfiles" (onChange)="seleccionarPerfil($event)" [(ngModel)]="autocompletadorPerfil" placeholder="Seleccionar"
                 [autoWidth]="true" [style]="{'width': '100%'}" filter="true"></p-dropdown>
             </div>
