@@ -38,6 +38,7 @@ this.appComponent.loader = false;
 
   ngOnInit() {
     this.emision=new Emision();
+    this.emision.usuario = this.api.getInfoUsuario();
     this.plazo = [];
     this.plazo.push({ label: 'Periodo de tiempo', value: null });
     this.api.get('api/catalogos/frecuenciapago', 'cotizacion').subscribe(

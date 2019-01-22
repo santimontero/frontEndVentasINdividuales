@@ -3,6 +3,7 @@ import { SelectItem } from 'primeng/primeng';
 import { ApiRequestService } from 'src/app/services/api-request.service';
 import { from } from 'rxjs';
 import { Emision } from 'src/app/domain/emision';
+import { AppComponent } from 'src/app/app.component';
 
 @Component({
   selector: 'app-emision',
@@ -20,7 +21,7 @@ export class EmisionComponent implements OnInit {
   prima: number;
   anual: number;
 
-  constructor(private api: ApiRequestService) {
+  constructor(private api: ApiRequestService, public appComponent: AppComponent) {
     // this.api.get('api/configuraciones/productosxasesor?tipoIdent=' + this.api.getInfoUsuario().tipoIdent + '&ident=' + this.api.getInfoUsuario().identificacion, 'cotizacion').subscribe(
     //   productosAsesor => {
     //     this.productos = productosAsesor;
@@ -91,10 +92,20 @@ export class EmisionComponent implements OnInit {
 
   siguiente() {
 
-/// objeto a enviarse a guardar
+    /// objeto a enviarse a guardar
 
     console.log(this.emision)
-    this.enviarPadre.emit({ index: 0 , emision: this.emision });
+    this.api.post('api/emision/guardar', this.emision, 'emision').subscribe(Data => {
+      if (Data.resultado == "OK") {
+        this.appComponent.loader = false;
+        this.appComponent.message('success', 'Emisión', 'Datos guardados satisfactoriamente');
+      }
+      else {
+        this.appComponent.loader = false;
+        this.appComponent.message('warn', 'Emisión', Data.resultado);
+      }
+    });
+    this.enviarPadre.emit({ index: 0, emision: this.emision });
 
   }
 
