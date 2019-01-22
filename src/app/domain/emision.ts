@@ -8,6 +8,7 @@ export class Emision {
   hogar?: Hogar;
   beneficiarios?: Beneficiarios[];
   comercializacion: ConfiguraComercializacion;
+  usuario: any;
 }
 
 export class Financiero {

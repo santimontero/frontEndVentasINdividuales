@@ -13,6 +13,7 @@ export interface UserInStorage {
     perfil: number;
     tipoIdent: string;
     identificacion: string;
+    nombAsesor: string;
 }
 
 export interface LoginInfoInStorage {

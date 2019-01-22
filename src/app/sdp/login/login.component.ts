@@ -106,7 +106,8 @@ export class LoginComponent implements OnInit {
                                                 "path": respuestaSesion.path,
                                                 "perfil": respuestaSesion.per_codigo_perfil,
                                                 "tipoIdent": respuestaSesion.usu_tipo_ident,
-                                                "identificacion": respuestaSesion.usu_identificacion
+                                                "identificacion": respuestaSesion.usu_identificacion,
+                                                "nombAsesor": respuestaSesion.usu_nombre_asesor.trim()
                                             }
                                         };
                                       
