@@ -12,7 +12,10 @@ import { ApiRequestService } from 'src/app/services/api-request.service';
 })
 export class DashboardComponent implements OnInit {
   cols: any[];
-  datos:any[]
+  datos:any[];
+  lineData: any;
+
+  barData: any;
   constructor(  private api: ApiRequestService,
     private formBuilder: FormBuilder,
     public appComponent: AppComponent) { 
@@ -27,6 +30,44 @@ export class DashboardComponent implements OnInit {
     }
 
   ngOnInit() {
+
+
+    this.lineData = {
+      labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+      datasets: [
+          {
+              label: 'PROCESADA',
+              data: [65, 59, 80, 81, 56, 55, 40],
+              fill: false,
+              borderColor: '#2162b0'
+          },
+          {
+              label: 'NO PROCESADA',
+              data: [28, 48, 40, 19, 86, 27, 90],
+              fill: false,
+              borderColor: '#e02365'
+          }
+      ]
+  };
+
+  this.barData = {
+      labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+      datasets: [
+          {
+              label: 'PROCESADA',
+              backgroundColor: '#2162b0',
+              borderColor: '#2162b0',
+              data: [65, 59, 80, 81, 56, 55, 40]
+          },
+          {
+              label: 'NO PROCESADA',
+              backgroundColor: '#e02365',
+              borderColor: '#e02365',
+              data: [28, 48, 40, 19, 86, 27, 90]
+          }
+      ]
+  };
+
 
     this.api.get('api/emision/transxusuario?tipoId=' + this.api.getInfoUsuario().tipoIdent+ '&identificacion=' + this.api.getInfoUsuario().identificacion, 'cotizacion').subscribe(
       data => {
