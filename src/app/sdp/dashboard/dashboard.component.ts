@@ -33,37 +33,46 @@ export class DashboardComponent implements OnInit {
 
 
     this.lineData = {
-      labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+      labels: ['21-01-2019', '22-01-2019', '23-01-2019', '24-01-2019', '25-01-2019', '26-01-2019', '27-01-2019'],
       datasets: [
           {
               label: 'PROCESADA',
               data: [65, 59, 80, 81, 56, 55, 40],
               fill: false,
-              borderColor: '#2162b0'
+              borderColor: '#2162b0',
+              backgroundColor: '#2162b0'
           },
           {
               label: 'NO PROCESADA',
               data: [28, 48, 40, 19, 86, 27, 90],
               fill: false,
-              borderColor: '#e02365'
+              borderColor: '#e02365',
+              backgroundColor: '#e02365'
           }
       ]
   };
 
   this.barData = {
-      labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+    labels: ['21-01-2019', '22-01-2019', '23-01-2019', '24-01-2019', '25-01-2019', '26-01-2019', '27-01-2019'],
       datasets: [
           {
-              label: 'PROCESADA',
+              label: 'ACCIDENTES PERSONALES',
               backgroundColor: '#2162b0',
               borderColor: '#2162b0',
               data: [65, 59, 80, 81, 56, 55, 40]
           },
           {
-              label: 'NO PROCESADA',
+              label: 'INCENDIO',
               backgroundColor: '#e02365',
               borderColor: '#e02365',
               data: [28, 48, 40, 19, 86, 27, 90]
+          }
+          ,
+          {
+              label: 'VIDA COLECTIVA',
+              backgroundColor: '#74e866',
+              borderColor: '#74e866',
+              data: [18, 28, 20, 39, 56, 17, 80]
           }
       ]
   };
