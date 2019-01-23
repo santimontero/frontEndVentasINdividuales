@@ -21,6 +21,7 @@
             "assets": [
               "src/assets",
               "src/upload.php",
+              "src/web.config",
               "src/favicon.ico"
             ],
             "styles": [
@@ -99,6 +100,7 @@
             "assets": [
               "src/favicon.ico",
               "src/upload.php",
+              "src/web.config",
               "src/assets"
             ]
           }
