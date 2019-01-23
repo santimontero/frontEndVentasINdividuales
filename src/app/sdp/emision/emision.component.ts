@@ -99,13 +99,13 @@ export class EmisionComponent implements OnInit {
       if (Data.resultado == "OK") {
         this.appComponent.loader = false;
         this.appComponent.message('success', 'Emisión', 'Datos guardados satisfactoriamente');
+        this.enviarPadre.emit({ index: 0, emision: this.emision });
       }
       else {
         this.appComponent.loader = false;
-        this.appComponent.message('warn', 'Emisión', Data.resultado);
+        this.appComponent.message('error', 'Emisión', Data.resultado);
       }
     });
-    this.enviarPadre.emit({ index: 0, emision: this.emision });
 
   }
 
