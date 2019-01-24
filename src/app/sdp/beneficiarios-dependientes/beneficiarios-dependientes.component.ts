@@ -93,6 +93,7 @@ export class BeneficiariosDependientesComponent implements OnInit {
 
     console.log(this.gruposconfig)
 
+
     this.tipoId = [];
     this.tipoId.push({ label: "NO TIENE", value: "04" });
 

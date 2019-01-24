@@ -112,7 +112,6 @@ export class Beneficiarios {
   fecha_nacimiento?: any;
   edad?: any;
   participacion?: any;
-
 }
 export class ClienteDomicilio {
   pais_origen?: any;
