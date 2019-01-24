@@ -92,12 +92,6 @@ export class BeneficiariosDependientesComponent implements OnInit {
     )
 
     console.log(this.gruposconfig)
-    // this.grupos = [
-    //   { label: 'BENEFICIARIOS', value: { id: 1, name: 'BENEFICIARIOS' } },
-    //   { label: 'CONYUGUE', value: { id: 2, name: 'CONYUGUE' } },
-    //   { label: 'HIJOS', value: { id: 3, name: 'HIJOS' } },
-    //   { label: 'OTROS DEPENDIENTES', value: { id: 4, name: 'OTROS DEPENDIENTES' } },
-    // ];
 
     this.tipoId = [];
     this.tipoId.push({ label: "NO TIENE", value: "04" });
