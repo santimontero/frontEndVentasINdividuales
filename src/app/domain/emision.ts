@@ -41,6 +41,7 @@ export class Hogar {
   refe?: any;
   barrio?: any;
   tel?: any;
+  piso?: any;
 }
 
 export class Cotizacion {
@@ -125,6 +126,7 @@ export class ClienteDomicilio {
   calle_prin_dom?: any;
   num_dom?: any;
   trasv_dom?: any;
+  piso_dom?: any;
   refe_dom?: any;
   barrio_dom?: any;
   tel_dom?: any;
