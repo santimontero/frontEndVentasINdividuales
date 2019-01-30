@@ -126,47 +126,48 @@
                 </form>
             </p-panel>
         </div>
-        <div class="ui-g-12 ">
-            <p-panel header="Tabla de Beneficiarios y Dependientes">
-                <p-table [columns]="cols" [value]="table">
-                    <ng-template pTemplate="header" let-columns>
-                        <tr>
-                            <th></th>
-                            <th *ngFor="let col of columns">
-                                {{col.header}}
-                            </th>
-                        </tr>
-                    </ng-template>
-                    <ng-template pTemplate="body" let-rowData let-columns="columns">
-                        <tr [ngClass]="{'beneTab': rowData.grupo_id == 1,
-                   'otrosTab':rowData.grupo_name.includes('DEPENDIENTES'),
+      
+
+
+
+    </div>
+    <div class="ui-g-12 ">
+        <p-panel header="Tabla de Beneficiarios y Dependientes">
+            <p-table [columns]="cols" [value]="table">
+                <ng-template pTemplate="header" let-columns>
+                    <tr>
+                        <th></th>
+                        <th *ngFor="let col of columns">
+                            {{col.header}}
+                        </th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-rowData let-columns="columns">
+                    <tr [ngClass]="{'beneTab': rowData.grupo_id == 1,
+               'otrosTab':rowData.grupo_name.includes('DEPENDIENTES'),
 'conyuTab': rowData.grupo_name.includes('CONYU'),'hijosTab': rowData.grupo_name.includes('HIJO')}">
-                            <td>
-                                <button pButton icon="pi pi-clone" [disabled]="gruposelect.id == null" style="margin: 2px;"
-                                    class="ui-button-success ui-button-rounded" (click)="clone(rowData)"></button>
-                                <button pButton icon="pi pi-pencil" style="margin: 2px;" class=" ui-button-rounded"
-                                    (click)="edit(rowData)"></button>
-                                <button pButton icon="pi pi-trash" style="margin: 2px;" class="ui-button-danger ui-button-rounded"
-                                    (click)="delete(rowData)"></button>
+                        <td>
+                            <button pButton icon="pi pi-clone" [disabled]="gruposelect.id == null" style="margin: 2px;"
+                                class="ui-button-success ui-button-rounded" (click)="clone(rowData)"></button>
+                            <button pButton icon="pi pi-pencil" style="margin: 2px;" class=" ui-button-rounded"
+                                (click)="edit(rowData)"></button>
+                            <button pButton icon="pi pi-trash" style="margin: 2px;" class="ui-button-danger ui-button-rounded"
+                                (click)="delete(rowData)"></button>
 
 
-                            </td>
-                            <td *ngFor="let col of columns">
-                                {{rowData[col.field]}}
-                            </td>
-                        </tr>
-                    </ng-template>
-                    <ng-template pTemplate="summary">
-                        Participación Total: {{part_total}}
-                    </ng-template>
-                </p-table>
+                        </td>
+                        <td *ngFor="let col of columns">
+                            {{rowData[col.field]}}
+                        </td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="summary">
+                    Participación Total: {{part_total}}
+                </ng-template>
+            </p-table>
 
 
-            </p-panel>
-        </div>
-
-
-
+        </p-panel>
     </div>
     <div class=" ui-g-12">
         <div class=" ui-g-6">

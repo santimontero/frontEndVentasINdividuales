@@ -120,8 +120,8 @@ export class ClienteDomicilioComponent implements OnInit {
       refe_dom: ['',],
       piso_dom: ['',],
       barrio_dom: new FormControl('', Validators.required),
-      tel_dom: new FormControl('', Validators.required),
-      cel_dom: new FormControl('', Validators.required),
+      tel_dom: new FormControl('', [Validators.required,Validators.minLength(9)]),
+      cel_dom: new FormControl('', [Validators.required,Validators.minLength(10)]),
       hora_desde_dom: new FormControl(''),
       hora_hasta_dom: new FormControl(''),
 
@@ -134,7 +134,7 @@ export class ClienteDomicilioComponent implements OnInit {
       refe_trab: new FormControl(''),
       local_trab: new FormControl(''),
       piso_trab: new FormControl(''),
-      tel_trab: new FormControl('', Validators.required),
+      tel_trab: new FormControl('', [Validators.required,Validators.minLength(9)]),
       ext_trab: new FormControl(''),
 
       nom_empresa: new FormControl('', Validators.required),
@@ -160,8 +160,8 @@ export class ClienteDomicilioComponent implements OnInit {
       piso_dom: [this.emision.clienteDomicilio.piso_dom,],
       refe_dom: [this.emision.clienteDomicilio.refe_dom,],
       barrio_dom: new FormControl(this.emision.clienteDomicilio.barrio_dom, Validators.required),
-      tel_dom: new FormControl(this.emision.clienteDomicilio.tel_dom, Validators.required),
-      cel_dom: new FormControl(this.emision.clienteDomicilio.cel_dom, Validators.required),
+      tel_dom: new FormControl(this.emision.clienteDomicilio.tel_dom,[Validators.required,Validators.minLength(9)]),
+      cel_dom: new FormControl(this.emision.clienteDomicilio.cel_dom,[Validators.required,Validators.minLength(10)]),
       hora_desde_dom: new FormControl(this.emision.clienteDomicilio.hora_desde_dom),
       hora_hasta_dom: new FormControl(this.emision.clienteDomicilio.hora_hasta_dom),
 
@@ -174,7 +174,7 @@ export class ClienteDomicilioComponent implements OnInit {
       refe_trab: new FormControl(this.emision.clienteDomicilio.refe_trab),
       local_trab: new FormControl(this.emision.clienteDomicilio.local_trab),
       piso_trab: new FormControl(this.emision.clienteDomicilio.piso_trab),
-      tel_trab: new FormControl(this.emision.clienteDomicilio.tel_trab, Validators.required),
+      tel_trab: new FormControl(this.emision.clienteDomicilio.tel_trab, [Validators.required,Validators.minLength(9)]),
       ext_trab: new FormControl(this.emision.clienteDomicilio.ext_trab),
 
          nom_empresa: new FormControl(this.emision.clienteDomicilio.nom_empresa, Validators.required),
@@ -190,8 +190,6 @@ export class ClienteDomicilioComponent implements OnInit {
   public CalculateAge(): void {
     if (this.formulario.get('fecha_nacimiento').value) {
       var timeDiff = Math.abs(Date.now() - this.formulario.get('fecha_nacimiento').value);
-      //Used Math.floor instead of Math.ceil
-      //so 26 years and 140 days would be considered as 26, not 27.
 
       this.formulario.patchValue({ edad: Math.floor((timeDiff / (1000 * 3600 * 24)) / 365) });
 

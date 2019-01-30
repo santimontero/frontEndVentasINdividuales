@@ -61,7 +61,10 @@ export class BeneficiariosDependientesComponent implements OnInit {
     this.table = [];
     this.nuevofurmulario();
     this.gruposconfig = [];
-    this.api.get('api/configuraciones/gruposproducto?ramo=' + this.emision.cotizacion.pda_ramo + '&codigo=' + this.emision.cotizacion.pda_codigo_plan, 'beneficiarios-dependientes').subscribe(
+ 
+    this.api.get('api/configuraciones/gruposproducto?ramo=01'+ '&codigo=01782' , 'beneficiarios-dependientes').subscribe(
+    
+    // this.api.get('api/configuraciones/gruposproducto?ramo=' + this.emision.cotizacion.pda_ramo + '&codigo=' + this.emision.cotizacion.pda_codigo_plan, 'beneficiarios-dependientes').subscribe(
       gruposProd => {
         this.grupos = [];
         for (let index = 0; index < gruposProd.length; index++) {
