@@ -20,24 +20,24 @@ export class CotizacionComponent implements OnInit {
   sumaaseg: number;
   prima: number;
   anual: number;
-  fren_pago:any;
+  fren_pago: any;
 
-  constructor( public appComponent: AppComponent,private api: ApiRequestService) {
+  constructor(public appComponent: AppComponent, private api: ApiRequestService) {
     this.appComponent.loader = true;
     this.api.get('api/configuraciones/productosxasesor?tipoIdent=' + this.api.getInfoUsuario().tipoIdent + '&ident=' + this.api.getInfoUsuario().identificacion, 'cotizacion').subscribe(
       productosAsesor => {
         this.productos = productosAsesor;
-       
+
       },
-      error=>{
-console.log(error)
-this.appComponent.loader = false;
+      error => {
+        console.log(error)
+        this.appComponent.loader = false;
       }
     )
   }
 
   ngOnInit() {
-    this.emision=new Emision();
+    this.emision = new Emision();
     this.emision.usuario = this.api.getInfoUsuario();
     this.plazo = [];
     this.plazo.push({ label: 'Periodo de tiempo', value: null });
@@ -50,9 +50,9 @@ this.appComponent.loader = false;
         this.appComponent.loader = false;
       }
       ,
-      error=>{
-console.log(error)
-this.appComponent.loader = false;
+      error => {
+        console.log(error)
+        this.appComponent.loader = false;
       }
     )
 
@@ -63,27 +63,37 @@ this.appComponent.loader = false;
 
   seleccionarProducto(event) {
     this.emision.cotizacion = new Cotizacion();
-    this.emision.cotizacion.pda_codigo_canal_subc= event.value.pda_codigo_canal_subc;
-    this.emision.cotizacion.pda_codigo_conf_prd= event.value.pda_codigo_conf_prd;
-    this.emision.cotizacion.pda_codigo_plan= event.value.pda_codigo_plan;
-    this.emision.cotizacion.pda_descrip_conf_prod= event.value.pda_descrip_conf_prod;
-    this.emision.cotizacion.pda_num_identifica_asesor= event.value.pda_num_identifica_asesor;
-    this.emision.cotizacion.pda_ramo= event.value.pda_ramo;
-    this.emision.cotizacion.pda_solicita_intermediario= event.value.pda_solicita_intermediario;
-    this.emision.cotizacion.pda_tipo_asesor= event.value.pda_tipo_asesor;
+    this.emision.cotizacion.pda_codigo_canal_subc = event.value.pda_codigo_canal_subc;
+    this.emision.cotizacion.pda_codigo_conf_prd = event.value.pda_codigo_conf_prd;
+    this.emision.cotizacion.pda_codigo_plan = event.value.pda_codigo_plan;
+    this.emision.cotizacion.pda_descrip_conf_prod = event.value.pda_descrip_conf_prod;
+    this.emision.cotizacion.pda_num_identifica_asesor = event.value.pda_num_identifica_asesor;
+    this.emision.cotizacion.pda_ramo = event.value.pda_ramo;
+    this.emision.cotizacion.pda_solicita_intermediario = event.value.pda_solicita_intermediario;
+    this.emision.cotizacion.pda_tipo_asesor = event.value.pda_tipo_asesor;
+    this.emision.cotizacion.prd_tipo_ramo = event.value.prd_tipo_ramo;
 
     this.fren_pago = null;
 
     this.api.get('api/configuraciones/coberturasxproducto?ramo=' + event.value.pda_ramo + '&codigo=' + event.value.pda_codigo_plan, 'cotizacion').subscribe(
       coberturasProducto => {
         this.coberturas = coberturasProducto;
-      
+      }
+    )
+    this.api.get('api/catalogos/frecuenciapagoxprod?ramo=' + event.value.pda_ramo + '&codigo=' + event.value.pda_codigo_plan, 'cotizacion').subscribe(
+      plazosProducto => {
+        this.plazo = [];
+        this.plazo.push({ label: 'Periodo de tiempo', value: null });
+        for (let i = 0; i < plazosProducto.length; i++) {
+          var p = { label: plazosProducto[i].cat_descripcion, value: { name: plazosProducto[i].cat_descripcion, code: plazosProducto[i].cat_id_catalogo } };
+          this.plazo.push(p);
+        }
       }
     )
     this.api.get('api/configuraciones/sumaasegurada?ramo=' + event.value.pda_ramo + '&codigo=' + event.value.pda_codigo_plan, 'cotizacion').subscribe(
       sumaAsegurada => {
         this.sumaaseg = sumaAsegurada;
-  
+
       }
     )
     this.api.get('api/configuraciones/primaanual?ramo=' + event.value.pda_ramo + '&codigo=' + event.value.pda_codigo_plan, 'cotizacion').subscribe(
@@ -97,7 +107,7 @@ this.appComponent.loader = false;
 
   seleccionarPlazo(event) {
 
-    if (this.anual > 0 && event.value !=null) {
+    if (this.anual > 0 && event.value != null) {
       switch (event.value.code) {
         case 'A':
           this.prima = this.anual
@@ -113,40 +123,41 @@ this.appComponent.loader = false;
           this.prima = 0;
           break;
       }
-    }else{
+    } else {
       this.prima = 0;
     }
   }
 
   siguiente() {
-  
-    this.emision.cotizacion.prima= this.anual;
-    this.emision.cotizacion.val_pagar =this.prima;
-    this.emision.cotizacion.suma_aseg= this.sumaaseg;
-    this.emision.cotizacion.fren_pago= this.fren_pago;
-    this.emision.cotizacion.coberturas= this.coberturas;
+
+    this.emision.cotizacion.prima = this.anual;
+    this.emision.cotizacion.val_pagar = this.prima;
+    this.emision.cotizacion.suma_aseg = this.sumaaseg;
+    this.emision.cotizacion.fren_pago = this.fren_pago;
+    this.emision.cotizacion.coberturas = this.coberturas;
 
     this.api.get('api/configuraciones/producto?codRamo=' + this.emision.cotizacion.pda_ramo + '&codProd=' + this.emision.cotizacion.pda_codigo_plan, 'cotizacion').subscribe(
       product => {
         this.emision.cotizacion.prd_edad_min = product.prd_edad_min;
         this.emision.cotizacion.prd_edad_max = product.prd_edad_max;
-   
-    this.api.get('api/configuraciones/comercializacion?ramo=' + this.emision.cotizacion.pda_ramo + '&codigo=' + this.emision.cotizacion.pda_codigo_plan, 'cotizacion').subscribe(
-      configuraComerc => {
-        this.emision.comercializacion = configuraComerc;
+        this.emision.cotizacion.prd_tipo_ramo = product.prd_tipo_ramo;
 
-        this.enviarPadre.emit({ index: this.activeIndex + 1,emision: this.emision  });
+        this.api.get('api/configuraciones/comercializacion?ramo=' + this.emision.cotizacion.pda_ramo + '&codigo=' + this.emision.cotizacion.pda_codigo_plan, 'cotizacion').subscribe(
+          configuraComerc => {
+            this.emision.comercializacion = configuraComerc;
+
+            this.enviarPadre.emit({ index: this.activeIndex + 1, emision: this.emision });
+
+          }
+        )
 
       }
     )
-    
-  }
-  )
 
   }
 
   anterior() {
-    this.enviarPadre.emit({ index: this.activeIndex - 1,emision: this.emision  });
+    this.enviarPadre.emit({ index: this.activeIndex - 1, emision: this.emision });
   }
 
 
