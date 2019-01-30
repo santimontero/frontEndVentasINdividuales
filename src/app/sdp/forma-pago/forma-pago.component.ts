@@ -46,14 +46,14 @@ export class FormaPagoComponent implements OnInit {
     this.tipo_cuenta.push({ label: 'CORRIENTE', value: 'C' });
 
     this.tipo_form_pago = [];
-    this.appComponent.loader = true; 
+
     this.api.get('api/catalogos/formaspago', 'forma_pago').subscribe(
       formpag => {
         for (let i = 0; i < formpag.length; i++) {
           var p = { label: formpag[i].cat_descripcion, value: { id: (i + 1), name: formpag[i].cat_descripcion, code: formpag[i].cat_id_catalogo } };
           this.tipo_form_pago.push(p);
         }
-        this.appComponent.loader = false; 
+
       }
     )
 
@@ -101,7 +101,7 @@ export class FormaPagoComponent implements OnInit {
     setTimeout(() => { 
         this.cargarfurmulario();
         this.appComponent.loader = false; 
-    }, 1000);
+    }, 500);
     }
   }
   

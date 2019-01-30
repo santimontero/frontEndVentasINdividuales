@@ -94,8 +94,8 @@ export class HogarComponent implements OnInit {
       trasv: ['',],
       refe: ['',],
       barrio: new FormControl('', Validators.required),
-      tel: new FormControl('', Validators.required)
-     
+      tel: new FormControl('', Validators.required),
+      piso: new FormControl('', ),
     });
 
 
@@ -111,8 +111,8 @@ export class HogarComponent implements OnInit {
       trasv: [this.emision.clienteDomicilio.trasv_dom,],
       refe: [this.emision.clienteDomicilio.refe_dom,],
       barrio: new FormControl(this.emision.clienteDomicilio.barrio_dom, Validators.required),
-      tel: new FormControl(this.emision.clienteDomicilio.tel_dom, Validators.required)
-     
+      tel: new FormControl(this.emision.clienteDomicilio.tel_dom, Validators.required),
+      piso: new FormControl(this.emision.clienteDomicilio.piso_dom, ),
     });
 
 
@@ -127,6 +127,7 @@ export class HogarComponent implements OnInit {
       refe: [this.emision.hogar.refe,],
       barrio: new FormControl(this.emision.hogar.barrio, Validators.required),
       tel: new FormControl(this.emision.hogar.tel, Validators.required),
+      piso: new FormControl(this.emision.hogar.piso,)
     });
 
   }

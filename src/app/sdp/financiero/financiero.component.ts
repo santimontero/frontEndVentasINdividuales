@@ -117,7 +117,7 @@ export class FinancieroComponent implements OnInit {
       setTimeout(() => {
         this.cargarfurmulario();
         this.appComponent.loader = false;
-      }, 1000);
+      }, 500);
     }
 
   }
