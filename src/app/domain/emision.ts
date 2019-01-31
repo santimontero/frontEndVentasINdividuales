@@ -102,6 +102,7 @@ export class FormaPago {
   numero_rembolso: any;
 }
 export class Beneficiarios {
+  id?: any;
   tipo_identificacion?: any;
   identificacion?: any;
   primer_nombre?: any;
@@ -112,6 +113,11 @@ export class Beneficiarios {
   fecha_nacimiento?: any;
   edad?: any;
   participacion?: any;
+  grupo:Grupo[];
+}
+export class Grupo{
+  id:any;
+  name:any;
 }
 export class ClienteDomicilio {
   pais_origen?: any;

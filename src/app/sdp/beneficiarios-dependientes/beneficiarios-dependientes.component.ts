@@ -25,14 +25,16 @@ export class BeneficiariosDependientesComponent implements OnInit {
   formulario: FormGroup;
   gruposconfig: gruposproducto[];
   grupos: any[];
-  gruposelect: { id: number; name: string; code: number };
-  table: any;
+  // gruposelect: { id: number; name: string; code: number };
+  table: any[];
   part_total: number = 0;
   cols: { field: string; header: string; }[];
-  confGrupo: confGrupo;
+  // confGrupo: confGrupo;
+  index:any;
+  mostrarPart:boolean=false;
   constructor(private formBuilder: FormBuilder,
     public appComponent: AppComponent, private api: ApiRequestService) {
-    this.gruposelect = { id: null, name: "", code: null }
+    // this.gruposelect = { id: null, name: "", code: null }
     this.es = {
       firstDayOfWeek: 1,
       dayNames: ["domingo", "lunes", "martes", "miércoles", "jueves", "viernes", "sábado"],
@@ -56,19 +58,21 @@ export class BeneficiariosDependientesComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.confGrupo = new confGrupo();
+   
     this.part_total = 0;
     this.table = [];
     this.nuevofurmulario();
     this.gruposconfig = [];
- 
-    this.api.get('api/configuraciones/gruposproducto?ramo=01'+ '&codigo=01782' , 'beneficiarios-dependientes').subscribe(
+    this.index=0;
     
-    // this.api.get('api/configuraciones/gruposproducto?ramo=' + this.emision.cotizacion.pda_ramo + '&codigo=' + this.emision.cotizacion.pda_codigo_plan, 'beneficiarios-dependientes').subscribe(
+
+    // this.api.get('api/configuraciones/gruposproducto?ramo=01' + '&codigo=01782', 'beneficiarios-dependientes').subscribe(
+
+      this.api.get('api/configuraciones/gruposproducto?ramo=' + this.emision.cotizacion.pda_ramo + '&codigo=' + this.emision.cotizacion.pda_codigo_plan, 'beneficiarios-dependientes').subscribe(
       gruposProd => {
         this.grupos = [];
         for (let index = 0; index < gruposProd.length; index++) {
-          var p = { label: gruposProd[index].gxp_descripcion, value: { id: (index + 1), name: gruposProd[index].gxp_descripcion, code: gruposProd[index].gxp_grupo } };
+          var p = { label: gruposProd[index].gxp_descripcion.replace(/~+$/, ''), value: { id: (index + 1), name: gruposProd[index].gxp_descripcion.replace(/~+$/, ''), code: gruposProd[index].gxp_grupo } };
           this.grupos.push(p);
           var c = {
             prd_ramo: gruposProd[index].prd_ramo,
@@ -89,8 +93,13 @@ export class BeneficiariosDependientesComponent implements OnInit {
             gxp_bd_edad: gruposProd[index].gxp_bd_edad,
             gxp_edad_prom: gruposProd[index].gxp_edad_prom,
           }
-          this.gruposconfig.push(c);
+          if (c.gxp_grupo != 1) { this.gruposconfig.push(c); }
+
+
+
         }
+     
+        // this.gruposelect= this.grupos[0].value
       }
     )
 
@@ -149,8 +158,9 @@ export class BeneficiariosDependientesComponent implements OnInit {
     }
   }
   nuevofurmulario() {
-    this.gruposelect = { id: null, name: "", code: null }
-    return this.formulario = this.formBuilder.group({
+    // this.gruposelect = { id: null, name: "", code: null }
+     this.formulario = this.formBuilder.group({
+      id:null,
       tipo_identificacion: ['', Validators.required],
       identificacion: new FormControl(''),
       primer_nombre: new FormControl('', Validators.required),
@@ -162,8 +172,9 @@ export class BeneficiariosDependientesComponent implements OnInit {
       fecha_nacimiento: new FormControl(''),
       edad: new FormControl('', Validators.required),
       participacion: new FormControl(''),
+      grupo: new FormControl('', Validators.required),
     });
-
+this.mostrarPart = false;
 
   }
   cargarfurmulario() {
@@ -175,46 +186,54 @@ export class BeneficiariosDependientesComponent implements OnInit {
   }
 
   seleccionarGrupo(event) {
+    console.log(event);
+    var actual = event.itemValue
+    if(event.value.find(a=>a.code == 1) ){
+      this.mostrarPart=true;
+    }else{
+      this.mostrarPart=false;
+    }
+    if (this.gruposconfig.find(a=>a.gxp_grupo == actual.code)) {
+      this.table.forEach(p=>{
+        if (this.gruposconfig.find(a=>a.gxp_grupo == actual.code).gxp_num_per <= p.grupo.filter(a=> a.code == actual.code).length  ) {
+          this.appComponent.message('warn', 'Atención', 'No puede superar el maximo número de persona configurado');
+          var index = this.formulario.get('grupo').value.indexOf(actual);
+          this.formulario.get('grupo').value.splice(index, 1);
+      actual = null;
+        } 
+      })
 
-    if (event.value.code == 1) {
 
-      if (+this.part_total > 100) {
-        this.gruposelect = { id: null, name: "", code: null }
-        this.appComponent.message('error', 'Error', 'la participación no puede superar el 100%, modifique algun beneficiario');
-      }
-      this.confGrupo = new confGrupo();
-      console.log(this.gruposelect )
-    } else {
-      if (+this.part_total < 100) {
-        this.gruposelect = { id: null, name: "", code: null }
-        this.appComponent.message('warn', 'Atención', 'la participación tiene que ser 100% antes de seleccionar otro grupo.');
-      }
-      else {
-       
-        this.tipo_parentesco_final = []
-        this.confGrupo = this.gruposconfig.find(a => a.gxp_grupo == this.gruposelect.code)
-        if (this.gruposelect.name.includes('CONYU')) {
-          this.tipo_parentesco.forEach(a => {
-            if (a.value.code == "14" || a.value.code == "21") {
-              this.tipo_parentesco_final.push(a);
-            }
-          })
-        } else if (this.gruposelect.name.includes('HIJO')) {
-          this.tipo_parentesco.forEach(a => {
-            if (a.value.code == "22" || a.value.code == "19") {
-              this.tipo_parentesco_final.push(a);
-            }
-          })
-        } else {
+    if (actual.name.includes('CONYU')) {
 
-          this.tipo_parentesco.forEach(a => {
-            this.tipo_parentesco_final.push(a);
-          })
+        if (!(this.formulario.get('paren').value.code == "14" || this.formulario.get('paren').value.code == "21")) {
+
+          this.appComponent.message('error', 'Error', 'El parentezco no esta correcto para este grupo');
+          var index = this.formulario.get('grupo').value.indexOf(actual);
+          this.formulario.get('grupo').value.splice(index, 1);
+
+          return;
         }
 
+      } else if (actual.name.includes('HIJO')) {
 
-      }
-    }
+        if (!(this.formulario.get('paren').value.code == "22" || this.formulario.get('paren').value.code == "19")) {
+
+          this.appComponent.message('error', 'Error', 'El parentezco no esta correcto para este grupo');
+          var index = this.formulario.get('grupo').value.indexOf(actual);
+          this.formulario.get('grupo').value.splice(index, 1);
+          return;
+        }
+      } 
+    }else
+    if (+this.part_total == 100 && actual.code==1) {
+
+      this.appComponent.message('info', 'Información', 'la participación no puede superar el 100% .');
+      var index = this.formulario.get('grupo').value.indexOf(actual);
+      this.formulario.get('grupo').value.splice(index, 1);
+ 
+  
+  }
   }
 
 
@@ -229,16 +248,16 @@ export class BeneficiariosDependientesComponent implements OnInit {
     }
   }
   delete(event) {
-    var borrar = this.table.find(e => e.identificacion == event.identificacion && e.grupo_id == event.grupo_id);
+    var borrar = this.table.find(e => e.id== event.id);
     var index = this.table.indexOf(borrar);
     this.table.splice(index, 1);
     this.calcular_part();
   }
   edit(event) {
-    console.log(event)
-    this.gruposelect = { id: event.grupo_id, name: event.grupo_name, code: event.grupo_id }
+console.log(event);
+    //this.gruposelect = { id: event.grupo_id, name: event.grupo_name, code: event.grupo_id }
     this.formulario = this.formBuilder.group({
-
+      id:new FormControl(event.id),
       tipo_identificacion: new FormControl(event.tipo_identificacion, Validators.required),
       identificacion: new FormControl(event.identificacion),
       primer_nombre: new FormControl(event.primer_nombre, Validators.required),
@@ -250,113 +269,66 @@ export class BeneficiariosDependientesComponent implements OnInit {
       fecha_nacimiento: new FormControl(event.fecha_nacimiento),
       edad: new FormControl(event.edad, Validators.required),
       participacion: new FormControl(event.participacion),
+      grupo: new FormControl(event.grupo, Validators.required),
     })
-  }
-  clone(event) {
-    var existe = this.table.find(e => e.identificacion == event.identificacion && e.grupo_id == this.gruposelect.id  && e.primer_nombre == event.primer_nombre && e.primer_apellido == event.primer_apellido);
-    var existe2 = null
-    if(this.gruposelect.name.includes('CONYU'))
-    {
-     existe2 = this.table.find(e => e.identificacion == event.identificacion && e.grupo_name.includes('HIJO') && e.primer_nombre == event.primer_nombre && e.primer_apellido == event.primer_apellido);
-    
-    }
-    if(this.gruposelect.name.includes('HIJO'))
-    {
-     existe2 = this.table.find(e => e.identificacion == event.identificacion && e.grupo_name.includes('CONYU') && e.primer_nombre == event.primer_nombre && e.primer_apellido == event.primer_apellido);
-    }
 
-
-    if(this.confGrupo.gxp_num_per <= this.table.filter(e => e.grupo_id == this.gruposelect.code).length  && this.gruposelect.code !=1){
-      this.appComponent.message('warn', 'Atención', 'No puede superar el maximo número de persona configurado');
-    }else if((this.confGrupo.gxp_edad_min >   event.edad)  || ( event.edad > this.confGrupo.gxp_edad_max)  && this.gruposelect.code !=1 ){
-      this.appComponent.message('warn', 'Atención', 'La edad ingresada no esta permitida para este grupo.');
+    if(event.grupo.find(a=>a.code == 1) ){
+      this.mostrarPart=true;
     }else{
-    if (!existe && !(this.gruposelect.code == 1) && !existe2 ) {
-      const form = {
-
-        tipo_identificacion: event.tipo_identificacion,
-        identificacion: event.identificacion,
-        primer_nombre: event.primer_nombre,
-        segundo_nombre: event.segundo_nombre,
-        primer_apellido: event.primer_apellido,
-        segundo_apellido: event.segundo_apellido,
-        genero: event.genero,
-        paren: event.paren,
-        paren_name: event.paren_name,
-        fecha_nacimiento: event.fecha_nacimiento,
-        edad: event.edad,
-        participacion: null,
-        grupo_id: this.gruposelect.code,
-        grupo_name: this.gruposelect.name
-      }
-
-      this.table.push(form)
-      this.nuevofurmulario();
-    }
-    else {
-      this.appComponent.message('warn', 'Atención', 'Ya existe para este grupo o no se puede duplicar.');
+      this.mostrarPart=false;
     }
   }
-  }
+
+
   guardar() {
 
     if (this.formulario.valid) {
+      var cont = 0;
+      if ((+this.part_total + +this.formulario.get('participacion').value ) > 100 && this.formulario.get('id').value == null) {       
+        this.appComponent.message('error', 'Error', 'la participación no puede superar el 100%');
+        cont = cont+ 1;
+      }
+      this.formulario.get('grupo').value.forEach(element => {
+        if(element.code != 1){
+
+          this.table.forEach(p=>{ 
+            if (this.gruposconfig.find(a=>a.gxp_grupo == element.code).gxp_num_per <= p.grupo.filter(a=> a.code == element.code).length   ) {
+              this.appComponent.message('warn', 'Atención', 'No puede superar el maximo número de persona configurado');
+              cont = cont+ 1;
+            } else if ((this.gruposconfig.find(a=>a.gxp_grupo  == element.code ).gxp_edad_min > this.formulario.get('edad').value) || (this.formulario.get('edad').value > this.gruposconfig.find(a=>a.gxp_grupo  == element.code ).gxp_edad_max) ) {
+              this.appComponent.message('warn', 'Atención', 'La edad ingresada no esta permitida para este grupo.');
+              cont = cont+ 1;
+            } 
+          })
+    
+     
+      }
+      });
+
+      if(cont==0){
 
         var cli = this.formulario.getRawValue();
-     if (!this.table.find(e => e.identificacion == this.formulario.get('identificacion').value && e.grupo_id == this.gruposelect.id) && (+this.part_total + +this.formulario.get('participacion').value) > 100) {
-        this.appComponent.message('error', 'Error', 'la participación no puede superar el 100%');
-      } else if(this.confGrupo.gxp_num_per <= this.table.filter(e => e.grupo_id == this.gruposelect.id).length  && this.gruposelect.code !=1  ){
-        this.appComponent.message('warn', 'Atención', 'No puede superar el maximo número de persona configurado');
-      }else if((this.confGrupo.gxp_edad_min >  this.formulario.get('edad').value)  || (this.formulario.get('edad').value> this.confGrupo.gxp_edad_max)  && this.gruposelect.code !=1 ){
-        this.appComponent.message('warn', 'Atención', 'La edad ingresada no esta permitida para este grupo.');
-      }else{
-
+        if(cli.tipo_identificacion == "04"){
+          this.guardadoFinal();
+        }else{
+        
         this.api.get('api/cliente/validaidentificacion?tipoId=' + cli.tipo_identificacion + '&identificacion=' + cli.identificacion, 'cotizacion').subscribe(
           valCe => {
-
-
-            if (valCe.resultado == "OK" || cli.tipo_identificacion == "04") {
-
-
-
-              this.appComponent.loader = true; //activar cargando
-
-              const form = {
-
-                tipo_identificacion: this.formulario.get('tipo_identificacion').value,
-                identificacion: cli.tipo_identificacion == "04" ? null : this.formulario.get('identificacion').value,
-                primer_nombre: this.formulario.get('primer_nombre').value,
-                segundo_nombre: this.formulario.get('segundo_nombre').value,
-                primer_apellido: this.formulario.get('primer_apellido').value,
-                segundo_apellido: this.formulario.get('segundo_apellido').value,
-                genero: this.formulario.get('genero').value,
-                paren: this.formulario.get('paren').value,
-                paren_name: this.formulario.get('paren').value.name,
-                fecha_nacimiento: this.formulario.get('fecha_nacimiento').value,
-                edad: this.formulario.get('edad').value,
-                participacion: this.formulario.get('participacion').value,
-                grupo_id: this.gruposelect.id,
-                grupo_name: this.gruposelect.name
-              }
-              var existe = this.table.find(e => e.identificacion == form.identificacion && e.grupo_id == form.grupo_id);
-              if (existe) {
-                this.table[this.table.indexOf(existe)] = form;
-              } else {
-                this.table.push(form)
-              }
-              this.calcular_part();
-              this.nuevofurmulario();
-              this.appComponent.loader = false; //desactivar cargando 
-
-
-            } else {
-              this.appComponent.message('warn', 'Validación Identificación', valCe.resultado);
-
-            }
-          }
-        );
+    
+    
+            if (valCe.resultado == "OK"){
+        this.guardadoFinal();
+      } else {
+        this.appComponent.message('warn', 'Validación Identificación', valCe.resultado);
 
       }
+      }
+      );
+      }
+
+    }
+
+      
 
     } else {
       Object.keys(this.formulario.controls).forEach(field => { // {1}
@@ -367,6 +339,55 @@ export class BeneficiariosDependientesComponent implements OnInit {
 
     }
 
+  }
+
+  guardadoFinal(){
+    var cli = this.formulario.getRawValue();
+
+
+
+
+
+          this.appComponent.loader = true; //activar cargando
+
+          const form = {
+            id: this.formulario.get('id').value,
+            tipo_identificacion: this.formulario.get('tipo_identificacion').value,
+            identificacion: cli.tipo_identificacion == "04" ? null : this.formulario.get('identificacion').value,
+            primer_nombre: this.formulario.get('primer_nombre').value,
+            segundo_nombre: this.formulario.get('segundo_nombre').value,
+            primer_apellido: this.formulario.get('primer_apellido').value,
+            segundo_apellido: this.formulario.get('segundo_apellido').value,
+            genero: this.formulario.get('genero').value,
+            paren: this.formulario.get('paren').value,
+            paren_name: this.formulario.get('paren').value.name,
+            fecha_nacimiento: this.formulario.get('fecha_nacimiento').value,
+            edad: this.formulario.get('edad').value,
+            participacion: this.formulario.get('participacion').value,
+            grupo: this.formulario.get('grupo').value,
+
+          }
+          this.index = this.table.length
+          console.log(this.index)
+            if(form.id == null){
+              form.id = this.index
+              this.table.push(form)
+            }else{
+              var existe = this.table.find(e => e.id == form.id);
+                this.table[this.table.indexOf(existe)] = form;
+              
+            }
+          
+        
+        
+           
+          this.calcular_part();
+          this.nuevofurmulario();
+          this.appComponent.loader = false; //desactivar cargando 
+
+
+       
+  
   }
   siguiente() {
 
@@ -406,4 +427,54 @@ export class BeneficiariosDependientesComponent implements OnInit {
     this.formulario.patchValue({ fecha_nacimiento: null });
 
   }
+
+
+
+
+  // clone(event) {
+  //   var existe = this.table.find(e => e.identificacion == event.identificacion && e.grupo_id == this.gruposelect.id  && e.primer_nombre == event.primer_nombre && e.primer_apellido == event.primer_apellido);
+  //   var existe2 = null
+  //   if(this.gruposelect.name.includes('CONYU'))
+  //   {
+  //    existe2 = this.table.find(e => e.identificacion == event.identificacion && e.grupo_name.includes('HIJO') && e.primer_nombre == event.primer_nombre && e.primer_apellido == event.primer_apellido);
+
+  //   }
+  //   if(this.gruposelect.name.includes('HIJO'))
+  //   {
+  //    existe2 = this.table.find(e => e.identificacion == event.identificacion && e.grupo_name.includes('CONYU') && e.primer_nombre == event.primer_nombre && e.primer_apellido == event.primer_apellido);
+  //   }
+
+
+  //   if(this.confGrupo.gxp_num_per <= this.table.filter(e => e.grupo_id == this.gruposelect.code).length  && this.gruposelect.code !=1){
+  //     this.appComponent.message('warn', 'Atención', 'No puede superar el maximo número de persona configurado');
+  //   }else if((this.confGrupo.gxp_edad_min >   event.edad)  || ( event.edad > this.confGrupo.gxp_edad_max)  && this.gruposelect.code !=1 ){
+  //     this.appComponent.message('warn', 'Atención', 'La edad ingresada no esta permitida para este grupo.');
+  //   }else{
+  //   if (!existe && !(this.gruposelect.code == 1) && !existe2 ) {
+  //     const form = {
+
+  //       tipo_identificacion: event.tipo_identificacion,
+  //       identificacion: event.identificacion,
+  //       primer_nombre: event.primer_nombre,
+  //       segundo_nombre: event.segundo_nombre,
+  //       primer_apellido: event.primer_apellido,
+  //       segundo_apellido: event.segundo_apellido,
+  //       genero: event.genero,
+  //       paren: event.paren,
+  //       paren_name: event.paren_name,
+  //       fecha_nacimiento: event.fecha_nacimiento,
+  //       edad: event.edad,
+  //       participacion: null,
+  //       grupo_id: this.gruposelect.code,
+  //       grupo_name: this.gruposelect.name
+  //     }
+
+  //     this.table.push(form)
+  //     this.nuevofurmulario();
+  //   }
+  //   else {
+  //     this.appComponent.message('warn', 'Atención', 'Ya existe para este grupo o no se puede duplicar.');
+  //   }
+  // }
+  // }
 }
