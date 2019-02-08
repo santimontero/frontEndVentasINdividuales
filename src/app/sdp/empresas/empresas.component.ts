@@ -101,7 +101,7 @@ export class EmpresasComponent implements OnInit {
 
   save() {
 
-
+    if (this.formulario.valid) {
     this.api.post('/api/empresas/guardar/', this.datosEnvio(), 'Empresa').subscribe(Data => {
       this.ngOnInit()
       this.appComponent.message('success', 'Exitoso', 'Se guardo correctamente.');
@@ -115,7 +115,14 @@ export class EmpresasComponent implements OnInit {
 
     );;
     this.displayDialog = false;
+  } else {
+    Object.keys(this.formulario.controls).forEach(field => { // {1}
+      const control = this.formulario.get(field);
+      control.markAsDirty({ onlySelf: true });            // {2}
+      control.markAsTouched({ onlySelf: true });       // {3}
+    });
 
+  }
   }
 
   delete() {

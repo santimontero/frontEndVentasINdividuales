@@ -88,7 +88,7 @@ export class OpcionesComponent implements OnInit {
 
   save() {
 
-
+    if (this.formulario.valid) {
     this.api.post('/api/opciones/guardar/', this.datosEnvio(), 'Opcion').subscribe(Data => {
       this.ngOnInit()
 
@@ -103,7 +103,14 @@ export class OpcionesComponent implements OnInit {
 
     );;
     this.displayDialog = false;
+  } else {
+    Object.keys(this.formulario.controls).forEach(field => { // {1}
+      const control = this.formulario.get(field);
+      control.markAsDirty({ onlySelf: true });            // {2}
+      control.markAsTouched({ onlySelf: true });       // {3}
+    });
 
+  }
   }
 
   delete() {

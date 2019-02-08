@@ -85,7 +85,7 @@ export class PerfilesComponent implements OnInit {
 
   save() {
 
-
+    if (this.formulario.valid) {
     this.api.post('/api/Perfiles/guardar/', this.datosEnvio(), 'Perfil').subscribe(Data => {
       this.ngOnInit()
 
@@ -100,7 +100,14 @@ export class PerfilesComponent implements OnInit {
 
     );;
     this.displayDialog = false;
+  } else {
+    Object.keys(this.formulario.controls).forEach(field => { // {1}
+      const control = this.formulario.get(field);
+      control.markAsDirty({ onlySelf: true });            // {2}
+      control.markAsTouched({ onlySelf: true });       // {3}
+    });
 
+  }
   }
 
   delete() {

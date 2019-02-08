@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { ApiRequestService } from 'src/app/services/api-request.service';
 import { AppComponent } from 'src/app/app.component';
 import { URLSearchParams } from '@angular/http';
-import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms'
+import { FormControl, FormGroup, FormBuilder, Validators,FormArray } from '@angular/forms'
 import { Usuario } from 'src/app/domain/usuario';
 import { SelectItem } from 'primeng/components/common/selectitem';
 @Component({
@@ -57,9 +57,6 @@ export class UsuariosComponent implements OnInit {
     this.api.get('/api/usuarios/listar', 'Usuarios').subscribe(
       res => {
         this.usuarios = res;
-        this.usuarios.forEach(element => {
-     
-        })
       }
     );
 
@@ -111,6 +108,9 @@ export class UsuariosComponent implements OnInit {
     this.usuario.usu_estado = 'A'
     this.displayDialog = true;
   }
+  getControls(frmGrp: FormGroup, key: string) {
+    return (<FormArray>frmGrp.controls[key]).controls;
+  }
   datosEnvio() {
     const envio = {
       usu_codigo_usuario: this.formulario.get('usu_codigo_usuario').value,
@@ -129,19 +129,29 @@ export class UsuariosComponent implements OnInit {
   }
 
   save() {
+    if (this.formulario.valid) {
+    this.appComponent.loader=true;
     this.api.post('/api/usuarios/guardar/', this.datosEnvio(), 'Usuarios').subscribe(Data => {
-      this.ngOnInit()
       this.appComponent.message('success', 'Exitoso', 'Se guardo correctamente.');
-       
-      // this.appComponent.loader = false; //desactivar cargando
+      this.displayDialog = false;
+       this.ngOnInit();
+     this.appComponent.loader = false; //desactivar cargando
      },
        error => {
          this.appComponent.message('error', 'Error', error);
      
-         //this.appComponent.loader = false; //desactivar cargando        
+        this.appComponent.loader = false; //desactivar cargando        
        }
      );
-    this.displayDialog = false;
+    
+  } else {
+    Object.keys(this.formulario.controls).forEach(field => { // {1}
+      const control = this.formulario.get(field);
+      control.markAsDirty({ onlySelf: true });            // {2}
+      control.markAsTouched({ onlySelf: true });       // {3}
+    });
+
+  }
   }
 
   delete() {
@@ -149,6 +159,7 @@ export class UsuariosComponent implements OnInit {
     params.set('id', this.selectedUsuarios.usu_codigo_usuario.toString());
     this.api.get('/api/usuarios/elimina', 'Usuarios', params).subscribe(
       res => {
+        this.displayDialog = false;
         this.ngOnInit();
         this.appComponent.message('success', 'Exitoso', 'Se borro correctamente.');
        
@@ -172,7 +183,7 @@ export class UsuariosComponent implements OnInit {
       usu_nombre_usuario: new FormControl({ value: this.selectedUsuarios.usu_nombre_usuario, disabled: true},),
       usu_nombre_asesor: [this.selectedUsuarios.usu_nombre_asesor,],
       per_codigo_perfil: [this.selectedUsuarios.per_codigo_perfil, Validators.required],
-      emp_id_empresa: [this.selectedUsuarios.per_codigo_perfil, Validators.required],
+      emp_id_empresa: [this.selectedUsuarios.emp_id_empresa, Validators.required],
       usu_mail: [this.selectedUsuarios.usu_mail, Validators.required],
       usu_agencia: [this.selectedUsuarios.usu_agencia, Validators.required],
       usu_val_presupuesto: [this.selectedUsuarios.usu_val_presupuesto,],
