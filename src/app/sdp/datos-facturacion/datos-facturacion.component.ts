@@ -66,7 +66,7 @@ export class DatosFacturacionComponent implements OnInit {
       tipo_identificacion: new FormControl(this.emision.factura.tipo_identificacion, Validators.required),
       identificacion: new FormControl(this.emision.factura.identificacion, Validators.required),
       email: new FormControl(this.emision.factura.email, Validators.required),
-      telefono: new FormControl(this.emision.factura.telefono, Validators.required),
+      telefono: new FormControl(this.emision.factura.telefono, [Validators.required,Validators.minLength(9)]),
       nombre: new FormControl(this.emision.factura.nombre, Validators.required),
       direccion: new FormControl(this.emision.factura.direccion, Validators.required),
 
@@ -80,7 +80,7 @@ export class DatosFacturacionComponent implements OnInit {
       tipo_identificacion: new FormControl(this.emision.cliente.tipo_identificacion, Validators.required),
       identificacion: new FormControl(this.emision.cliente.identificacion, Validators.required),
       email: new FormControl(this.emision.clienteDomicilio.email, Validators.required),
-      telefono: new FormControl(this.emision.clienteDomicilio.tel_dom, Validators.required),
+      telefono: new FormControl(this.emision.clienteDomicilio.tel_dom, [Validators.required,Validators.minLength(9)]),
       nombre: new FormControl(this.emision.cliente.primer_nombre + ' ' + this.emision.cliente.primer_apellido, Validators.required),
       direccion: new FormControl(this.emision.clienteDomicilio.calle_prin_dom + ' ' + this.emision.clienteDomicilio.num_dom + ' ' + this.emision.clienteDomicilio.trasv_dom, Validators.required),
 
@@ -93,7 +93,7 @@ export class DatosFacturacionComponent implements OnInit {
       tipo_identificacion: new FormControl('', Validators.required),
       identificacion: new FormControl('', Validators.required),
       email: new FormControl('', Validators.required),
-      telefono: new FormControl('', Validators.required),
+      telefono: new FormControl('', [Validators.required,Validators.minLength(9)]),
       nombre: new FormControl('', Validators.required),
       direccion: new FormControl('', Validators.required),
 

@@ -139,6 +139,8 @@ export class LoginComponent implements OnInit {
                                 this.showError('La cuenta de usuario ha expirado');
                             } else if (msj.error_description != null && msj.error_description == 'User is disabled') {
                                 this.showError('La cuenta de usuario esta deshabilitado');
+                            } else if (msj.error_description != undefined){
+                                this.showError(msj.error_description);
                             } else {
                                 this.showError('Correo electrónico o clave incorrectos');
                             }

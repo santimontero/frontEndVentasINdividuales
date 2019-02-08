@@ -46,7 +46,7 @@ export class Hogar {
 
 export class Cotizacion {
   prima?: any;
-  val_pagar?:any
+  val_pagar?: any
   suma_aseg?: any;
   fren_pago?: any;
   coberturas?: any;
@@ -58,11 +58,11 @@ export class Cotizacion {
   pda_num_identifica_asesor?: any;
   pda_ramo?: any;
   pda_solicita_intermediario?: any;
-  pda_tipo_asesor?: any;  
+  pda_tipo_asesor?: any;
   //De la tabla tb_ven_producto
   prd_edad_min?: any;
-  prd_edad_max?: any; 
-  
+  prd_edad_max?: any;
+  prd_tipo_ramo?: any;
 }
 
 export class Cliente {
@@ -82,8 +82,8 @@ export class Cliente {
   Fecha_Ingreso_Pais?: any;
   Fecha_Caducidad_Pasp?: any;
 
-  descla_salud_tit:any
-  descla_salud_bene:any
+  descla_salud_tit: any
+  descla_salud_bene: any
 }
 export class FormaPago {
   tipo_form_pago?: any;
@@ -97,11 +97,12 @@ export class FormaPago {
 
   //rembolso 
 
-  tip_cuenta_rembolso:any;
-  banco_rembolso:any;
-  numero_rembolso:any;
+  tip_cuenta_rembolso: any;
+  banco_rembolso: any;
+  numero_rembolso: any;
 }
 export class Beneficiarios {
+  id?: any;
   tipo_identificacion?: any;
   identificacion?: any;
   primer_nombre?: any;
@@ -112,6 +113,11 @@ export class Beneficiarios {
   fecha_nacimiento?: any;
   edad?: any;
   participacion?: any;
+  grupo:Grupo[];
+}
+export class Grupo{
+  id:any;
+  name:any;
 }
 export class ClienteDomicilio {
   pais_origen?: any;
@@ -149,11 +155,11 @@ export class ClienteDomicilio {
 
 }
 
-export class ConfiguraComercializacion{
+export class ConfiguraComercializacion {
   prd_ramo: any;
   prd_codigo: any;
-  cfc_prima_comercializacion?: any; 
-  cfc_limite?: any; 
+  cfc_prima_comercializacion?: any;
+  cfc_limite?: any;
   cfc_codigo_estructura?: any;
   cfc_porcentaje_estructura?: any;
   cfc_cerrado_abierto: any;
@@ -161,7 +167,7 @@ export class ConfiguraComercializacion{
   cfc_numero_meses?: any;
   cfc_valor_rda?: any;
   cfc_plurianual: any;
-  cfc_ingbenef: any; 
+  cfc_ingbenef: any;
   cfc_formapago?: any;
   cfc_imprimirtodascoberturas: any;
   cfc_tipodnegocio: any;
@@ -170,19 +176,19 @@ export class ConfiguraComercializacion{
   cfc_configuracion_maestra: any;
   cfc_calular_comision: any;
   cfc_cod_banco: any;
-  cfc_homologarcobertura: any; 
-  cfc_declaracion_salud: any; 
+  cfc_homologarcobertura: any;
+  cfc_declaracion_salud: any;
   cfc_validadependiente_declaracion_salud: any;
   cfc_valida_suma_asegurada: any;
-  cfc_valida_fechanacimiento_dependiente: any; 
+  cfc_valida_fechanacimiento_dependiente: any;
   cfc_tipoventa: any;
   cfc_ruc_institucion_educativa: any;
   cfc_modificabienasegurado: any;
-  cfc_flag_item: any; 
+  cfc_flag_item: any;
 }
 
-export class confGrupo{
-  gxp_num_per: any; 
-  gxp_edad_min: any; 
-  gxp_edad_max: any; 
+export class confGrupo {
+  gxp_num_per: any;
+  gxp_edad_min: any;
+  gxp_edad_max: any;
 }
