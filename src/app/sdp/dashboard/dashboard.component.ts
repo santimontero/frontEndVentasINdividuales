@@ -4,6 +4,7 @@ import { FormControl, FormGroup, FormBuilder, Validators, FormArray } from '@ang
 import { AppComponent } from 'src/app/app.component';
 import { ApiRequestService } from 'src/app/services/api-request.service';
 import { timeout } from 'q';
+import { empty } from 'rxjs';
 
 
 @Component({
@@ -16,8 +17,8 @@ export class DashboardComponent implements OnInit {
   datos: any[];
   lineData: any;
   labelDay: any[];
-  procesados: any[];
-  noProcesados: any[];
+  procesados: number[];
+  noProcesados: number[];
 
   vida: number[];
   accidentes: number[];
@@ -63,17 +64,18 @@ export class DashboardComponent implements OnInit {
 
           this.labelDay.push(element.fecha)
         });
+  
         this.api.get('api/emision/dashboard?tipoId=' + this.api.getInfoUsuario().tipoIdent + '&identificacion=' + this.api.getInfoUsuario().identificacion + '&sel=2', 'cotizacion').subscribe(
           data2 => {  
               data2.forEach(element => {
-        
+
                 var index = this.labelDay.indexOf(element.fecha)
                 if (element.tra_procesado == "0") {
                   this.noProcesados[index] =+element.valor;
-                  this.procesados[index] = 0;
+                if(this.procesados[index] <= 0)  this.procesados[index] = 0
                 }else{
                   this.procesados[index] = +element.valor;
-                  this.noProcesados[index] =0;
+                  if(this.noProcesados[index] <= 0)  this.noProcesados[index] = 0
                 }
             });
               this.lineData = {

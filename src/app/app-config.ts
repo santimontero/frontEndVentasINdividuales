@@ -22,10 +22,12 @@ export class AppConfig {
 
     constructor() {
         if (this.apiProtocol === undefined) {
-            this.apiProtocol = "https";
+           // this.apiProtocol = "https";
+            this.apiProtocol = "http";
         }
         if (this.apiHostName === undefined) {
-            this.apiHostName =  "serviceout.segurosdelpichincha.com/BackendVentasIndividuales/";
+           // this.apiHostName =  "serviceout.segurosdelpichincha.com/BackendVentasIndividuales/";
+            this.apiHostName =  "10.204.50.28/BackendVentasIndividuales/";
         }
         if (this.apiPort === undefined) {
             this.apiPort = window.location.port;

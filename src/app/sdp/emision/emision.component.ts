@@ -95,7 +95,9 @@ export class EmisionComponent implements OnInit {
     /// objeto a enviarse a guardar
 
     console.log(this.emision)
+    this.appComponent.loader = true;
     this.api.post('api/emision/guardar', this.emision, 'emision').subscribe(Data => {
+      this.appComponent.loader = false;
       if (Data.resultado == "OK") {
         this.appComponent.loader = false;
         this.appComponent.message('success', 'Emisión', 'Negocio emitido correctamente');
